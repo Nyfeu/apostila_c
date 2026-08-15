@@ -41,7 +41,7 @@ void loop() {
 \end{codigoc}
 
 \begin{itemize}
-    \item \code{attachInterrupt(pino, funcao, modo)} registra \code{botao\_isr} para ser chamada automaticamente pelo hardware sempre que o evento especificado ocorrer no pino indicado — \code{digitalPinToInterrupt()} converte o número do pino para o identificador de interrupção correspondente;
+    \item \code{attachInterrupt(pino, funcao, modo)} registra \code{botao\_isr} para que a funcao seja chamada automaticamente pelo hardware sempre que o evento especificado ocorrer no pino indicado — \code{digitalPinToInterrupt()} converte o número do pino para o identificador de interrupção correspondente;
     \item \code{FALLING} dispara a interrupção na \textbf{borda de descida} — o instante exato em que o nível do pino cai de alto para baixo (o momento em que um botão com pull-up é pressionado). Outras opções incluem \code{RISING} (borda de subida) e \code{CHANGE} (qualquer mudança de nível);
     \item \code{IRAM\_ATTR} garante que o código da ISR fique carregado na memória RAM interna do \ESP{}, exigido pelo framework para funções chamadas a partir de uma interrupção;
     \item A variável \code{evento\_botao} é declarada \code{volatile} — exatamente pelo motivo explicado no \cref{cap:funcoes}: seu valor é alterado de forma assíncrona pela ISR, e o compilador não pode assumir que ela permanece constante entre uma leitura e outra dentro de \code{loop()}.
@@ -80,8 +80,8 @@ void loop() {
 }
 \end{codigoc}
 
-Essa comparação — ``já se passou tempo suficiente desde a última vez?'' — é um padrão tão comum em firmware que tem nome: \textbf{temporização cooperativa} (ou, informalmente, o padrão \emph{blink without delay}). Ao contrário de um \code{delay()}, \code{loop()} continua girando livremente a cada iteração; a ação só acontece quando o tempo decorrido atinge o intervalo desejado, deixando o restante do código livre para tratar sensores, botões e outras tarefas no meio tempo.
+Essa comparação — ``já se passou tempo suficiente desde a última vez?'' — é um padrão tão comum em firmware que tem nome: \textbf{temporização cooperativa} (ou, informalmente, o padrão \emph{blink without delay}). Ao contrário de um \code{delay()}, \code{loop()} continua rodando livremente a cada iteração; a ação só acontece quando o tempo decorrido atinge o intervalo desejado, deixando o restante do código livre para tratar sensores, botões e outras tarefas no meio tempo.
 
 \begin{esp32box}
-Combinar \textbf{interrupções} (para eventos externos imprevisíveis, como um botão) com \textbf{temporização por \code{millis()}} (para tarefas periódicas e previsíveis, como ler um sensor a cada segundo) é o padrão de projeto mais comum em firmware Arduino para o \ESP{} — e é exatamente essa combinação que usaremos no projeto integrador do próximo capítulo.
+Combinar \textbf{interrupções} (para eventos externos imprevisíveis, como um botão) com \textbf{temporização por \code{millis()}} (para tarefas periódicas e previsíveis, como ler um sensor a cada segundo) é o padrão de projeto mais comum em firmware Arduino para o \ESP{}.
 \end{esp32box}

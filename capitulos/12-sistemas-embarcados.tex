@@ -30,6 +30,12 @@ Essas restrições — pouca memória, sem sistema operacional completo, energia
 
 O \ESP{} é uma família de \textbf{microcontroladores} (\emph{system-on-a-chip}, SoC) desenvolvida pela Espressif Systems, que integra em um único chip:
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{imagens/esp32_diagram_upscayl_5x_upscayl-standard-4x.png}
+\caption{Diagrama de blocos das features do microcontrolador ESP32.}
+\end{figure}
+
 \begin{itemize}
     \item Um processador \textbf{Xtensa LX6 (ou LX7, em variantes mais recentes)}, tipicamente dual-core, operando a até 240~MHz;
     \item \textbf{Wi-Fi} (802.11 b/g/n) e \textbf{Bluetooth} (clássico e BLE) integrados;
@@ -49,7 +55,7 @@ Ao escrever \code{hello\_world.c} no \cref{cap:primeiros-passos}, o programa era
 Isso muda a estrutura típica de um programa de duas formas centrais:
 
 \begin{enumerate}
-    \item Não existe uma função \code{main} que ``termina'' — como adiantado no \cref{cap:primeiros-passos}, o firmware gira indefinidamente em torno de um \textbf{laço principal}, reagindo a eventos e atualizando o estado do sistema enquanto houver energia;
+    \item Não existe uma função \code{main} que ``termina'' — como adiantado no \cref{cap:primeiros-passos}, o firmware roda indefinidamente em torno de um \textbf{laço principal}, reagindo a eventos e atualizando o estado do sistema enquanto houver energia;
     \item O programador é responsável por configurar diretamente os periféricos que deseja usar — não existe um driver de teclado ou de tela pronto: existe, por exemplo, um pino GPIO específico que precisa ser configurado como saída antes de poder acender um LED.
 \end{enumerate}
 

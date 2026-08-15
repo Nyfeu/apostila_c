@@ -53,7 +53,7 @@
 \contentsline {section}{\numberline {8.1}Declarando e percorrendo um vetor}{39}{section.8.1}%
 \contentsline {section}{\numberline {8.2}Vetores e strings}{40}{section.8.2}%
 \contentsline {section}{\numberline {8.3}Passando arranjos para funções}{40}{section.8.3}%
-\contentsline {chapter}{\numberline {9}Ponteiros e Alocação Dinâmica de Memória}{43}{chapter.9}%
+\contentsline {chapter}{\numberline {9}Ponteiros e Alocação Dinâmica}{43}{chapter.9}%
 \contentsline {section}{\numberline {9.1}O que é um ponteiro}{43}{section.9.1}%
 \contentsline {section}{\numberline {9.2}Ponteiros como parâmetros de função}{44}{section.9.2}%
 \contentsline {section}{\numberline {9.3}Ponteiros e vetores}{44}{section.9.3}%
@@ -62,15 +62,15 @@
 \contentsline {section}{\numberline {10.1}Registros e \texttt {\color {secundaria}structs}}{47}{section.10.1}%
 \contentsline {subsection}{\numberline {10.1.1}Structs e ponteiros}{47}{subsection.10.1.1}%
 \contentsline {section}{\numberline {10.2}Enumerações (\texttt {\color {secundaria}enum})}{48}{section.10.2}%
-\contentsline {chapter}{\numberline {11}Modularização: Bibliotecas e Múltiplos Arquivos}{51}{chapter.11}%
+\contentsline {chapter}{\numberline {11}Modularização}{51}{chapter.11}%
 \contentsline {section}{\numberline {11.1}Bibliotecas de software}{51}{section.11.1}%
 \contentsline {section}{\numberline {11.2}Dividindo um programa em múltiplos arquivos}{52}{section.11.2}%
 \contentsline {part}{II\hspace {1em}Sistemas Embarcados com o ESP32 e o PlatformIO}{55}{part.2}%
 \contentsline {chapter}{\numberline {12}Introdução aos Sistemas Embarcados}{57}{chapter.12}%
 \contentsline {section}{\numberline {12.1}O que é um sistema embarcado}{57}{section.12.1}%
 \contentsline {section}{\numberline {12.2}O microcontrolador ESP32}{57}{section.12.2}%
-\contentsline {section}{\numberline {12.3}Como um firmware é diferente de um programa comum}{58}{section.12.3}%
-\contentsline {chapter}{\numberline {13}Microcontroladores: Histórico e Arquitetura}{61}{chapter.13}%
+\contentsline {section}{\numberline {12.3}Como um firmware é diferente de um programa comum}{59}{section.12.3}%
+\contentsline {chapter}{\numberline {13}Microcontroladores: História e Arquitetura}{61}{chapter.13}%
 \contentsline {section}{\numberline {13.1}Um breve histórico}{61}{section.13.1}%
 \contentsline {section}{\numberline {13.2}A unidade de processamento}{62}{section.13.2}%
 \contentsline {section}{\numberline {13.3}Arquitetura de laço único (\emph {Super Loop})}{63}{section.13.3}%
@@ -105,7 +105,7 @@
 \contentsline {section}{\numberline {19.1}O que é uma interrupção}{87}{section.19.1}%
 \contentsline {section}{\numberline {19.2}Interrupções de GPIO com \texttt {\color {secundaria}attachInterrupt}}{87}{section.19.2}%
 \contentsline {section}{\numberline {19.3}Temporização sem bloquear o laço: a técnica de \texttt {\color {secundaria}millis()}}{88}{section.19.3}%
-\contentsline {chapter}{\numberline {20}Projeto Integrador: Estação de Monitoramento IoT}{91}{chapter.20}%
+\contentsline {chapter}{\numberline {20}Estação de Monitoramento IoT}{91}{chapter.20}%
 \contentsline {section}{\numberline {20.1}Especificação do projeto}{91}{section.20.1}%
 \contentsline {subsection}{\numberline {20.1.1}Materiais}{91}{subsection.20.1.1}%
 \contentsline {subsection}{\numberline {20.1.2}Ligações sugeridas}{91}{subsection.20.1.2}%

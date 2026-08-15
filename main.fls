@@ -766,6 +766,9 @@ INPUT _minted-main/3EA88B9B997C8F809051976C8E2670571E8B2165DB203E1CDFAC5131E1A31
 INPUT ./capitulos/12-sistemas-embarcados.tex
 INPUT ./capitulos/12-sistemas-embarcados.tex
 INPUT capitulos/12-sistemas-embarcados.tex
+INPUT ./imagens/esp32_diagram_upscayl_5x_upscayl-standard-4x.png
+INPUT ./imagens/esp32_diagram_upscayl_5x_upscayl-standard-4x.png
+INPUT ./imagens/esp32_diagram_upscayl_5x_upscayl-standard-4x.png
 INPUT ./capitulos/13-microcontroladores.tex
 INPUT ./capitulos/13-microcontroladores.tex
 INPUT capitulos/13-microcontroladores.tex

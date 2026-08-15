@@ -1,11 +1,11 @@
-\chapter{Microcontroladores: Histórico e Arquitetura}
+\chapter{Microcontroladores: História e Arquitetura}
 \label{cap:arquitetura-mcu}
 
 Antes de configurar o ambiente de desenvolvimento e escrever firmware de verdade, vale entender de onde vêm os microcontroladores e como sua unidade de processamento funciona por dentro. Esse pano de fundo explica \emph{por que} o firmware que escreveremos ao longo desta apostila é estruturado do jeito que é — e, em particular, por que o \ESP{} precisa ser protegido por um mecanismo chamado \textbf{Watchdog Timer}, apresentado ao final deste capítulo.
 
 \section{Um breve histórico}
 
-Desenvolver um novo circuito eletrônico dedicado a cada novo projeto consome muito tempo e recursos. Cada nova função exigiria, literalmente, uma nova rede de portas lógicas projetada do zero. Foi para resolver esse problema que o engenheiro \textbf{Federico Faggin}, então na Intel, ajudou a desenvolver um circuito capaz de executar um \textbf{conjunto de operações em uma sequência definida}, armazenada em uma memória — em vez de um circuito fixo, um circuito \emph{programável}. Essa mudança de perspectiva é o que separa um circuito puramente digital (como os circuitos combinacionais e sequenciais estudados em eletrônica digital) de um \textbf{processador}: em vez de recabear o hardware para cada nova tarefa, basta escrever uma nova sequência de instruções.
+Desenvolver um novo circuito eletrônico dedicado a cada novo projeto consome muito tempo e recursos. Cada nova função exigiria, literalmente, um novo circuito projetado do zero. Foi para resolver esse problema que o engenheiro \textbf{Federico Faggin}, então na Intel, ajudou a desenvolver um circuito capaz de executar um \textbf{conjunto de operações em uma sequência definida}, armazenada em uma memória — em vez de um circuito fixo, um circuito \emph{programável}. Essa mudança de perspectiva é o que separa um circuito puramente digital (como os circuitos combinacionais e sequenciais estudados em eletrônica digital) de um \textbf{processador}: em vez de redefinir o hardware para cada nova tarefa, basta escrever uma nova sequência de instruções.
 
 O primeiro produto comercial desse tipo foi o chip \textbf{Intel 4004}, desenvolvido para equipar a calculadora \emph{Busicom 141-PF}.
 
@@ -17,7 +17,7 @@ O primeiro produto comercial desse tipo foi o chip \textbf{Intel 4004}, desenvol
 
 Lançado em 1971, o Intel 4004 possuía uma arquitetura de apenas \textbf{4 bits}, um repertório de \textbf{45 instruções} diferentes, e operava a uma frequência de \emph{clock} máxima de \textbf{740 kHz} — para comparação, milhares de vezes mais lento que o \ESP{} que usaremos nesta apostila.
 
-Um microprocessador sozinho, porém, não é suficiente para compor um circuito integrado completo para aplicações embarcadas: ele ainda precisaria de chips externos de memória e de interface para ser útil. Foi para resolver essa lacuna que surgiram os \textbf{microcontroladores} — circuitos integrados que reúnem, em um único substrato:
+Um microprocessador sozinho, porém, não é suficiente para compor um circuito integrado completo para aplicações embarcadas: ele ainda precisaria de chips externos de memória e de interface para ser útil. Foi para resolver essa lacuna que surgiram os \textbf{microcontroladores} — circuitos integrados que reúnem, em um único chip:
 
 \begin{itemize}
     \item a \textbf{ROM} (\emph{Read-Only Memory}), associada às instruções do programa;
@@ -59,11 +59,9 @@ A ideia é direta: o firmware é dividido em duas fases.
 
 Você já reconhece essa estrutura: é exatamente o par \code{setup()} / \code{loop()} do framework Arduino, apresentado no \cref{cap:anatomia}. \code{setup()} é a fase de inicialização; \code{loop()}, chamada repetidamente pelo próprio framework, é o laço único.
 
-\begin{esp32box}
 A grande vantagem da arquitetura de laço único é a \textbf{simplicidade}: não há troca de contexto entre tarefas, não há concorrência para gerenciar, e o comportamento do sistema é fácil de prever e depurar — a cada volta do laço, o código roda sempre na mesma ordem. É também extremamente econômica em termos de memória, o que a torna ideal para microcontroladores simples.
 
-O preço dessa simplicidade é que \textbf{nenhuma tarefa pode bloquear o laço por muito tempo}. Se uma única iteração de \code{loop()} demorar demais — por exemplo, presa em um \code{delay()} longo ou esperando um sensor lento —, \emph{todo} o resto do sistema fica paralisado durante esse tempo: nenhum outro sensor é lido, nenhum outro botão é verificado. É exatamente por isso que o \cref{cap:interrupcoes} apresentou a técnica de temporização por \code{millis()} como alternativa ao \code{delay()} dentro de um laço com múltiplas responsabilidades — e é para proteger o sistema quando, apesar de tudo, alguma tarefa trava por completo, que existe o mecanismo apresentado a seguir.
-\end{esp32box}
+O preço dessa simplicidade é que \textbf{nenhuma tarefa pode bloquear o laço por muito tempo}. Se uma única iteração de \code{loop()} demorar demais — por exemplo, presa em um \code{delay()} longo ou esperando um sensor lento —, \emph{todo} o resto do sistema fica paralisado durante esse tempo: nenhum outro sensor é lido, nenhum outro botão é verificado. É exatamente por isso que o \cref{cap:interrupcoes} apresenta a técnica de temporização por \code{millis()} como alternativa ao \code{delay()} dentro de um laço com múltiplas responsabilidades — e é para proteger o sistema quando, apesar de tudo, alguma tarefa trava por completo, que existe o mecanismo apresentado a seguir.
 
 \section{Watchdog Timer}
 \label{sec:watchdog}
