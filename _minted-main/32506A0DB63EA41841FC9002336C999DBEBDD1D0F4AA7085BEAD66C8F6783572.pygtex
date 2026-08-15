@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{decimal}\PYG{+w}{     }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{42}\PYG{p}{;}\PYG{+w}{        }\PYG{c+c1}{// Base 10 (padrao)}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{octal}\PYG{+w}{       }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mo}{052}\PYG{p}{;}\PYG{+w}{       }\PYG{c+c1}{// Base 8  (prefixo 0)}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{hexadecimal}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mh}{0x2A}\PYG{p}{;}\PYG{+w}{      }\PYG{c+c1}{// Base 16 (prefixo 0x)}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{binario}\PYG{+w}{     }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mb}{0b101010}\PYG{p}{;}\PYG{+w}{  }\PYG{c+c1}{// Base 2  (prefixo 0b, extensao GNU/C23)}
+\end{Verbatim}

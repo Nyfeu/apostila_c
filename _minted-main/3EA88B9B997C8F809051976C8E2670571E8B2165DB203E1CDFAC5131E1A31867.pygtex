@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{}\PYG{+w}{ }gcc\PYG{+w}{ }main.c\PYG{+w}{ }sensor.c\PYG{+w}{ }\PYGZhy{}o\PYG{+w}{ }programa
+\PYGZdl{}\PYG{+w}{ }./programa
+Temperatura:\PYG{+w}{ }\PYG{l+m}{165}.0\PYG{+w}{ }C
+\end{Verbatim}

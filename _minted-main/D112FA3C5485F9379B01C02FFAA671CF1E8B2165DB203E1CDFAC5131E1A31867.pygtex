@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{}\PYG{+w}{ }gcc\PYG{+w}{ }\PYGZhy{}o\PYG{+w}{ }hello\PYGZus{}world\PYG{+w}{ }hello\PYGZus{}world.c
+\end{Verbatim}

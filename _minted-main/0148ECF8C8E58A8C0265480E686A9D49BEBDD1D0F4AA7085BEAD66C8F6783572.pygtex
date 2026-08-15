@@ -1,0 +1,24 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}define PINO\PYGZus{}LED 2}
+\PYG{k}{const}\PYG{+w}{ }\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{long}\PYG{+w}{ }\PYG{n}{INTERVALO}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{1000}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// 1000 ms}
+
+\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{long}\PYG{+w}{ }\PYG{n}{ultimo\PYGZus{}instante}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{estado\PYGZus{}led}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nb}{false}\PYG{p}{;}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{setup}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{pinMode}\PYG{p}{(}\PYG{n}{PINO\PYGZus{}LED}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{OUTPUT}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{loop}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{long}\PYG{+w}{ }\PYG{n}{agora}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{millis}\PYG{p}{();}
+
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{agora}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{ultimo\PYGZus{}instante}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{n}{INTERVALO}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{ultimo\PYGZus{}instante}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{agora}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{estado\PYGZus{}led}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o}{!}\PYG{n}{estado\PYGZus{}led}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{digitalWrite}\PYG{p}{(}\PYG{n}{PINO\PYGZus{}LED}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{estado\PYGZus{}led}\PYG{p}{);}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{c+c1}{// o resto de loop() continua livre para fazer outras coisas}
+\PYG{+w}{    }\PYG{c+c1}{// a cada volta, sem nunca ficar bloqueado esperando}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

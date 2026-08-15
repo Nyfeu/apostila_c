@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{leitura\PYGZus{}bruta}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{analogRead}\PYG{p}{(}\PYG{n}{PINO\PYGZus{}SENSOR}\PYG{p}{);}
+\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}[DEBUG] leitura\PYGZus{}bruta = \PYGZdq{}}\PYG{p}{);}
+\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{n}{leitura\PYGZus{}bruta}\PYG{p}{);}
+
+\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{tensao}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{leitura\PYGZus{}bruta}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{l+m+mf}{4095.0f}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{l+m+mf}{3.3f}\PYG{p}{;}
+\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}[DEBUG] tensao = \PYGZdq{}}\PYG{p}{);}
+\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{n}{tensao}\PYG{p}{);}
+\end{Verbatim}

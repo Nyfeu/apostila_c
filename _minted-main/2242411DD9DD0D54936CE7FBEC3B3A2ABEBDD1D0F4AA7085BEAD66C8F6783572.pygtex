@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}define PINO\PYGZus{}LED    2}
+\PYG{c+cp}{\PYGZsh{}define PINO\PYGZus{}BOTAO  15}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{setup}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{pinMode}\PYG{p}{(}\PYG{n}{PINO\PYGZus{}LED}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{OUTPUT}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{pinMode}\PYG{p}{(}\PYG{n}{PINO\PYGZus{}BOTAO}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{INPUT\PYGZus{}PULLUP}\PYG{p}{);}\PYG{+w}{   }\PYG{c+c1}{// resistor de pull\PYGZhy{}up interno}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{loop}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{pressionado}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{digitalRead}\PYG{p}{(}\PYG{n}{PINO\PYGZus{}BOTAO}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{n}{LOW}\PYG{p}{);}
+\PYG{+w}{    }\PYG{c+c1}{// com pull\PYGZhy{}up, o pino le LOW quando o botao conecta o pino ao GND}
+
+\PYG{+w}{    }\PYG{n}{digitalWrite}\PYG{p}{(}\PYG{n}{PINO\PYGZus{}LED}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{pressionado}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{delay}\PYG{p}{(}\PYG{l+m+mi}{20}\PYG{p}{);}\PYG{+w}{   }\PYG{c+c1}{// pequena pausa (debounce simples)}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

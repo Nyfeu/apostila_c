@@ -1,0 +1,25 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}define DEBUG  }\PYG{c+c1}{// Comente esta linha (coloque // na frente) para desativar o debug}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{setup}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{c+c1}{// Inicializa a serial (nao tem problema inicializar mesmo sem usar)}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(}\PYG{l+m+mi}{115200}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{c+cp}{\PYGZsh{}ifdef DEBUG}
+\PYG{+w}{        }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Sistema iniciado. Modo DEBUG ativo.\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{    }\PYG{c+cp}{\PYGZsh{}endif}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{loop}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{leitura}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{analogRead}\PYG{p}{(}\PYG{l+m+mi}{34}\PYG{p}{);}\PYG{+w}{ }\PYG{c+c1}{// Leitura de um sensor qualquer}
+
+\PYG{+w}{    }\PYG{c+cp}{\PYGZsh{}ifdef DEBUG}
+\PYG{+w}{        }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Valor lido pelo sensor: \PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{        }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{n}{leitura}\PYG{p}{);}
+\PYG{+w}{    }\PYG{c+cp}{\PYGZsh{}endif}
+
+\PYG{+w}{    }\PYG{c+c1}{// A logica principal do programa continua aqui,}
+\PYG{+w}{    }\PYG{c+c1}{// sem interrupcoes da serial se o DEBUG estiver desativado}
+\PYG{+w}{    }\PYG{n}{delay}\PYG{p}{(}\PYG{l+m+mi}{1000}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{contador}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+
+\PYG{n}{contador}\PYG{+w}{ }\PYG{o}{+=}\PYG{+w}{ }\PYG{l+m+mi}{5}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// equivalente a: contador = contador + 5;}
+\PYG{n}{contador}\PYG{+w}{ }\PYG{o}{\PYGZhy{}=}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// equivalente a: contador = contador \PYGZhy{} 2;}
+\PYG{n}{contador}\PYG{+w}{ }\PYG{o}{*=}\PYG{+w}{ }\PYG{l+m+mi}{3}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// equivalente a: contador = contador * 3;}
+\PYG{n}{contador}\PYG{+w}{ }\PYG{o}{/=}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// equivalente a: contador = contador / 2;}
+
+\PYG{n}{contador}\PYG{o}{++}\PYG{p}{;}\PYG{+w}{      }\PYG{c+c1}{// incrementa em 1 (equivalente a contador += 1)}
+\PYG{n}{contador}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{;}\PYG{+w}{      }\PYG{c+c1}{// decrementa em 1 (equivalente a contador \PYGZhy{}= 1)}
+\end{Verbatim}

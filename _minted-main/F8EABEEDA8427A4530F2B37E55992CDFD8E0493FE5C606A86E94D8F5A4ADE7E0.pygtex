@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+na}{meu\PYGZhy{}primeiro\PYGZhy{}projeto/}
+\PYG{n+na}{|\PYGZhy{}\PYGZhy{} platformio.ini      \PYGZsh{} arquivo de configuracao do projeto}
+\PYG{n+na}{|\PYGZhy{}\PYGZhy{} src/                \PYGZsh{} codigo\PYGZhy{}fonte principal do firmware}
+\PYG{n+na}{|   `\PYGZhy{}\PYGZhy{} main.cpp}
+\PYG{n+na}{|\PYGZhy{}\PYGZhy{} include/             \PYGZsh{} cabecalhos (.h) proprios do projeto}
+\PYG{n+na}{|\PYGZhy{}\PYGZhy{} lib/                 \PYGZsh{} bibliotecas privadas do projeto}
+\PYG{n+na}{`\PYGZhy{}\PYGZhy{} test/                \PYGZsh{} testes automatizados (opcional)}
+\end{Verbatim}

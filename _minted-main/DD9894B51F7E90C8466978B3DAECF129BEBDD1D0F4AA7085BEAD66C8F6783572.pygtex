@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{enum}\PYG{+w}{ }\PYG{n}{ModoOperacao}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{MODO\PYGZus{}NORMAL}\PYG{p}{,}
+\PYG{+w}{    }\PYG{n}{MODO\PYGZus{}VERBOSO}\PYG{p}{,}
+\PYG{p}{\PYGZcb{};}
+
+\PYG{k}{struct}\PYG{+w}{ }\PYG{n+nc}{EstadoEstacao}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{ModoOperacao}\PYG{+w}{ }\PYG{n}{modo}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{ultima\PYGZus{}leitura}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{media\PYGZus{}movel}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{alerta\PYGZus{}ativo}\PYG{p}{;}
+\PYG{p}{\PYGZcb{};}
+\end{Verbatim}

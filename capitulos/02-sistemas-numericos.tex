@@ -68,6 +68,26 @@ O prefixo \code{0} para octal é uma pegadinha clássica: escrever \code{int cod
 Hexadecimal é a notação padrão para endereços de memória e para os \textbf{registradores} de periféricos do \ESP{} (ex.: \code{0x3FF44004}), e é extremamente comum representar conjuntos de pinos GPIO como \textbf{máscaras de bits} em binário ou hexadecimal — cada bit ligado corresponde a um pino específico habilitado. Voltaremos a essa ideia no \cref{cap:gpio}, quando configurarmos registradores de GPIO diretamente.
 \end{esp32box}
 
+Se você assistiu ao filme \emph{Perdido em Marte} (ou leu o livro de Andy Weir), viu o sistema hexadecimal resolver um problema vital de engenharia. No enredo, o astronauta Mark Watney precisa se comunicar com a Terra usando a câmera giratória da antiga sonda \href{https://science.nasa.gov/mission/mars-pathfinder/}{Mars Pathfinder}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{imagens/mars_pathfinder.png}
+\caption{Diagrama da plataforma de pouso da missão Mars Pathfinder da NASA. Repare na câmera rotatória acoplada ao sistema.}
+\end{figure}
+
+Ele precisava que a câmera apontasse para placas com letras ao seu redor. Se usasse o alfabeto convencional (26 letras), ele teria que dividir os 360 graus do círculo por 26, o que dá fatias estreitas de cerca de 13,8 graus. A chance de a câmera apontar para a fronteira entre duas letras e gerar ambiguidade era enorme.
+
+A solução? Usar a tabela ASCII (que mapeia texto em números) em formato \textbf{hexadecimal}. Como o hexadecimal possui apenas 16 símbolos (0 a 9 e A a F), ele pôde dividir os 360 graus por 16. O resultado foram fatias largas e seguras de 22,5 graus. Assim, para a Terra enviar a letra "H" (cujo valor na tabela ASCII é 72 em decimal, ou \code{0x48} em hexadecimal), a câmera girava primeiro para a placa \code{4} e depois para a placa \code{8}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{imagens/mark_watney.png}
+\caption{Mark Watney acessando a tabela ASCII pelo notebook de Beth Johanssen.}
+\end{figure}
+
+A cena do primeiro contato do filme pode ser vista neste \href{https://www.youtube.com/watch?v=NttUBB98zg4}{link Youtube}.
+
 \section{Memória}
 
 Um programa em execução manipula dados que residem na \textbf{memória} do sistema. Em um computador de propósito geral, essa memória é tipicamente volátil (RAM) e vasta (gigabytes); o sistema operacional gerencia sua alocação de forma praticamente transparente ao programador.
@@ -79,7 +99,7 @@ Um microcontrolador como o \ESP{} tem uma realidade bem diferente:
     \item \textbf{SRAM} — memória volátil, rápida, usada para variáveis, pilha (\emph{stack}) e heap durante a execução. No \ESP{}, apenas algumas centenas de kB — ordens de magnitude menor que a RAM de um computador comum.
 \end{itemize}
 
-Essa escassez de memória é a razão pela qual, em programação embarcada, escolher o \textbf{tipo de dado} correto para cada variável (assunto do \cref{cap:tipos}) deixa de ser um detalhe estilístico e passa a ser uma decisão de engenharia: usar um \code{int} de 32 bits para armazenar um valor que cabe perfeitamente em 8 bits desperdiça memória que, em um sistema embarcado, pode ser exatamente o que falta.
+Essa escassez de memória é a razão pela qual, em programação embarcada, escolher o \textbf{tipo de dado} correto para cada variável (assunto do \cref{cap:tipos}) deixa de ser um preciosismo e passa a ser uma decisão de engenharia: usar um \code{int} de 32 bits para armazenar um valor que cabe perfeitamente em 8 bits desperdiça memória que, em um sistema embarcado, pode ser exatamente o que falta.
 
 \section{Pré-processamento}
 \label{sec:preprocessamento}
@@ -87,10 +107,10 @@ Essa escassez de memória é a razão pela qual, em programação embarcada, esc
 Antes que o compilador propriamente dito veja o código, ele passa por um estágio chamado \textbf{pré-processamento}, controlado por linhas que começam com \code{\#} — as \textbf{diretivas}. Já vimos uma delas, \code{\#include}. Outras diretivas comuns:
 
 \begin{codigoc}{Diretivas de pré-processador}
-#include <stdio.h>      // inclui um cabecalho da biblioteca padrao
-#include "meu_arquivo.h" // inclui um cabecalho do proprio projeto
+#include <stdio.h>               // inclui um cabecalho da biblioteca padrao
+#include "meu_arquivo.h"         // inclui um cabecalho do proprio projeto
 
-#define PI 3.14159       // define uma macro/constante simbolica
+#define PI 3.14159               // define uma macro/constante simbolica
 #define QUADRADO(x) ((x) * (x))  // macro com "parametro"
 
 #ifdef DEBUG
@@ -99,6 +119,36 @@ Antes que o compilador propriamente dito veja o código, ele passa por um estág
 \end{codigoc}
 
 A diretiva \code{\#define} cria uma \textbf{macro}: onde quer que \code{PI} apareça no código depois dessa linha, o pré-processador o substitui literalmente por \code{3.14159}, \emph{antes} mesmo de o compilador analisar a sintaxe. Diretivas condicionais como \code{\#ifdef}/\code{\#endif} permitem incluir ou excluir trechos inteiros de código dependendo de configurações — um recurso muito usado em projetos embarcados para, por exemplo, ativar mensagens de depuração apenas em builds de desenvolvimento.
+
+Veja como isso se aplica na prática em um código para o ESP32. Podemos criar uma macro chamada \code{DEBUG} e usá-la para "ligar" ou "desligar" o envio de dados pela porta serial:
+
+\begin{codigoc}{Depuração condicional com macros}
+#define DEBUG  // Comente esta linha (coloque // na frente) para desativar o debug
+
+void setup() {
+    // Inicializa a serial (nao tem problema inicializar mesmo sem usar)
+    Serial.begin(115200);
+
+    #ifdef DEBUG
+        Serial.println("Sistema iniciado. Modo DEBUG ativo.");
+    #endif
+}
+
+void loop() {
+    int leitura = analogRead(34); // Leitura de um sensor qualquer
+
+    #ifdef DEBUG
+        Serial.print("Valor lido pelo sensor: ");
+        Serial.println(leitura);
+    #endif
+
+    // A logica principal do programa continua aqui, 
+    // sem interrupcoes da serial se o DEBUG estiver desativado
+    delay(1000);
+}
+\end{codigoc}
+
+Essa técnica é extremamente poderosa. Ela permite que você encha o seu código de mensagens úteis para investigar o comportamento do sistema durante o desenvolvimento. Quando o projeto estiver pronto para uso real, basta comentar a primeira linha (\code{// \#define DEBUG}). O pré-processador, então, apagará invisivelmente tudo o que estiver entre os blocos \code{\#ifdef DEBUG} e \code{\#endif} antes da compilação. O resultado? Um firmware final menor, mais rápido e que não desperdiça processamento enviando texto para uma porta USB vazia.
 
 \section{Compilação}
 \label{sec:compilacao}
@@ -112,7 +162,7 @@ O termo ``compilar'' esconde, na verdade, quatro etapas distintas:
     \item \textbf{Ligação (\emph{linking})} — combina o(s) arquivo(s) objeto com as bibliotecas necessárias (como a implementação de \code{printf}) em um único executável.
 \end{enumerate}
 
-O \code{gcc} executa essas quatro etapas automaticamente, mas é possível observá-las isoladamente:
+O \code{gcc} executa essas quatro etapas automaticamente, mas é possível observá-las de forma isolada com a seguir:
 
 \begin{codigobash}{Etapas de compilação separadas}
 $ gcc -E hello_world.c -o hello_world.i   # so o pre-processador
@@ -127,7 +177,7 @@ Ao compilar um projeto para o \ESP{} no PlatformIO, essas mesmas quatro etapas a
 
 \section{Números pseudoaleatórios}
 
-Muitos programas — jogos, simulações, e também firmwares embarcados (por exemplo, para gerar atrasos aleatórios em protocolos de rede) — precisam de números aparentemente aleatórios. Como um computador é uma máquina determinística, ele não gera aleatoriedade verdadeira a partir do nada: gera números \textbf{pseudoaleatórios}, calculados por uma fórmula a partir de um valor inicial chamado \textbf{semente} (\emph{seed}).
+Muitos programas — jogos, simulações, e também firmwares embarcados — precisam de números aparentemente aleatórios. Como um computador é uma máquina determinística, ele não gera aleatoriedade verdadeira a partir do nada: gera números \textbf{pseudoaleatórios}, calculados por uma fórmula a partir de um valor inicial chamado \textbf{semente} (\emph{seed}).
 
 \begin{codigoc}{Gerando números pseudoaleatórios}
 #include <stdio.h>
@@ -144,12 +194,8 @@ int main(void) {
 }
 \end{codigoc}
 
-A função \code{srand} define a semente do gerador; usar \code{time(NULL)} (o tempo atual em segundos) garante uma semente diferente a cada execução. A função \code{rand()} retorna um inteiro pseudoaleatório; o operador \code{\%} (resto da divisão) é usado para restringir o resultado a um intervalo específico — no exemplo, de 1 a 6, como em um dado de tabuleiro.
+A função \code{srand} define a semente do gerador; usar \code{time(NULL)} (o tempo atual em segundos) garante uma semente diferente a cada execução. A função \code{rand()} retorna um valor inteiro pseudoaleatório; o operador \code{\%} (resto da divisão) é usado para restringir o resultado a um intervalo específico — no exemplo, de 1 a 6, como em um dado de tabuleiro.
 
 \begin{atencao}
 \code{rand()} \textbf{não} é adequado para fins criptográficos — sua sequência é previsível se a semente for conhecida. Para geração de números aleatórios seguros, bibliotecas específicas de criptografia devem ser usadas.
 \end{atencao}
-
-\begin{esp32box}
-O \ESP{} não tem, por padrão, um relógio de tempo real com precisão de segundos ao ligar (a menos que sincronizado via Wi-Fi/NTP), então usar \code{time(NULL)} como semente nem sempre é útil logo na inicialização. No framework Arduino, o par \code{randomSeed()}/\code{random()} substitui \code{srand}/\code{rand}: um truque comum é semear o gerador lendo um pino analógico sem nada conectado a ele (\code{randomSeed(analogRead(A0))}), aproveitando o ruído elétrico natural presente nesse pino como fonte de aleatoriedade. Por baixo dos panos, o núcleo Arduino para o \ESP{} ainda pode recorrer a um gerador de números aleatórios embutido no próprio chip — mas, na prática do dia a dia, \code{randomSeed}/\code{random} já resolvem bem a maioria dos casos.
-\end{esp32box}

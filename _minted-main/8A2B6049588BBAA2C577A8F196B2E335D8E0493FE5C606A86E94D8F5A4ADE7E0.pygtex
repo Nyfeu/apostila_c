@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{[env:esp32dev]}
+\PYG{n+na}{platform}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{espressif32}
+\PYG{n+na}{board}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{esp32dev}
+\PYG{n+na}{framework}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{arduino}
+\PYG{n+na}{monitor\PYGZus{}speed}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{115200}
+\PYG{n+na}{build\PYGZus{}flags}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZhy{}DCORE\PYGZus{}DEBUG\PYGZus{}LEVEL=4}\PYG{+w}{   }\PYG{c+c1}{; 0=Nenhum ... 5=Verbose}
+\end{Verbatim}

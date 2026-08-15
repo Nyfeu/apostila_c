@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}ifndef SENSOR\PYGZus{}H}
+\PYG{c+cp}{\PYGZsh{}define SENSOR\PYGZus{}H}
+
+\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n+nf}{converter\PYGZus{}para\PYGZus{}celsius}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{leitura\PYGZus{}bruta}\PYG{p}{);}
+
+\PYG{c+cp}{\PYGZsh{}endif}
+\end{Verbatim}

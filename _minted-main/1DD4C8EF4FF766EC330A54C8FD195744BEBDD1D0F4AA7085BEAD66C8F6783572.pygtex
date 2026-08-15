@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZdq{}sensor.h\PYGZdq{}}
+
+\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n+nf}{converter\PYGZus{}para\PYGZus{}celsius}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{leitura\PYGZus{}bruta}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{leitura\PYGZus{}bruta}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{l+m+mf}{4095.0f}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{l+m+mf}{3.3f}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{l+m+mf}{100.0f}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

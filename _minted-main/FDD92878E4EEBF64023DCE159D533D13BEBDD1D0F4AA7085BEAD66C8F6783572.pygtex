@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/*}
+\PYG{c+cm}{    Este e\PYGZsq{} um comentario de multiplas linhas.}
+\PYG{c+cm}{    Pode ocupar quantas linhas forem necessarias.}
+\PYG{c+cm}{*/}
+
+\PYG{c+c1}{// Este e\PYGZsq{} um comentario de uma unica linha.}
+\end{Verbatim}

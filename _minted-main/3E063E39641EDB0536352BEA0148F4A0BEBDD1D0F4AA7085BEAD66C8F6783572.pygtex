@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}stdio.h\PYGZgt{}}
+
+\PYG{k}{typedef}\PYG{+w}{ }\PYG{k}{enum}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{ESTADO\PYGZus{}AGUARDANDO}\PYG{p}{,}\PYG{+w}{   }\PYG{c+c1}{// vale 0}
+\PYG{+w}{    }\PYG{n}{ESTADO\PYGZus{}CONECTANDO}\PYG{p}{,}\PYG{+w}{   }\PYG{c+c1}{// vale 1}
+\PYG{+w}{    }\PYG{n}{ESTADO\PYGZus{}ATIVO}\PYG{p}{,}\PYG{+w}{        }\PYG{c+c1}{// vale 2}
+\PYG{+w}{    }\PYG{n}{ESTADO\PYGZus{}ERRO}\PYG{+w}{          }\PYG{c+c1}{// vale 3}
+\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{n}{EstadoSistema}\PYG{p}{;}
+
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{k+kt}{void}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{EstadoSistema}\PYG{+w}{ }\PYG{n}{estado}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{ESTADO\PYGZus{}CONECTANDO}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{estado}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{n}{ESTADO\PYGZus{}CONECTANDO}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Conectando...}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{}\PYG{+w}{ }gcc\PYG{+w}{ }\PYGZhy{}E\PYG{+w}{ }hello\PYGZus{}world.c\PYG{+w}{ }\PYGZhy{}o\PYG{+w}{ }hello\PYGZus{}world.i\PYG{+w}{   }\PYG{c+c1}{\PYGZsh{} so o pre\PYGZhy{}processador}
+\PYGZdl{}\PYG{+w}{ }gcc\PYG{+w}{ }\PYGZhy{}S\PYG{+w}{ }hello\PYGZus{}world.i\PYG{+w}{ }\PYGZhy{}o\PYG{+w}{ }hello\PYGZus{}world.s\PYG{+w}{   }\PYG{c+c1}{\PYGZsh{} gera assembly}
+\PYGZdl{}\PYG{+w}{ }gcc\PYG{+w}{ }\PYGZhy{}c\PYG{+w}{ }hello\PYGZus{}world.s\PYG{+w}{ }\PYGZhy{}o\PYG{+w}{ }hello\PYGZus{}world.o\PYG{+w}{   }\PYG{c+c1}{\PYGZsh{} gera arquivo objeto}
+\PYGZdl{}\PYG{+w}{ }gcc\PYG{+w}{ }hello\PYGZus{}world.o\PYG{+w}{ }\PYGZhy{}o\PYG{+w}{ }hello\PYGZus{}world\PYG{+w}{        }\PYG{c+c1}{\PYGZsh{} linka e gera o executavel}
+\end{Verbatim}

@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kt}{uint8\PYGZus{}t}\PYG{+w}{ }\PYG{n}{estado\PYGZus{}reles}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+
+\PYG{n}{estado\PYGZus{}reles}\PYG{+w}{ }\PYG{o}{|=}\PYG{+w}{ }\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{l+m+mi}{3}\PYG{p}{);}\PYG{+w}{   }\PYG{c+c1}{// liga o rele numero 3}
+\PYG{n}{estado\PYGZus{}reles}\PYG{+w}{ }\PYG{o}{\PYGZam{}=}\PYG{+w}{ }\PYG{o}{\PYGZti{}}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{l+m+mi}{5}\PYG{p}{);}\PYG{+w}{  }\PYG{c+c1}{// desliga o rele numero 5}
+
+\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{estado\PYGZus{}reles}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{l+m+mi}{3}\PYG{p}{))}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{   }\PYG{c+c1}{// verifica se o rele 3 esta ligado}
+\PYG{+w}{    }\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Rele 3 esta ligado}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

@@ -102,10 +102,12 @@ No Linux/macOS, o \code{./} antes do nome do executável é necessário porque, 
 
 Um microcontrolador como o \ESP{} não tem teclado, tela ou sistema operacional convencional — então não existe um terminal esperando por \code{Hello, World!}. Ainda assim, o princípio é idêntico: escrevemos código C, ele é compilado, e o resultado (um arquivo \emph{binário}) é carregado para a memória do dispositivo, onde passa a ser executado assim que ele é ligado.
 
-\begin{esp32box}
 No mundo dos microcontroladores, o equivalente ao \emph{Hello, World!} costuma ser o \textbf{blink}: piscar um LED. É o primeiro programa que qualquer pessoa escreve para o \ESP{}, porque prova visualmente que o código foi compilado, carregado e está de fato em execução no hardware. Chegaremos lá: a partir do \cref{cap:platformio}, vamos configurar o ambiente PlatformIO e, no \cref{cap:gpio}, escrever exatamente esse programa.
 
-Por enquanto, a diferença mais importante a guardar é esta: em vez de uma única função \code{main} que roda uma vez e termina, um firmware embarcado tipicamente gira em torno de um \textbf{laço infinito} — o programa nunca ``termina'' (não haveria sentido em um \code{return} para o quê, exatamente?), ele fica reagindo a eventos e atualizando o estado do sistema enquanto houver energia. No framework que usaremos (Arduino, via PlatformIO), isso aparece de forma bem explícita: em vez de uma função \code{main}, escreveremos duas funções, \code{setup()} e \code{loop()} — a segunda chamada repetidamente, para sempre, pelo próprio framework.
-\end{esp32box}
+A diferença mais importante a guardar por enquanto é estrutural. Você viu que o nosso programa C tradicional usa uma função \code{main} que roda uma vez, exibe a mensagem na tela, e termina devolvendo \code{0} ao sistema operacional. 
+
+Um microcontrolador funciona de forma diferente. Não faria sentido um programa finalizar sua execução — se ele acabar, o que o hardware faria depois? Por isso, a programação para o ESP32 é baseada em um \textbf{ciclo contínuo}. Em vez de uma função que termina, o código de um firmware é desenhado para rodar infinitamente, repetindo instruções e reagindo ao mundo exterior enquanto a placa estiver ligada. 
+
+Quando chegarmos na Parte II e formos programar o ESP32 usando o framework Arduino, essa estrutura aparecerá de forma bem explícita: em vez de usarmos o \code{main}, dividiremos nosso código em duas partes: uma função chamada \code{setup()} para configurações iniciais, e uma função chamada \code{loop()}, que o próprio sistema se encarrega de repetir para sempre.
 
 Toda a Parte I desta apostila usa o \code{gcc} e a execução em um computador comum como ambiente de aprendizado, exatamente porque isso permite testar cada conceito de forma rápida e isolada, sem depender de hardware específico. Os mesmos conceitos — tipos de dados, estruturas de controle, funções, ponteiros — são diretamente aplicáveis ao firmware do \ESP{} que construiremos na Parte II.

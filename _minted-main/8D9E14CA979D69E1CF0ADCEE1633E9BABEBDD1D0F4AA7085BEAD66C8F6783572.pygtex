@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}stdio.h\PYGZgt{}}\PYG{c+c1}{               // inclui um cabecalho da biblioteca padrao}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZdq{}meu\PYGZus{}arquivo.h\PYGZdq{}}\PYG{c+c1}{         // inclui um cabecalho do proprio projeto}
+
+\PYG{c+cp}{\PYGZsh{}define PI 3.14159               }\PYG{c+c1}{// define uma macro/constante simbolica}
+\PYG{c+cp}{\PYGZsh{}define QUADRADO(x) ((x) * (x))  }\PYG{c+c1}{// macro com \PYGZdq{}parametro\PYGZdq{}}
+
+\PYG{c+cp}{\PYGZsh{}ifdef DEBUG}
+\PYG{+w}{    }\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Modo debug ativo}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{);}
+\PYG{c+cp}{\PYGZsh{}endif}
+\end{Verbatim}

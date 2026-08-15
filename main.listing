@@ -1,0 +1,94 @@
+#define PINO_LED    2
+#define PINO_LDR    34
+#define PINO_BOTAO  15
+
+#define TAMANHO_HISTORICO   10
+#define LIMIAR_ESCURO       25.0f   // abaixo disso, ambiente "escuro" (%)
+#define INTERVALO_LEITURA   500UL   // ms entre leituras do sensor
+
+enum ModoOperacao {
+    MODO_NORMAL,
+    MODO_VERBOSO,
+};
+
+struct EstadoEstacao {
+    ModoOperacao modo;
+    int ultima_leitura;
+    float media_movel;
+    bool alerta_ativo;
+};
+
+EstadoEstacao estado = {MODO_NORMAL, 0, 0.0f, false};
+
+int historico[TAMANHO_HISTORICO];
+int indice_historico = 0;
+
+volatile bool evento_botao = false;
+unsigned long ultima_leitura_ms = 0;
+
+void IRAM_ATTR botao_isr() {
+    evento_botao = true;
+}
+
+float calcular_media(void) {
+    long soma = 0;
+    for (int i = 0; i < TAMANHO_HISTORICO; i++) {
+        soma += historico[i];
+    }
+    return (float) soma / TAMANHO_HISTORICO;
+}
+
+void setup() {
+    Serial.begin(115200);
+
+    pinMode(PINO_LED, OUTPUT);
+    pinMode(PINO_BOTAO, INPUT_PULLUP);
+    attachInterrupt(digitalPinToInterrupt(PINO_BOTAO), botao_isr, FALLING);
+
+    for (int i = 0; i < TAMANHO_HISTORICO; i++) {
+        historico[i] = 0;
+    }
+
+    Serial.println("Estacao de monitoramento iniciada em modo NORMAL.");
+}
+
+void loop() {
+    // 1) verifica se o botao foi pressionado (sem bloquear o laco)
+    if (evento_botao) {
+        evento_botao = false;
+        estado.modo = (estado.modo == MODO_NORMAL) ? MODO_VERBOSO : MODO_NORMAL;
+
+        Serial.print("Modo alterado para: ");
+        Serial.println(estado.modo == MODO_NORMAL ? "NORMAL" : "VERBOSO");
+    }
+
+    // 2) le o sensor periodicamente, sem usar delay()
+    unsigned long agora = millis();
+    if (agora - ultima_leitura_ms >= INTERVALO_LEITURA) {
+        ultima_leitura_ms = agora;
+
+        estado.ultima_leitura = analogRead(PINO_LDR);
+        historico[indice_historico] = estado.ultima_leitura;
+        indice_historico = (indice_historico + 1) % TAMANHO_HISTORICO;
+
+        estado.media_movel = calcular_media();
+        float luminosidade_pct = (estado.media_movel / 4095.0f) * 100.0f;
+        estado.alerta_ativo = (luminosidade_pct < LIMIAR_ESCURO);
+
+        digitalWrite(PINO_LED, estado.alerta_ativo);
+
+        if (estado.modo == MODO_VERBOSO) {
+            Serial.print("[LEITURA] bruta=");
+            Serial.print(estado.ultima_leitura);
+            Serial.print(" media=");
+            Serial.print(estado.media_movel);
+            Serial.print(" luminosidade=");
+            Serial.print(luminosidade_pct);
+            Serial.println("%");
+        }
+
+        if (estado.alerta_ativo) {
+            Serial.println("[ALERTA] Ambiente escuro detectado!");
+        }
+    }
+}

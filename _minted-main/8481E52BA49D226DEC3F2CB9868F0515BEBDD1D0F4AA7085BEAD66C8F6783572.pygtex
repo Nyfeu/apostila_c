@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kt}{short}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{   }\PYG{n}{a}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// inteiro \PYGZdq{}curto\PYGZdq{} (tipicamente 2 bytes)}
+\PYG{k+kt}{long}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{    }\PYG{n}{b}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// inteiro \PYGZdq{}longo\PYGZdq{} (tipicamente 4 ou 8 bytes)}
+\PYG{k+kt}{long}\PYG{+w}{ }\PYG{k+kt}{long}\PYG{+w}{   }\PYG{n}{c}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// inteiro \PYGZdq{}bem longo\PYGZdq{} (tipicamente 8 bytes)}
+
+\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{d}\PYG{p}{;}\PYG{+w}{  }\PYG{c+c1}{// apenas valores nao\PYGZhy{}negativos (dobra o limite superior)}
+\PYG{k+kt}{signed}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{   }\PYG{n}{e}\PYG{p}{;}\PYG{+w}{  }\PYG{c+c1}{// admite valores negativos (comportamento padrao de \PYGZdq{}int\PYGZdq{})}
+\end{Verbatim}

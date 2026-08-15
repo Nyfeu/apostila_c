@@ -87,20 +87,24 @@
     coltitle=textoclaro, fonttitle=\bfseries\ttfamily\small,
     boxrule=0pt, top=5mm, bottom=1mm, left=1mm, right=1mm,
     arc=2mm, outer arc=2mm,
-    before={\color{textoclaro}},
+    before skip=15pt,   % <-- Espaçamento superior restaurado
+    after skip=15pt,    % <-- Espaçamento inferior restaurado
+    coltext=textoclaro, % <-- Substitui o "before" e aplica a cor corretamente
     attach boxed title to top left={xshift=3mm, yshift=-1mm},
     boxed title style={colback=acento, arc=1.5mm, boxrule=0pt,
                         top=0.6mm, bottom=0.6mm, left=2mm, right=2mm},
   },
   terminalbase/.style={
-    breakable, enhanced, listing only, minted style=one-dark,
+    breakable, enhanced, listing only, minted style=native, % <-- Tema para terminal escuro
     minted options={fontsize=\small, breaklines, breakanywhere,
                      tabsize=4, baselinestretch=1.05},
     colback=fundocodigo, colframe=cinzaesc,
     coltitle=textoclaro, fonttitle=\bfseries\ttfamily\small,
     boxrule=0.4pt, top=1mm, bottom=1mm, left=1mm, right=1mm,
     arc=2mm, outer arc=2mm,
-    before={\color{textoclaro}},
+    before skip=15pt,   % <-- Espaçamento superior restaurado
+    after skip=15pt,    % <-- Espaçamento inferior restaurado
+    coltext=textoclaro, % <-- Força cor clara no texto comum do terminal
   }
 }
 

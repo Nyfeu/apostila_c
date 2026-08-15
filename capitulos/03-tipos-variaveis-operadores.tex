@@ -1,7 +1,7 @@
 \chapter{Tipos de Variáveis e Operadores}
 \label{cap:tipos}
 
-Uma \textbf{variável} é um espaço nomeado na memória usado para armazenar um valor que pode mudar ao longo da execução do programa. Diferente de linguagens como Python, C exige que o \textbf{tipo} de cada variável seja declarado explicitamente — é isso que permite ao compilador saber, entre outras coisas, quantos bytes reservar para ela.
+Uma \textbf{variável} é um espaço nomeado na memória usado para armazenar um valor que pode mudar ao longo da execução do programa. Diferente de linguagens como Python, C exige que o \textbf{tipo} de cada variável seja declarado explicitamente (tipagem estática) — é isso que permite ao compilador saber, entre outras coisas, quantos bytes reservar para ela.
 
 \section{Tipos primitivos}
 
@@ -15,7 +15,7 @@ Uma \textbf{variável} é um espaço nomeado na memória usado para armazenar um
 \code{int}    & número inteiro                 & 4 bytes \\
 \code{float}  & número em ponto flutuante (precisão simples) & 4 bytes \\
 \code{double} & número em ponto flutuante (precisão dupla)   & 8 bytes \\
-\code{\_Bool} / \code{bool}\textsuperscript{†} & valor lógico (verdadeiro/falso) & 1 byte \\
+\code{bool}\textsuperscript{†} & valor lógico (verdadeiro/falso) & 1 byte \\
 \bottomrule
 \end{tabular}
 \caption{Tipos primitivos da linguagem C. *O tamanho exato depende da arquitetura e do compilador — nunca assuma, use \code{sizeof}. †\code{bool} requer \code{\#include <stdbool.h>}.}
@@ -175,7 +175,7 @@ contador--;      // decrementa em 1 (equivalente a contador -= 1)
 
 \section{Conversão de tipos (\emph{casting})}
 
-Quando uma expressão mistura tipos diferentes, C converte automaticamente os valores para um tipo comum antes de operar — a chamada \textbf{conversão implícita}. Isso já apareceu antes: \code{7.0 / 2} funciona porque o \code{2} (inteiro) é implicitamente convertido para \code{2.0} (ponto flutuante) antes da divisão.
+Quando uma expressão mistura tipos diferentes, C converte automaticamente os valores para um tipo comum antes de operar — a chamada \textbf{conversão implícita}. Por exemplo, a operação \code{7.0 / 2} funciona porque o \code{2} (inteiro) é implicitamente convertido para \code{2.0} (ponto flutuante) antes da divisão.
 
 Também é possível forçar uma conversão explicitamente, escrevendo o tipo desejado entre parênteses antes da expressão — o chamado \textbf{cast}:
 

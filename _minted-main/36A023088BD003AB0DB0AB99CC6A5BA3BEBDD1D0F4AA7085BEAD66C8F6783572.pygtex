@@ -1,0 +1,19 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}stdio.h\PYGZgt{}}
+
+\PYG{k}{typedef}\PYG{+w}{ }\PYG{k}{struct}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kt}{char}\PYG{+w}{ }\PYG{n}{nome}\PYG{p}{[}\PYG{l+m+mi}{20}\PYG{p}{];}
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{temperatura}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{  }\PYG{n}{umidade}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{n}{Leitura}\PYG{p}{;}
+
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{k+kt}{void}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{Leitura}\PYG{+w}{ }\PYG{n}{sala}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}Sala de estar\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{23.5f}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{60}\PYG{p}{\PYGZcb{};}
+
+\PYG{+w}{    }\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}s: \PYGZpc{}.1f C, \PYGZpc{}d\PYGZpc{}\PYGZpc{} umidade}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+\PYG{+w}{           }\PYG{n}{sala}\PYG{p}{.}\PYG{n}{nome}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{sala}\PYG{p}{.}\PYG{n}{temperatura}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{sala}\PYG{p}{.}\PYG{n}{umidade}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{n}{sala}\PYG{p}{.}\PYG{n}{temperatura}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{24.0f}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// acessando e alterando um campo}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
