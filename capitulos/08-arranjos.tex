@@ -1,0 +1,75 @@
+\chapter{Arranjos: Vetores}
+\label{cap:arranjos}
+
+Um \textbf{arranjo} (\emph{array}), ou \textbf{vetor}, é uma coleção de elementos do mesmo tipo, armazenados em posições de memória contíguas e acessados por um índice numérico. É a estrutura de dados mais fundamental para trabalhar com múltiplos valores relacionados — uma lista de leituras de sensor, o histórico de temperaturas de um dia, as últimas N amostras de um sinal.
+
+\section{Declarando e percorrendo um vetor}
+
+\begin{codigoc}{Declarando e usando um vetor}
+#include <stdio.h>
+
+int main(void) {
+    int temperaturas[5] = {21, 23, 19, 25, 22};
+
+    for (int i = 0; i < 5; i++) {
+        printf("Dia %d: %d C\n", i, temperaturas[i]);
+    }
+
+    return 0;
+}
+\end{codigoc}
+
+Pontos essenciais sobre vetores em C:
+
+\begin{itemize}
+    \item \textbf{Índices começam em 0} — o primeiro elemento de \code{temperaturas} é \code{temperaturas[0]}, e o último, em um vetor de 5 elementos, é \code{temperaturas[4]};
+    \item O \textbf{tamanho é fixo} após a declaração — um vetor declarado com 5 posições sempre ocupará espaço para 5 elementos; não é possível ``crescer'' um vetor comum em tempo de execução (para isso, veja alocação dinâmica no \cref{cap:ponteiros});
+    \item C \textbf{não verifica limites automaticamente}: acessar \code{temperaturas[10]} em um vetor de 5 posições não gera um erro imediato — apenas lê (ou escreve) memória fora da área reservada, um comportamento indefinido e uma fonte clássica de bugs graves.
+\end{itemize}
+
+\begin{atencao}
+Esse tipo de acesso fora dos limites (\emph{buffer overflow}) é uma das causas mais comuns de falhas de segurança em software escrito em C. Sempre garanta, por construção do seu código, que o índice usado está dentro do intervalo válido do vetor.
+\end{atencao}
+
+\section{Vetores e strings}
+
+Como visto no \cref{cap:entrada-saida}, uma string em C é simplesmente um vetor de \code{char} terminado pelo caractere nulo \code{'\textbackslash 0'}:
+
+\begin{codigoc}{Uma string é um vetor de char}
+#include <stdio.h>
+
+int main(void) {
+    char saudacao[6] = {'H', 'e', 'l', 'l', 'o', '\0'};
+    // equivalente, e muito mais pratico, a:
+    char saudacao2[] = "Hello";
+
+    printf("%s\n", saudacao2);
+    return 0;
+}
+\end{codigoc}
+
+\section{Passando arranjos para funções}
+
+Quando um vetor é passado como argumento para uma função, o que de fato é passado é um \textbf{ponteiro} para seu primeiro elemento — não uma cópia de todos os seus dados. Por isso, é comum (e necessário) passar também o tamanho do vetor como um parâmetro separado, já que a função não tem como saber onde ele termina apenas olhando para o ponteiro.
+
+\begin{codigoc}{Vetor como parâmetro de função}
+#include <stdio.h>
+
+float media(int vetor[], int tamanho) {
+    int soma = 0;
+    for (int i = 0; i < tamanho; i++) {
+        soma += vetor[i];
+    }
+    return (float) soma / tamanho;
+}
+
+int main(void) {
+    int leituras[4] = {30, 32, 28, 31};
+    printf("Media: %.1f\n", media(leituras, 4));
+    return 0;
+}
+\end{codigoc}
+
+\begin{esp32box}
+Vetores são onipresentes em firmware embarcado: um buffer para armazenar bytes recebidos pela porta serial, uma tabela de valores de calibração de um sensor, ou um histórico circular das últimas N leituras de temperatura para calcular uma média móvel. Como a memória RAM do \ESP{} é limitada, o \textbf{tamanho} desses vetores costuma ser dimensionado com muito mais cuidado do que em um programa de computador — reservar um vetor de 10.000 posições ``só por garantia'' pode facilmente esgotar a memória disponível do chip.
+\end{esp32box}

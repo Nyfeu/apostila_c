@@ -1,0 +1,60 @@
+\chapter{Introdução aos Sistemas Embarcados}
+\label{cap:embarcados}
+
+Com os fundamentos da linguagem C estabelecidos, a Parte II desta apostila muda de ambiente: em vez de compilar e rodar programas em um computador comum, vamos escrever firmware para um microcontrolador real, o \ESP{}. Este capítulo estabelece o vocabulário e o contexto necessários antes de abrirmos o PlatformIO pela primeira vez, no próximo capítulo.
+
+\section{O que é um sistema embarcado}
+
+Um \textbf{sistema embarcado} é um sistema computacional dedicado a uma função específica, geralmente integrado a um equipamento maior — diferente de um computador de propósito geral, que roda uma variedade praticamente ilimitada de programas. Uma máquina de lavar, um roteador Wi-Fi, o painel de instrumentos de um carro, uma pulseira de atividade física: todos são sistemas embarcados.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Característica} & \textbf{Computador comum} & \textbf{Sistema embarcado} \\
+\midrule
+Propósito       & genérico            & dedicado a uma função \\
+Memória RAM     & gigabytes           & kilobytes a poucos megabytes \\
+Armazenamento   & discos de alta capacidade & memória flash, tipicamente MB \\
+Sistema operacional & completo (Linux, Windows) & ausente, mínimo, ou um RTOS \\
+Entrada/saída   & teclado, mouse, tela & sensores, atuadores, LEDs \\
+Consumo de energia & watts        & miliwatts a microwatts \\
+\bottomrule
+\end{tabular}
+\caption{Sistemas embarcados vs. computadores de propósito geral.}
+\end{table}
+
+Essas restrições — pouca memória, sem sistema operacional completo, energia limitada — são exatamente o motivo pelo qual C continua sendo a linguagem dominante nesse domínio: ela permite controle fino sobre o que o processador de fato executa, sem a sobrecarga (\emph{overhead}) de linguagens de mais alto nível.
+
+\section{O microcontrolador ESP32}
+
+O \ESP{} é uma família de \textbf{microcontroladores} (\emph{system-on-a-chip}, SoC) desenvolvida pela Espressif Systems, que integra em um único chip:
+
+\begin{itemize}
+    \item Um processador \textbf{Xtensa LX6 (ou LX7, em variantes mais recentes)}, tipicamente dual-core, operando a até 240~MHz;
+    \item \textbf{Wi-Fi} (802.11 b/g/n) e \textbf{Bluetooth} (clássico e BLE) integrados;
+    \item Memória \textbf{SRAM} interna (algumas centenas de kB) para variáveis e pilha durante a execução;
+    \item Memória \textbf{Flash} externa (tipicamente 4~MB ou mais) onde o firmware compilado é armazenado permanentemente;
+    \item Dezenas de pinos \textbf{GPIO} de uso geral, além de periféricos dedicados: conversores analógico-digitais (ADC), saídas PWM, interfaces I²C, SPI, UART, e mais.
+\end{itemize}
+
+\begin{nota}
+``Microcontrolador'' e ``microprocessador'' não são sinônimos. Um \textbf{microprocessador} (como o de um computador) é apenas a unidade de processamento — precisa de chips externos para memória, entrada/saída, etc. Um \textbf{microcontrolador} já integra processador, memória e periféricos em um único chip, pronto para ser incorporado a um produto com o mínimo de componentes adicionais. É exatamente esse nível de integração que torna o \ESP{} tão popular em projetos de eletrônica e produtos comerciais.
+\end{nota}
+
+\section{Como um firmware é diferente de um programa comum}
+
+Ao escrever \code{hello\_world.c} no \cref{cap:primeiros-passos}, o programa era executado sob um sistema operacional (Linux, Windows ou macOS), que gerenciava memória, agendamento de processos e acesso a dispositivos por trás dos panos. Em um microcontrolador programado da forma mais simples, não existe esse intermediário: o código compilado é o \textbf{único} programa em execução, com acesso direto ao hardware.
+
+Isso muda a estrutura típica de um programa de duas formas centrais:
+
+\begin{enumerate}
+    \item Não existe uma função \code{main} que ``termina'' — como adiantado no \cref{cap:primeiros-passos}, o firmware gira indefinidamente em torno de um \textbf{laço principal}, reagindo a eventos e atualizando o estado do sistema enquanto houver energia;
+    \item O programador é responsável por configurar diretamente os periféricos que deseja usar — não existe um driver de teclado ou de tela pronto: existe, por exemplo, um pino GPIO específico que precisa ser configurado como saída antes de poder acender um LED.
+\end{enumerate}
+
+\begin{esp32box}
+Tecnicamente, o \ESP{} \emph{não} roda ``sem sistema operacional'' — por baixo do framework que usaremos nesta apostila, o \textbf{Arduino}, existe o \textbf{ESP-IDF}, o SDK oficial da Espressif, construído sobre o \textbf{FreeRTOS}, um sistema operacional de tempo real (RTOS) leve, projetado especificamente para microcontroladores. O framework Arduino é, na prática, uma camada de conveniência sobre essa base: ele simplifica drasticamente a forma de escrever o firmware — como veremos já no próximo capítulo — sem esconder o acesso direto ao hardware que torna C tão adequado para essa tarefa.
+\end{esp32box}
+
+Antes de colocar a mão no código, o próximo capítulo faz uma pausa conceitual: de onde vêm os microcontroladores, e como sua unidade de processamento funciona por dentro. Esse pano de fundo prepara o terreno para o \textbf{PlatformIO}, o ambiente que usaremos a partir do \cref{cap:platformio} para escrever, compilar e carregar código C no \ESP{}.

@@ -1,0 +1,49 @@
+\documentclass[11pt,a4paper,twoside,openright]{book}
+
+\input{preambulo.tex}
+
+\title{Introdução à Linguagem C para Sistemas Embarcados}
+\author{Apostila EFB2006}
+\date{\today}
+
+\begin{document}
+
+\input{capa.tex}
+
+\frontmatter
+\input{capitulos/00-prefacio.tex}
+\tableofcontents
+
+\mainmatter
+
+\part{Fundamentos da Linguagem C}
+\input{capitulos/01-primeiros-passos.tex}
+\input{capitulos/02-sistemas-numericos.tex}
+\input{capitulos/03-tipos-variaveis-operadores.tex}
+\input{capitulos/04-entrada-saida.tex}
+\input{capitulos/05-decisao.tex}
+\input{capitulos/06-repeticao-desvios.tex}
+\input{capitulos/07-funcoes.tex}
+\input{capitulos/08-arranjos.tex}
+\input{capitulos/09-ponteiros-memoria.tex}
+\input{capitulos/10-structs-unioes-enums.tex}
+\input{capitulos/11-modularizacao.tex}
+
+\part{Sistemas Embarcados com o ESP32 e o PlatformIO}
+\input{capitulos/12-sistemas-embarcados.tex}
+\input{capitulos/13-microcontroladores.tex}
+\input{capitulos/14-platformio.tex}
+\input{capitulos/15-anatomia-projeto.tex}
+\input{capitulos/16-gpio.tex}
+\input{capitulos/17-adc-sensores.tex}
+\input{capitulos/18-serial-debug.tex}
+\input{capitulos/19-interrupcoes-temporizacao.tex}
+\input{capitulos/20-projeto-final.tex}
+
+\appendix
+\input{capitulos/a1-tabela-ascii.tex}
+\input{capitulos/a2-referencia-rapida.tex}
+
+\backmatter
+
+\end{document}

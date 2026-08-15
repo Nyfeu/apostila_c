@@ -1,0 +1,126 @@
+\chapter{PlatformIO: Ambiente de Desenvolvimento}
+\label{cap:platformio}
+
+Para compilar e carregar código C no \ESP{}, precisamos de uma ferramenta capaz de: (1) compilar o código usando uma \textbf{toolchain cruzada} (o compilador roda no seu computador, mas gera código para o processador Xtensa do \ESP{}, como adiantado no \cref{cap:sistemas-numericos}); (2) transferir o binário resultante para a memória flash do dispositivo via USB; e (3) abrir um canal de comunicação serial para depuração. O \textbf{PlatformIO} faz as três coisas — e muito mais — de forma integrada e gratuita.
+
+\section{O que é o PlatformIO}
+
+PlatformIO é um ecossistema de desenvolvimento profissional para sistemas embarcados, disponível como extensão para o Visual Studio Code (a forma mais comum de uso, e a que seguiremos aqui) ou como ferramenta de linha de comando independente. Ele suporta centenas de placas diferentes — não apenas o \ESP{} — e múltiplos \textbf{frameworks} de desenvolvimento para cada uma.
+
+\begin{nota}
+Um \textbf{framework}, no contexto do PlatformIO, é o conjunto de bibliotecas e convenções sobre as quais o firmware é escrito. Para o \ESP{}, os dois frameworks mais usados são o \textbf{ESP-IDF} (\emph{Espressif IoT Development Framework}, o SDK oficial da Espressif, escrito em C puro) e o \textbf{Arduino} — uma camada de conveniência sobre esse mesmo SDK, com uma API muito mais simples e enxuta, e o padrão de fato para projetos de prototipagem e IoT. É o framework \textbf{Arduino} que usaremos em todos os exemplos desta apostila daqui em diante.
+\end{nota}
+
+\begin{atencao}
+Um detalhe técnico importante: arquivos do framework Arduino são compilados como \textbf{C++}, não C puro — é o que permite, por exemplo, que \code{Serial.print(...)} funcione (\code{Serial} é um objeto). Ainda assim, o estilo de código ensinado nesta apostila permanece deliberadamente próximo do C ``puro'' apresentado na Parte I — sem classes, templates ou os demais recursos exclusivos de C++ —, de modo que tudo o que você já aprendeu continua diretamente aplicável. Você vai reconhecer, na prática, que programar para o \ESP{} com Arduino é escrever C dentro de um ambiente C++ minimalista.
+\end{atencao}
+
+\section{Instalação}
+
+\begin{enumerate}
+    \item Instale o \href{https://code.visualstudio.com/}{Visual Studio Code} (disponível para Windows, macOS e Linux);
+    \item Dentro do VS Code, abra a aba de \textbf{Extensões} (ícone de blocos no menu lateral, ou \code{Ctrl+Shift+X});
+    \item Busque por \textbf{``PlatformIO IDE''} e clique em \textbf{Instalar};
+    \item Aguarde a instalação terminar — na primeira vez, o PlatformIO baixa e configura suas próprias dependências (Python, toolchains de compilação), o que pode levar alguns minutos;
+    \item Reinicie o VS Code quando solicitado. Um novo ícone de ``formiga'' (a logo do PlatformIO) deve aparecer na barra lateral esquerda.
+\end{enumerate}
+
+\begin{dica}
+Não é necessário instalar o Python ou qualquer toolchain manualmente — a extensão do PlatformIO cuida de todo esse processo de forma isolada do restante do sistema, evitando conflitos com outras instalações que você já possa ter.
+\end{dica}
+
+\section{Criando um novo projeto}
+
+Com a extensão instalada, clique no ícone da formiga na barra lateral para abrir o \textbf{PIO Home}, e em seguida em \textbf{New Project}. O assistente solicita quatro informações:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Campo} & \textbf{Valor sugerido} \\
+\midrule
+Name      & \code{meu-primeiro-projeto} (ou o nome que preferir) \\
+Board     & \code{Espressif ESP32 Dev Module} (ajuste conforme sua placa) \\
+Framework & \code{Arduino} \\
+Location  & a pasta onde o projeto será criado \\
+\bottomrule
+\end{tabular}
+\caption{Configuração do assistente de novo projeto do PlatformIO.}
+\end{table}
+
+\begin{atencao}
+O campo \textbf{Board} precisa corresponder (ou ao menos ser compatível com) a placa física que você possui. Existem dezenas de variantes de placas baseadas no \ESP{} (DevKit V1, WROOM-32, NodeMCU-32S, entre outras) — quando em dúvida, \code{Espressif ESP32 Dev Module} é uma escolha segura e amplamente compatível para as placas de desenvolvimento mais comuns.
+\end{atencao}
+
+\section{Anatomia de um projeto PlatformIO}
+
+Ao criar o projeto, o PlatformIO gera automaticamente a seguinte estrutura de pastas:
+
+\begin{codigoini}{Estrutura de pastas de um projeto PlatformIO}
+meu-primeiro-projeto/
+|-- platformio.ini      # arquivo de configuracao do projeto
+|-- src/                # codigo-fonte principal do firmware
+|   `-- main.cpp
+|-- include/             # cabecalhos (.h) proprios do projeto
+|-- lib/                 # bibliotecas privadas do projeto
+`-- test/                # testes automatizados (opcional)
+\end{codigoini}
+
+\begin{itemize}
+    \item \code{src/} — onde vive o código-fonte principal. É aqui que criaremos e editaremos \code{main.cpp} em todos os exemplos seguintes (a extensão \code{.cpp}, e não \code{.c}, é exigida pelo framework Arduino, como visto na nota anterior);
+    \item \code{include/} — para cabeçalhos (\code{.h}) específicos do seu projeto, como os vistos no \cref{cap:modularizacao};
+    \item \code{lib/} — para bibliotecas próprias, reutilizáveis entre projetos, ou de terceiros adicionadas manualmente;
+    \item \code{platformio.ini} — o coração da configuração do projeto, detalhado a seguir.
+\end{itemize}
+
+\subsection{O arquivo \code{platformio.ini}}
+
+\begin{codigoini}{platformio.ini}
+[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = arduino
+monitor_speed = 115200
+\end{codigoini}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Chave} & \textbf{Significado} \\
+\midrule
+\code{platform}       & a plataforma de hardware (\code{espressif32}, para toda a família \ESP{}) \\
+\code{board}          & o identificador exato da placa de desenvolvimento \\
+\code{framework}      & o SDK usado (\code{arduino}, nesta apostila) \\
+\code{monitor\_speed} & a velocidade (\emph{baud rate}) do monitor serial, em bits por segundo \\
+\bottomrule
+\end{tabular}
+\caption{Principais chaves de configuração do \code{platformio.ini}.}
+\end{table}
+
+Esse arquivo texto simples — versionável junto ao código-fonte em um sistema como Git — é o que torna um projeto PlatformIO totalmente reprodutível em qualquer máquina: qualquer pessoa que clone o projeto e abra a pasta no VS Code com a extensão instalada terá exatamente o mesmo ambiente de compilação, sem precisar configurar nada manualmente.
+
+\section{A barra de tarefas do PlatformIO}
+
+Na parte inferior da janela do VS Code, a extensão adiciona uma barra de ícones com as ações mais usadas:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Ícone} & \textbf{Ação} \\
+\midrule
+\faCheck\ (visto)         & \textbf{Build} — compila o projeto, sem carregá-lo na placa \\
+\faArrowRight\ (seta)     & \textbf{Upload} — compila e carrega o firmware na placa via USB \\
+\faPlug\ (tomada)         & \textbf{Serial Monitor} — abre o monitor serial para ver mensagens do firmware \\
+\faTrash\ (lixeira)       & \textbf{Clean} — remove arquivos de compilação anteriores \\
+\bottomrule
+\end{tabular}
+\caption{Principais ações da barra de tarefas do PlatformIO no VS Code.}
+\end{table}
+
+\begin{dica}
+O botão de \textbf{Upload} já executa o \textbf{Build} automaticamente antes de carregar — não é necessário clicar nos dois separadamente. Durante o upload, muitas placas exigem que se segure um botão físico chamado \textbf{BOOT} (ou \textbf{IO0}) no exato momento em que a transferência começa, para entrar em modo de gravação. Se o upload falhar com um erro de timeout de conexão, essa é a primeira coisa a verificar.
+\end{dica}
+
+O próximo capítulo detalha o conteúdo mínimo de \code{src/main.cpp} em um projeto Arduino — o equivalente, no mundo embarcado, ao \code{hello\_world.c} do \cref{cap:primeiros-passos}.

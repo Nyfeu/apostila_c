@@ -1,0 +1,75 @@
+\chapter{Anatomia de um Projeto Arduino}
+\label{cap:anatomia}
+
+Com o ambiente configurado, é hora de escrever o primeiro firmware de verdade. Este capítulo dissecta a estrutura mínima de um programa Arduino — o ponto de partida para todos os exemplos do restante da apostila.
+
+\section{As funções \code{setup} e \code{loop}}
+
+Diferente de um programa C convencional, onde tudo começa em \code{main}, um \emph{sketch} Arduino (o nome tradicional dado a um programa nesse framework) é organizado em torno de duas funções obrigatórias:
+
+\begin{codigoc}{src/main.cpp — esqueleto mínimo}
+void setup() {
+    // executado uma unica vez, ao ligar ou reiniciar o ESP32
+}
+
+void loop() {
+    // executado repetidamente, para sempre, enquanto houver energia
+}
+\end{codigoc}
+
+\begin{itemize}
+    \item \code{setup()} roda \textbf{uma única vez}, logo após o \ESP{} ser ligado ou reiniciado — é o lugar certo para inicializações: configurar pinos, iniciar a comunicação serial, preparar sensores;
+    \item \code{loop()} roda \textbf{repetidamente, para sempre}, chamada automaticamente pelo próprio framework assim que \code{setup()} termina — é aqui que mora a lógica principal do firmware, exatamente o ``laço infinito'' adiantado no \cref{cap:primeiros-passos} e no \cref{cap:repeticao}.
+\end{itemize}
+
+\begin{nota}
+Por que não uma função \code{main}? Tecnicamente, \emph{existe} uma \code{main} nos bastidores — mas ela pertence ao próprio núcleo do framework Arduino, não ao seu código. Esse \code{main} interno cuida de inicializar o hardware e então chama \code{setup()} uma vez, seguida de \code{loop()} dentro de um laço infinito escondido de você. É por isso que \code{setup} e \code{loop} não retornam nenhum valor (\code{void}) e não recebem parâmetros: elas não são o ponto de entrada do programa, apenas dois pontos de extensão que o framework chama em momentos específicos.
+\end{nota}
+
+\section{Um primeiro exemplo completo}
+
+\begin{codigoc}{src/main.cpp — contador com atraso}
+void setup() {
+    Serial.begin(115200);   // inicia a comunicacao serial
+}
+
+void loop() {
+    static int contador = 0;
+
+    Serial.print("Contador: ");
+    Serial.println(contador);
+    contador++;
+
+    delay(1000);   // pausa de 1000 ms antes da proxima iteracao
+}
+\end{codigoc}
+
+\begin{atencao}
+A pausa acima usa \code{delay(ms)}, a função padrão do Arduino para aguardar um intervalo de tempo em milissegundos — \textbf{não} um laço vazio de espera ocupada (\emph{busy-waiting}, como \code{for (long i = 0; i < 1000000; i++);}). Por baixo dos panos, o \ESP{} roda sobre um sistema operacional de tempo real (o FreeRTOS, adiantado no \cref{cap:embarcados}), que depende de que cada tarefa devolva o controle periodicamente; \code{delay()} já faz isso de forma segura, permitindo que outras tarefas do sistema (como a pilha de Wi-Fi) continuem funcionando durante a espera. Um laço vazio, em vez disso, prende o processador e pode disparar o \textbf{Watchdog Timer} — o mecanismo de segurança apresentado no \cref{sec:watchdog}, que reinicia o chip sozinho quando percebe que o laço principal ``travou''.
+\end{atencao}
+
+\section{Compilando, carregando e monitorando}
+
+Com o código acima salvo em \code{src/main.cpp}, o fluxo de trabalho no PlatformIO é:
+
+\begin{enumerate}
+    \item Conecte o \ESP{} ao computador via cabo USB;
+    \item Clique no ícone de \textbf{Upload} (\cref{cap:platformio}) — o PlatformIO compila o projeto e carrega o binário na placa;
+    \item Clique no ícone de \textbf{Serial Monitor} para ver a saída de \code{Serial.print}/\code{Serial.println} em tempo real.
+\end{enumerate}
+
+\begin{codigobash}{Saída esperada no monitor serial}
+Contador: 0
+Contador: 1
+Contador: 2
+\end{codigobash}
+
+\begin{dica}
+Se o monitor serial mostrar apenas caracteres ilegíveis (``lixo''), a causa quase sempre é uma incompatibilidade entre a velocidade configurada no monitor e a velocidade passada para \code{Serial.begin()} no código. Confirme que \code{monitor\_speed} no \code{platformio.ini} coincide com o valor usado em \code{Serial.begin(...)} — nesta apostila, sempre \code{115200}.
+\end{dica}
+
+\section{De volta aos fundamentos: o que você já sabe aplicar}
+
+Vale parar um momento para notar que tudo neste primeiro exemplo já foi visto na Parte I: uma variável \code{static} preservando seu valor entre chamadas (\cref{cap:funcoes}), incremento com \code{++} (\cref{cap:tipos}), e duas funções sem retorno (\code{void}, \cref{cap:funcoes}). Programar o \ESP{} não introduz uma linguagem nova — introduz um \textbf{framework} novo, com suas próprias funções e convenções, construído sobre exatamente o C que você já domina.
+
+Os próximos capítulos exploram, um a um, os periféricos mais importantes do \ESP{}: entradas e saídas digitais (\cref{cap:gpio}), leitura de sensores analógicos (\cref{cap:adc}), comunicação serial (\cref{cap:serial}) e interrupções (\cref{cap:interrupcoes}).

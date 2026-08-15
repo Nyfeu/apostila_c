@@ -1,0 +1,111 @@
+\chapter{Primeiros Passos}
+\label{cap:primeiros-passos}
+
+C é uma linguagem de programação criada no início dos anos 1970 por Dennis Ritchie, nos laboratórios da Bell, originalmente para reescrever o sistema operacional Unix. Mais de cinquenta anos depois, ela continua sendo uma das linguagens mais usadas do mundo — e isso não é acidente: C oferece um equilíbrio raro entre abstração suficiente para ser produtiva e proximidade suficiente do hardware para ser eficiente. É exatamente por esse motivo que praticamente todo sistema operacional, driver de dispositivo e firmware de microcontrolador — incluindo o do \ESP{} — tem C em algum lugar de sua base.
+
+\begin{nota}
+A linguagem C é \textbf{compilada}: o código-fonte que escrevemos (extensão \code{.c}) é traduzido por um programa chamado \textbf{compilador} para linguagem de máquina antes de ser executado. Isso é diferente de linguagens \textbf{interpretadas}, como Python ou JavaScript, cujo código é lido e executado linha a linha por um interpretador em tempo de execução. Java fica no meio do caminho: compila para um bytecode intermediário, interpretado depois pela JVM. Essa distinção será retomada no \cref{cap:sistemas-numericos}, quando falarmos sobre o processo de compilação em detalhe.
+\end{nota}
+
+\section{O primeiro programa}
+
+Por tradição — que remonta ao próprio livro de Kernighan e Ritchie sobre a linguagem —, o primeiro programa que qualquer pessoa escreve em C é o "\emph{Hello, World!}": um programa que apenas exibe essa mensagem na tela.
+
+\begin{codigoc}{hello\_world.c}
+/*
+    Seu primeiro programa em C
+    ** Para dar sorte! **
+*/
+
+#include <stdio.h>          // Inclui a biblioteca padrao de
+                            // entrada e saida (Standard Input/Output)
+
+int main(void) {
+
+    printf("Hello, World!\n");   // Exibe "Hello, World!" na tela
+    return 0;
+
+}
+\end{codigoc}
+
+Apesar de simples, este programa já contém quase todos os elementos estruturais que qualquer programa em C possui. Vamos destrinchá-lo peça por peça.
+
+\subsection{Comentários}
+
+As primeiras linhas do código são um comentário de múltiplas linhas, delimitado por \code{/*} e \code{*/}. Mais adiante, na mesma linha do \code{\#include}, aparece um comentário de linha única, iniciado por \code{//} e válido até o final da linha.
+
+\begin{codigoc}{Sintaxe de comentários}
+/*
+    Este e' um comentario de multiplas linhas.
+    Pode ocupar quantas linhas forem necessarias.
+*/
+
+// Este e' um comentario de uma unica linha.
+\end{codigoc}
+
+Comentários são trechos de texto totalmente ignorados pelo compilador — eles existem apenas para quem lê o código. Use-os para explicar \emph{por que} uma decisão foi tomada, não para descrever o óbvio.
+
+\subsection{A diretiva \code{\#include}}
+
+A linha \code{\#include <stdio.h>} não é, tecnicamente, um comando C: é uma \textbf{diretiva de pré-processador}, processada \emph{antes} da compilação propriamente dita. Ela instrui o compilador a inserir, naquele ponto do arquivo, o conteúdo do arquivo de cabeçalho (\emph{header}) \code{stdio.h}, que declara as funções da biblioteca padrão de entrada e saída — entre elas, a função \code{printf} usada logo abaixo. O pré-processador e as bibliotecas de software serão tratados com mais profundidade no \cref{cap:modularizacao}.
+
+\subsection{A função \code{main}}
+
+Todo programa C possui exatamente um ponto de entrada: a função \code{main}. É a partir dela que a execução do programa começa.
+
+\begin{codigoc}{Assinatura da função main}
+int main(void) {
+    // ... corpo do programa ...
+}
+\end{codigoc}
+
+\begin{itemize}
+    \item O \code{int} antes de \code{main} indica que essa função \textbf{retorna} um número inteiro ao sistema operacional quando termina — o chamado \emph{código de saída};
+    \item O \code{void} entre parênteses indica que, neste caso, a função não recebe parâmetros de entrada. É possível receber argumentos de linha de comando aqui, assunto tratado mais adiante no material;
+    \item Tudo o que está entre as chaves \code{\{ \}} constitui o \textbf{corpo} (ou escopo) da função — o bloco de instruções que será executado.
+\end{itemize}
+
+\subsection{A instrução \code{printf}}
+
+\code{printf} (\emph{print formatted}) é uma função da biblioteca \code{stdio.h} responsável por exibir texto na saída padrão — normalmente, o terminal. O texto entre aspas duplas é uma \textbf{string} (uma sequência de caracteres); a sequência \code{\textbackslash n} dentro dela é um \textbf{caractere de escape} que representa uma quebra de linha. Formatação de entrada e saída de dados é aprofundada no \cref{cap:entrada-saida}.
+
+\subsection{O retorno e o ponto e vírgula}
+
+A última instrução, \code{return 0;}, encerra a execução de \code{main} devolvendo o valor \code{0} ao sistema operacional — por convenção, \code{0} significa ``o programa terminou sem erros''. Qualquer outro valor costuma indicar algum tipo de falha. Esse conceito é fundamental em engenharia de software: é assim que um programa comunica sucesso ou falha para quem o executou (outro programa, um script, ou o próprio sistema operacional).
+
+Repare também que \textbf{toda instrução em C termina com ponto e vírgula} (\code{;}). Esquecer esse detalhe é, disparadamente, o erro de sintaxe mais comum entre iniciantes.
+
+\begin{atencao}
+O compilador C é implacável com pequenos deslizes de sintaxe: uma chave não fechada, um ponto e vírgula esquecido ou um parêntese a mais são suficientes para impedir a compilação inteira do programa. Leia as mensagens de erro com atenção — elas quase sempre indicam a linha exata (ou próxima dela) onde o problema ocorre.
+\end{atencao}
+
+\section{Compilando e executando}
+
+Para transformar o arquivo \code{hello\_world.c} em um programa executável, usamos um compilador. No Linux e no macOS, o mais comum é o \textbf{GCC} (\emph{GNU Compiler Collection}); no Windows, alternativas como MinGW ou o compilador do próprio Visual Studio cumprem o mesmo papel.
+
+\begin{codigobash}{Compilando com gcc}
+$ gcc -o hello_world hello_world.c
+\end{codigobash}
+
+O parâmetro \code{-o hello\_world} define o nome do arquivo executável gerado. Sem ele, o GCC produziria um arquivo chamado \code{a.out} por padrão. Para executar o programa:
+
+\begin{codigobash}{Executando o programa}
+$ ./hello_world
+Hello, World!
+\end{codigobash}
+
+\begin{dica}
+No Linux/macOS, o \code{./} antes do nome do executável é necessário porque, por segurança, o diretório atual normalmente não faz parte do \code{PATH} do sistema — sem ele, o shell não saberia onde procurar o programa.
+\end{dica}
+
+\section{E no ESP32?}
+
+Um microcontrolador como o \ESP{} não tem teclado, tela ou sistema operacional convencional — então não existe um terminal esperando por \code{Hello, World!}. Ainda assim, o princípio é idêntico: escrevemos código C, ele é compilado, e o resultado (um arquivo \emph{binário}) é carregado para a memória do dispositivo, onde passa a ser executado assim que ele é ligado.
+
+\begin{esp32box}
+No mundo dos microcontroladores, o equivalente ao \emph{Hello, World!} costuma ser o \textbf{blink}: piscar um LED. É o primeiro programa que qualquer pessoa escreve para o \ESP{}, porque prova visualmente que o código foi compilado, carregado e está de fato em execução no hardware. Chegaremos lá: a partir do \cref{cap:platformio}, vamos configurar o ambiente PlatformIO e, no \cref{cap:gpio}, escrever exatamente esse programa.
+
+Por enquanto, a diferença mais importante a guardar é esta: em vez de uma única função \code{main} que roda uma vez e termina, um firmware embarcado tipicamente gira em torno de um \textbf{laço infinito} — o programa nunca ``termina'' (não haveria sentido em um \code{return} para o quê, exatamente?), ele fica reagindo a eventos e atualizando o estado do sistema enquanto houver energia. No framework que usaremos (Arduino, via PlatformIO), isso aparece de forma bem explícita: em vez de uma função \code{main}, escreveremos duas funções, \code{setup()} e \code{loop()} — a segunda chamada repetidamente, para sempre, pelo próprio framework.
+\end{esp32box}
+
+Toda a Parte I desta apostila usa o \code{gcc} e a execução em um computador comum como ambiente de aprendizado, exatamente porque isso permite testar cada conceito de forma rápida e isolada, sem depender de hardware específico. Os mesmos conceitos — tipos de dados, estruturas de controle, funções, ponteiros — são diretamente aplicáveis ao firmware do \ESP{} que construiremos na Parte II.

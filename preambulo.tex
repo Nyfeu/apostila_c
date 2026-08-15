@@ -1,0 +1,204 @@
+% ============================================================
+% preambulo.tex — Estilo geral da apostila
+% ============================================================
+
+% ---- Fontes -------------------------------------------------
+\usepackage{fontspec}
+\setmainfont{Fira Sans}
+\setsansfont{Fira Sans}
+\setmonofont{Fira Mono}[Scale=0.88]
+
+% ---- Idioma ---------------------------------------------------
+\usepackage{polyglossia}
+\setmainlanguage{brazilian}
+\AtBeginDocument{
+    \renewcommand{\tablename}{Tabela}
+    \renewcommand{\figurename}{Figura}
+    \renewcommand{\contentsname}{Sumário}
+    \renewcommand{\appendixname}{Apêndice}
+    \renewcommand{\chaptername}{Capítulo}
+    \renewcommand{\partname}{Parte}
+}
+
+% ---- Layout de página ----------------------------------------
+\usepackage[a4paper,margin=2.5cm,marginparwidth=2.2cm,marginparsep=0.4cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% ---- Cores ------------------------------------------------
+\usepackage{xcolor}
+\definecolor{primaria}{HTML}{0B3D5C}      % azul petróleo escuro (título)
+\definecolor{secundaria}{HTML}{12809E}    % azul-esverdeado (ESP32/PCB)
+\definecolor{acento}{HTML}{E8762C}        % laranja circuito (destaques)
+\definecolor{fundoclaro}{HTML}{F4F7F8}
+\definecolor{fundocodigo}{HTML}{282C34}
+\definecolor{textoclaro}{HTML}{E8EEF1}
+\definecolor{cinzaesc}{HTML}{3B4750}
+\definecolor{notaBg}{HTML}{EAF4F6}
+\definecolor{notaBorda}{HTML}{12809E}
+\definecolor{atencaoBg}{HTML}{FCEFE6}
+\definecolor{atencaoBorda}{HTML}{E8762C}
+\definecolor{dicaBg}{HTML}{EEF6EC}
+\definecolor{dicaBorda}{HTML}{4C8C4A}
+
+% ---- Matemática / símbolos ---------------------------------
+\usepackage{amsmath,amssymb}
+
+% ---- Gráficos e diagramas -----------------------------------
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows.meta,positioning,fit,backgrounds,calc}
+
+% ---- Tabelas --------------------------------------------------
+\usepackage{array,tabularx,booktabs,longtable,multirow}
+\renewcommand{\arraystretch}{1.25}
+
+% ---- Listas -----------------------------------------------
+\usepackage{enumitem}
+\setlist{itemsep=0.15em, topsep=0.4em}
+
+% ---- Hyperlinks e referências -------------------------------
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaria,
+    citecolor=primaria,
+    urlcolor=secundaria,
+    pdftitle={Introdução à Linguagem C para Sistemas Embarcados},
+    pdfauthor={Apostila EFB2006},
+    pdfsubject={Linguagem C, ESP32, PlatformIO},
+    bookmarksnumbered=true,
+    bookmarksopen=true
+}
+\usepackage[capitalize,noabbrev]{cleveref}
+
+% ---- Código-fonte (minted + tcolorbox) ------------------------
+\usepackage{fontawesome5}
+\usepackage{tcolorbox}
+\tcbuselibrary{minted,breakable,skins}
+\usemintedstyle{one-dark}
+
+\tcbset{
+  codigobase/.style={
+    breakable, enhanced, listing only, minted style=one-dark,
+    minted options={fontsize=\small, breaklines, breakanywhere,
+                     tabsize=4, baselinestretch=1.05},
+    colback=fundocodigo, colframe=fundocodigo,
+    coltitle=textoclaro, fonttitle=\bfseries\ttfamily\small,
+    boxrule=0pt, top=5mm, bottom=1mm, left=1mm, right=1mm,
+    arc=2mm, outer arc=2mm,
+    before={\color{textoclaro}},
+    attach boxed title to top left={xshift=3mm, yshift=-1mm},
+    boxed title style={colback=acento, arc=1.5mm, boxrule=0pt,
+                        top=0.6mm, bottom=0.6mm, left=2mm, right=2mm},
+  },
+  terminalbase/.style={
+    breakable, enhanced, listing only, minted style=one-dark,
+    minted options={fontsize=\small, breaklines, breakanywhere,
+                     tabsize=4, baselinestretch=1.05},
+    colback=fundocodigo, colframe=cinzaesc,
+    coltitle=textoclaro, fonttitle=\bfseries\ttfamily\small,
+    boxrule=0.4pt, top=1mm, bottom=1mm, left=1mm, right=1mm,
+    arc=2mm, outer arc=2mm,
+    before={\color{textoclaro}},
+  }
+}
+
+% Ambientes de código com título automático de arquivo
+\newtcblisting{codigoc}[1]{codigobase, minted language=c, title={#1}}
+\newtcblisting{codigoini}[1]{codigobase, minted language=ini, title={#1}}
+\newtcblisting{codigobash}[1]{terminalbase, minted language=bash, title={#1}}
+
+% ---- Caixas de destaque (nota, atenção, dica) -----------------
+\newtcolorbox{nota}{
+    breakable, enhanced, colback=notaBg, colframe=notaBorda,
+    boxrule=0pt, leftrule=2.6pt, arc=1mm,
+    left=3mm, right=3mm, top=1.5mm, bottom=1.5mm,
+    fonttitle=\bfseries\color{notaBorda},
+    title={\faInfoCircle\ \ Nota}
+}
+\newtcolorbox{atencao}{
+    breakable, enhanced, colback=atencaoBg, colframe=atencaoBorda,
+    boxrule=0pt, leftrule=2.6pt, arc=1mm,
+    left=3mm, right=3mm, top=1.5mm, bottom=1.5mm,
+    fonttitle=\bfseries\color{atencaoBorda},
+    title={\faExclamationTriangle\ \ Atenção}
+}
+\newtcolorbox{dica}{
+    breakable, enhanced, colback=dicaBg, colframe=dicaBorda,
+    boxrule=0pt, leftrule=2.6pt, arc=1mm,
+    left=3mm, right=3mm, top=1.5mm, bottom=1.5mm,
+    fonttitle=\bfseries\color{dicaBorda},
+    title={\faLightbulb\ \ Dica}
+}
+\newtcolorbox{esp32box}{
+    breakable, enhanced, colback=fundoclaro, colframe=secundaria,
+    boxrule=0pt, leftrule=2.6pt, arc=1mm,
+    left=3mm, right=3mm, top=1.5mm, bottom=1.5mm,
+    fonttitle=\bfseries\color{secundaria},
+    title={\faMicrochip\ \ Aplicação no ESP32}
+}
+
+% ---- Títulos de capítulo/seção ---------------------------------
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont}
+  {\Large\color{secundaria}\fontsize{14}{16}\selectfont\textsc{Capítulo \thechapter}}
+  {6pt}
+  {\Huge\bfseries\color{primaria}}
+\titlespacing*{\chapter}{0pt}{-10pt}{28pt}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{primaria}}
+  {\thesection}{0.6em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{secundaria}}
+  {\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\color{cinzaesc}}
+  {\thesubsubsection}{0.6em}{}
+
+% ---- Cabeçalhos e rodapés -------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[LE,RO]{\small\thepage}
+\fancyhead[RE]{\small\color{cinzaesc}\nouppercase{\leftmark}}
+\fancyhead[LO]{\small\color{cinzaesc}\nouppercase{\rightmark}}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[LE,RO]{\small\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+% Páginas em branco (inseridas para iniciar capítulos em página ímpar)
+% não devem exibir cabeçalho.
+\makeatletter
+\renewcommand{\cleardoublepage}{%
+  \clearpage
+  \if@twoside
+    \ifodd\c@page\else
+      \hbox{}\thispagestyle{empty}\newpage
+      \if@twocolumn\hbox{}\newpage\fi
+    \fi
+  \fi
+}
+\makeatother
+
+% ---- Sumário -----------------------------------------------
+\usepackage{tocloft}
+\renewcommand{\cftchapfont}{\bfseries\color{primaria}}
+\renewcommand{\cftchappagefont}{\color{primaria}}
+\renewcommand{\cftsecfont}{\color{cinzaesc}}
+
+% ---- Numeração de código e legendas ---------------------------
+\usepackage{caption}
+\captionsetup{font=small,labelfont={bf,color=primaria}}
+
+% ---- Comando utilitário para inline code ------------------
+\newcommand{\code}[1]{\texttt{\color{secundaria}#1}}
+\newcommand{\ESP}{ESP32\xspace}
+\usepackage{xspace}

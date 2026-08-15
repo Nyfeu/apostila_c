@@ -1,0 +1,106 @@
+\chapter{Laços de Repetição e Desvios}
+\label{cap:repeticao}
+
+Laços (ou \emph{loops}) permitem repetir um bloco de instruções múltiplas vezes, sem precisar reescrevê-lo. C oferece três estruturas de repetição — \code{for}, \code{while} e \code{do-while} — cada uma mais adequada a um cenário específico.
+
+\section{\code{for}}
+
+O laço \code{for} é ideal quando o número de repetições é conhecido (ou calculável) de antemão.
+
+\begin{codigoc}{Laço for}
+#include <stdio.h>
+
+int main(void) {
+    for (int i = 0; i < 5; i++) {
+        printf("Iteracao %d\n", i);
+    }
+    return 0;
+}
+\end{codigoc}
+
+A estrutura \code{for (inicialização; condição; incremento)} tem três partes, todas opcionais:
+
+\begin{itemize}
+    \item \textbf{Inicialização} — executada uma única vez, antes da primeira iteração (tipicamente declara e inicializa a variável de controle);
+    \item \textbf{Condição} — testada \emph{antes} de cada iteração; o laço continua enquanto ela for verdadeira;
+    \item \textbf{Incremento} — executado ao final de cada iteração, antes de testar a condição novamente.
+\end{itemize}
+
+\section{\code{while}}
+
+O laço \code{while} repete um bloco \emph{enquanto} uma condição permanecer verdadeira, testada sempre no início de cada iteração — inclusive antes da primeira. É a estrutura certa quando o número de repetições não é conhecido de antemão.
+
+\begin{codigoc}{Laço while}
+#include <stdio.h>
+
+int main(void) {
+    int contador = 5;
+
+    while (contador > 0) {
+        printf("Contagem: %d\n", contador);
+        contador--;
+    }
+    printf("Fim!\n");
+
+    return 0;
+}
+\end{codigoc}
+
+\section{\code{do-while}}
+
+O laço \code{do-while} é semelhante ao \code{while}, mas testa a condição \emph{depois} de cada iteração — garantindo que o bloco execute \textbf{ao menos uma vez}, mesmo que a condição já comece falsa. Isso o torna a estrutura natural para validação de entrada, onde é preciso pedir o dado ao menos uma vez antes de poder avaliar se ele é válido:
+
+\begin{codigoc}{Laço do-while}
+#include <stdio.h>
+
+int main(void) {
+    int senha, tentativas = 0;
+
+    do {
+        printf("Digite a senha: ");
+        scanf("%d", &senha);
+        tentativas++;
+    } while (senha != 1234 && tentativas < 3);
+
+    if (senha == 1234) {
+        printf("Acesso liberado!\n");
+    } else {
+        printf("Numero de tentativas excedido.\n");
+    }
+
+    return 0;
+}
+\end{codigoc}
+
+\begin{esp32box}
+Todo firmware embarcado gira, conceitualmente, em torno de um \textbf{laço principal infinito} — algo como \code{while (1) \{ ... \}}, que nunca termina enquanto o dispositivo estiver ligado, lendo sensores e atualizando saídas indefinidamente. No framework Arduino, como veremos no \cref{cap:anatomia}, esse laço já vem pronto: em vez de escrevê-lo você mesmo, basta colocar o código a repetir dentro de uma função chamada \code{loop()} — o próprio framework se encarrega de chamá-la repetidamente, para sempre, por trás dos panos.
+\end{esp32box}
+
+\section{\code{break} e \code{continue}}
+
+Dois comandos permitem alterar o fluxo normal de um laço:
+
+\begin{itemize}
+    \item \code{break} — interrompe o laço imediatamente, saindo dele por completo;
+    \item \code{continue} — pula o restante da iteração atual e avança direto para a próxima.
+\end{itemize}
+
+\begin{codigoc}{break e continue}
+#include <stdio.h>
+
+int main(void) {
+    for (int i = 1; i <= 10; i++) {
+
+        if (i % 2 == 0) {
+            continue;   // pula os numeros pares
+        }
+
+        if (i > 7) {
+            break;      // interrompe o laco ao passar de 7
+        }
+
+        printf("%d\n", i);  // imprime: 1, 3, 5, 7
+    }
+    return 0;
+}
+\end{codigoc}

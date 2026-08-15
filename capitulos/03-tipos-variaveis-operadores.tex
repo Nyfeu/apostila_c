@@ -1,0 +1,204 @@
+\chapter{Tipos de Variáveis e Operadores}
+\label{cap:tipos}
+
+Uma \textbf{variável} é um espaço nomeado na memória usado para armazenar um valor que pode mudar ao longo da execução do programa. Diferente de linguagens como Python, C exige que o \textbf{tipo} de cada variável seja declarado explicitamente — é isso que permite ao compilador saber, entre outras coisas, quantos bytes reservar para ela.
+
+\section{Tipos primitivos}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Tipo} & \textbf{Uso típico} & \textbf{Tamanho comum*} \\
+\midrule
+\code{char}   & um caractere / inteiro pequeno & 1 byte \\
+\code{int}    & número inteiro                 & 4 bytes \\
+\code{float}  & número em ponto flutuante (precisão simples) & 4 bytes \\
+\code{double} & número em ponto flutuante (precisão dupla)   & 8 bytes \\
+\code{\_Bool} / \code{bool}\textsuperscript{†} & valor lógico (verdadeiro/falso) & 1 byte \\
+\bottomrule
+\end{tabular}
+\caption{Tipos primitivos da linguagem C. *O tamanho exato depende da arquitetura e do compilador — nunca assuma, use \code{sizeof}. †\code{bool} requer \code{\#include <stdbool.h>}.}
+\end{table}
+
+Os tipos \code{int}, \code{char} e \code{double} ainda podem ser modificados por qualificadores:
+
+\begin{codigoc}{Qualificadores de tipo}
+short int   a;   // inteiro "curto" (tipicamente 2 bytes)
+long int    b;   // inteiro "longo" (tipicamente 4 ou 8 bytes)
+long long   c;   // inteiro "bem longo" (tipicamente 8 bytes)
+
+unsigned int d;  // apenas valores nao-negativos (dobra o limite superior)
+signed int   e;  // admite valores negativos (comportamento padrao de "int")
+\end{codigoc}
+
+Por padrão, os tipos inteiros são \code{signed} (admitem valores negativos, usando uma representação chamada complemento de dois). Adicionar \code{unsigned} descarta o sinal e usa todos os bits para magnitude — um \code{uint8\_t} (8 bits sem sinal) vai de 0 a 255; sua versão com sinal, de $-128$ a $127$.
+
+\begin{codigoc}{Descobrindo o tamanho de um tipo}
+#include <stdio.h>
+
+int main(void) {
+    printf("sizeof(int)    = %zu bytes\n", sizeof(int));
+    printf("sizeof(double) = %zu bytes\n", sizeof(double));
+    printf("sizeof(char)   = %zu bytes\n", sizeof(char));
+    return 0;
+}
+\end{codigoc}
+
+O operador \code{sizeof} retorna, em tempo de compilação, o número de bytes ocupados por um tipo ou variável — é a ferramenta certa para nunca precisar ``chutar'' o tamanho de nada.
+
+\begin{atencao}
+A linguagem C \textbf{garante apenas tamanhos mínimos} para os tipos primitivos, não tamanhos exatos — \code{int} pode ter 2, 4 ou até 8 bytes dependendo da plataforma e do compilador. Código que assume um tamanho fixo para \code{int} pode compilar perfeitamente em um computador e se comportar de forma diferente (ou quebrar) em um microcontrolador. É exatamente esse problema que a próxima seção resolve.
+\end{atencao}
+
+\section{Tipos de largura fixa: \code{stdint.h}}
+
+Para eliminar essa ambiguidade — crítica em sistemas embarcados, onde o tamanho exato de cada variável impacta diretamente no uso de uma memória escassa —, a biblioteca padrão \code{<stdint.h>} define tipos com largura \textbf{garantida}:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Tipo} & \textbf{Descrição} \\
+\midrule
+\code{int8\_t}  / \code{uint8\_t}  & inteiro de 8 bits, com/sem sinal (0 a 255) \\
+\code{int16\_t} / \code{uint16\_t} & inteiro de 16 bits, com/sem sinal (0 a 65\,535) \\
+\code{int32\_t} / \code{uint32\_t} & inteiro de 32 bits, com/sem sinal (0 a $2^{32}\!-\!1$) \\
+\code{int64\_t} / \code{uint64\_t} & inteiro de 64 bits, com/sem sinal \\
+\bottomrule
+\end{tabular}
+\caption{Tipos de largura fixa de \code{<stdint.h>}.}
+\end{table}
+
+\begin{esp32box}
+No código de firmware para o \ESP{} (e em praticamente todo código embarcado sério), \code{uint8\_t}, \code{uint16\_t} e \code{uint32\_t} são usados com muito mais frequência do que \code{int} puro. O motivo é duplo: primeiro, previsibilidade — os registradores dos periféricos do chip exigem tamanhos exatos; segundo, economia de memória — se um valor de sensor nunca ultrapassa 255, guardá-lo em \code{uint8\_t} em vez de \code{int} (que pode ocupar o quádruplo do espaço) é uma escolha consciente de engenharia, não um exagero.
+\end{esp32box}
+
+\section{Operadores}
+
+\subsection{Aritméticos}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}cll@{}}
+\toprule
+\textbf{Operador} & \textbf{Significado} & \textbf{Exemplo} \\
+\midrule
+\code{+} & adição               & \code{a + b} \\
+\code{-} & subtração            & \code{a - b} \\
+\code{*} & multiplicação        & \code{a * b} \\
+\code{/} & divisão              & \code{a / b} \\
+\code{\%} & resto da divisão (módulo) & \code{a \% b} \\
+\bottomrule
+\end{tabular}
+\caption{Operadores aritméticos.}
+\end{table}
+
+\begin{atencao}
+A divisão entre dois inteiros em C é sempre \textbf{inteira} — o resultado é truncado, não arredondado. \code{7 / 2} vale \code{3}, não \code{3.5}. Para obter um resultado fracionário, pelo menos um dos operandos precisa ser de ponto flutuante: \code{7.0 / 2} vale \code{3.5}.
+\end{atencao}
+
+\subsection{Relacionais e lógicos}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}cl@{}c@{}cl@{}}
+\toprule
+\multicolumn{2}{c}{\textbf{Relacionais}} & & \multicolumn{2}{c}{\textbf{Lógicos}} \\
+\cmidrule(r){1-2} \cmidrule(l){4-5}
+\code{==} & igual a & & \code{\&\&} & E lógico (\emph{and}) \\
+\code{!=} & diferente de & & \code{||} & OU lógico (\emph{or}) \\
+\code{>} \ \code{<} & maior / menor que & & \code{!} & NÃO lógico (\emph{not}) \\
+\code{>=} \ \code{<=} & maior/menor ou igual & & & \\
+\bottomrule
+\end{tabular}
+\caption{Operadores relacionais e lógicos — o resultado é sempre 0 (falso) ou 1 (verdadeiro).}
+\end{table}
+
+\begin{atencao}
+Um dos erros mais clássicos em C é confundir o operador de \textbf{atribuição} (\code{=}) com o de \textbf{comparação} (\code{==}). A expressão \code{if (x = 5)} é \emph{sintaticamente válida}: ela atribui 5 a \code{x} e depois avalia esse resultado (sempre verdadeiro, pois 5 é diferente de zero) — quase nunca é isso que se pretendia escrever.
+\end{atencao}
+
+\subsection{Bit a bit (\emph{bitwise})}
+
+Operadores bit a bit atuam diretamente sobre a representação binária dos operandos, bit por bit — e são especialmente importantes em programação embarcada.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}cll@{}}
+\toprule
+\textbf{Operador} & \textbf{Significado} & \textbf{Exemplo} \\
+\midrule
+\code{\&} & E bit a bit (AND)      & \code{0b1100 \& 0b1010 == 0b1000} \\
+\code{|}  & OU bit a bit (OR)      & \code{0b1100 | 0b1010 == 0b1110} \\
+\code{\textasciicircum} & OU exclusivo (XOR) & \code{0b1100 \textasciicircum\ 0b1010 == 0b0110} \\
+\code{\textasciitilde} & complemento (NOT) & \code{\textasciitilde 0b0000 == 0b1111} \\
+\code{<<} & deslocamento à esquerda & \code{1 << 3 == 0b1000} (=8) \\
+\code{>>} & deslocamento à direita  & \code{8 >> 2 == 0b0010} (=2) \\
+\bottomrule
+\end{tabular}
+\caption{Operadores bit a bit.}
+\end{table}
+
+\begin{esp32box}
+Operadores bit a bit são a ferramenta padrão para manipular \textbf{registradores} de periféricos e criar \textbf{máscaras de bits} — muito usadas para representar, de forma compacta, o estado de vários pinos ou dispositivos digitais em uma única variável. Por exemplo, o estado de 8 relés (ligado/desligado) cabe inteiro em um único \code{uint8\_t}, um bit por relé:
+\begin{minted}{c}
+uint8_t estado_reles = 0;
+
+estado_reles |= (1 << 3);   // liga o rele numero 3
+estado_reles &= ~(1 << 5);  // desliga o rele numero 5
+
+if (estado_reles & (1 << 3)) {   // verifica se o rele 3 esta ligado
+    printf("Rele 3 esta ligado\n");
+}
+\end{minted}
+O operador \code{<<} desloca o bit \code{1} para a posição correspondente ao dispositivo desejado; \code{|=} liga esse bit sem afetar os demais; \code{\&= \textasciitilde(...)} desliga apenas ele. Voltaremos a essa ideia de forma prática ao ler e escrever pinos digitais no \cref{cap:gpio}.
+\end{esp32box}
+
+\subsection{Atribuição composta}
+
+\begin{codigoc}{Operadores de atribuição composta}
+int contador = 0;
+
+contador += 5;   // equivalente a: contador = contador + 5;
+contador -= 2;   // equivalente a: contador = contador - 2;
+contador *= 3;   // equivalente a: contador = contador * 3;
+contador /= 2;   // equivalente a: contador = contador / 2;
+
+contador++;      // incrementa em 1 (equivalente a contador += 1)
+contador--;      // decrementa em 1 (equivalente a contador -= 1)
+\end{codigoc}
+
+\begin{dica}
+\code{contador++} (pós-incremento) e \code{++contador} (pré-incremento) têm o mesmo efeito \emph{sobre a variável}, mas diferem no \emph{valor retornado pela expressão} quando usados dentro de outra operação — por exemplo, \code{y = x++} atribui a \code{y} o valor \emph{antigo} de \code{x} e só depois incrementa; \code{y = ++x} incrementa primeiro e atribui o novo valor. Quando o incremento é usado sozinho, em sua própria linha, essa diferença não importa.
+\end{dica}
+
+\section{Conversão de tipos (\emph{casting})}
+
+Quando uma expressão mistura tipos diferentes, C converte automaticamente os valores para um tipo comum antes de operar — a chamada \textbf{conversão implícita}. Isso já apareceu antes: \code{7.0 / 2} funciona porque o \code{2} (inteiro) é implicitamente convertido para \code{2.0} (ponto flutuante) antes da divisão.
+
+Também é possível forçar uma conversão explicitamente, escrevendo o tipo desejado entre parênteses antes da expressão — o chamado \textbf{cast}:
+
+\begin{codigoc}{Conversão explícita de tipos}
+#include <stdio.h>
+
+int main(void) {
+    int total = 7, quantidade = 2;
+
+    float media_errada = total / quantidade;          // 3.0 (divisao inteira antes!)
+    float media_certa  = (float) total / quantidade;   // 3.5 (cast antes da divisao)
+
+    printf("%.1f\n", media_errada);
+    printf("%.1f\n", media_certa);
+
+    return 0;
+}
+\end{codigoc}
+
+\begin{atencao}
+Converter de um tipo ``maior'' para um ``menor'' (por exemplo, \code{double} para \code{int}, ou \code{int} para \code{uint8\_t}) pode \textbf{truncar} ou \textbf{perder informação}: \code{(int) 3.99} vale \code{3}, não \code{4} (a parte fracionária é simplesmente descartada, sem arredondar); atribuir o valor \code{300} a uma variável \code{uint8\_t} (que só representa até 255) produz um resultado \emph{enrolado} (\emph{overflow}), não um erro — o compilador, em geral, nem avisa.
+\end{atencao}
+
+\begin{esp32box}
+Casts explícitos aparecem com frequência no código de firmware, principalmente ao converter a leitura bruta e inteira de um sensor analógico para uma grandeza física em ponto flutuante. É exatamente o que faremos no \cref{cap:adc}: converter o valor devolvido por \code{analogRead()} (um \code{int} entre 0 e 4095) em uma tensão em volts, algo como \code{(float) leitura / 4095.0f * 3.3f}.
+\end{esp32box}

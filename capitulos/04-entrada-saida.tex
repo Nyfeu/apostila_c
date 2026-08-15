@@ -1,0 +1,168 @@
+\chapter{Entrada e Saída de Dados}
+\label{cap:entrada-saida}
+
+Um programa que não troca informação com o mundo exterior tem utilidade limitada. Nesta seção vemos como C lê dados fornecidos pelo usuário (entrada) e como exibe resultados (saída), usando as funções da biblioteca padrão \code{<stdio.h>}.
+
+\section{Saída formatada: \code{printf}}
+
+Já usamos \code{printf} para exibir texto fixo. Seu verdadeiro poder está nos \textbf{especificadores de formato}, que permitem inserir valores de variáveis dentro da string de saída.
+
+\begin{codigoc}{Especificadores de formato}
+#include <stdio.h>
+
+int main(void) {
+    int idade = 25;
+    float altura = 1.78f;
+    char inicial = 'A';
+
+    printf("Idade: %d anos\n", idade);
+    printf("Altura: %.2f m\n", altura);
+    printf("Inicial: %c\n", inicial);
+    printf("Idade em hex: %x, em octal: %o\n", idade, idade);
+
+    return 0;
+}
+\end{codigoc}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Especificador} & \textbf{Tipo} \\
+\midrule
+\code{\%d} / \code{\%i} & inteiro com sinal (\code{int}) \\
+\code{\%u}  & inteiro sem sinal (\code{unsigned int}) \\
+\code{\%f}  & ponto flutuante (\code{float}/\code{double}) \\
+\code{\%c}  & caractere único (\code{char}) \\
+\code{\%s}  & string (\code{char *}) \\
+\code{\%x} / \code{\%X} & inteiro em hexadecimal (minúsculo/maiúsculo) \\
+\code{\%o}  & inteiro em octal \\
+\code{\%p}  & endereço de ponteiro \\
+\code{\%\%} & imprime o caractere \code{\%} literal \\
+\bottomrule
+\end{tabular}
+\caption{Principais especificadores de formato de \code{printf}/\code{scanf}.}
+\end{table}
+
+O especificador pode incluir modificadores de precisão e largura: \code{\%.2f} imprime um ponto flutuante com duas casas decimais; \code{\%5d} reserva um campo de 5 caracteres de largura, alinhado à direita.
+
+\section{Entrada formatada: \code{scanf}}
+
+A função \code{scanf} lê dados digitados pelo usuário no terminal, seguindo a mesma lógica de especificadores de \code{printf} — porém exige o \textbf{endereço} da variável onde o valor lido será armazenado, indicado pelo operador \code{\&} (introduzido formalmente no \cref{cap:ponteiros}).
+
+\begin{codigoc}{Lendo dados do teclado}
+#include <stdio.h>
+
+int main(void) {
+    int idade;
+
+    printf("Digite sua idade: ");
+    scanf("%d", &idade);
+
+    printf("Voce tem %d anos.\n", idade);
+    return 0;
+}
+\end{codigoc}
+
+\begin{atencao}
+Esquecer o \code{\&} antes da variável em \code{scanf} é um erro comum e perigoso: em vez do endereço da variável, \code{scanf} recebe o \emph{valor} nela contido, interpretado como se fosse um endereço de memória — e tenta escrever ali. O compilador frequentemente emite um aviso (\emph{warning}), mas o programa pode compilar mesmo assim e falhar (ou pior, corromper memória) apenas durante a execução.
+\end{atencao}
+
+\begin{dica}
+\code{scanf} é útil para aprender, mas tem limitações importantes de segurança e de tratamento de erros (não valida corretamente o que foi digitado, e é fácil causar \emph{buffer overflow} ao ler strings sem limitar o tamanho). Em código de produção, funções como \code{fgets} combinada com \code{sscanf} costumam ser preferidas.
+\end{dica}
+
+\section{Caracteres e strings}
+
+Uma \code{string} em C não é um tipo primitivo — é, na prática, um vetor de caracteres (\code{char[]}) terminado por um caractere nulo especial, \code{'\textbackslash 0'}, que marca seu fim. Esse assunto será retomado com mais profundidade no \cref{cap:arranjos}.
+
+\begin{codigoc}{Strings como vetores de caracteres}
+#include <stdio.h>
+
+int main(void) {
+    char nome[20];
+
+    printf("Digite seu nome: ");
+    scanf("%19s", nome);   // le ate 19 caracteres (+ '\0' automatico)
+
+    printf("Ola, %s!\n", nome);
+    return 0;
+}
+\end{codigoc}
+
+\section{Sequências de escape}
+
+Dentro de strings e caracteres literais, a barra invertida introduz caracteres especiais que não têm representação visual direta:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Sequência} & \textbf{Significado} \\
+\midrule
+\code{\textbackslash n} & nova linha (\emph{newline}) \\
+\code{\textbackslash t} & tabulação horizontal \\
+\code{\textbackslash r} & retorno de carro (\emph{carriage return}) \\
+\code{\textbackslash 0} & caractere nulo (fim de string) \\
+\code{\textbackslash \textbackslash} & barra invertida literal \\
+\code{\textbackslash "} & aspas duplas literais (dentro de uma string) \\
+\bottomrule
+\end{tabular}
+\caption{Sequências de escape mais comuns.}
+\end{table}
+
+\section{Manipulação de arquivos}
+
+A biblioteca \code{<stdio.h>} também fornece funções para ler e escrever arquivos em disco, usando um ponteiro do tipo \code{FILE *} como identificador do arquivo aberto.
+
+\begin{codigoc}{Escrevendo e lendo um arquivo de texto}
+#include <stdio.h>
+
+int main(void) {
+    FILE *arquivo = fopen("dados.txt", "w");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return 1;
+    }
+
+    fprintf(arquivo, "Temperatura: %d C\n", 27);
+    fclose(arquivo);
+
+    return 0;
+}
+\end{codigoc}
+
+O padrão \code{"w"} abre o arquivo para escrita (criando-o se não existir, ou apagando seu conteúdo se existir); \code{"r"} abre para leitura; \code{"a"} adiciona conteúdo ao final de um arquivo existente. Verificar se \code{fopen} retornou \code{NULL} é essencial — é assim que a função sinaliza falha (por exemplo, permissão negada ou disco cheio).
+
+\section{Saída como ferramenta de depuração}
+\label{sec:printf-debug}
+
+Além de comunicar resultados ao usuário final, a saída de um programa é, na prática, a ferramenta de \textbf{depuração} (\emph{debug}) mais usada por programadores iniciantes e experientes — imprimir o valor de uma variável em pontos estratégicos do código para entender \emph{por que} ele não está se comportando como esperado é uma técnica tão comum que tem até um apelido: \emph{print debugging}.
+
+\begin{codigoc}{Depurando um cálculo com printf}
+#include <stdio.h>
+
+int main(void) {
+    int total = 0;
+
+    for (int i = 1; i <= 5; i++) {
+        total += i;
+        printf("[DEBUG] i = %d, total acumulado = %d\n", i, total);
+    }
+
+    printf("Resultado final: %d\n", total);
+    return 0;
+}
+\end{codigoc}
+
+\begin{dica}
+Um prefixo consistente, como \code{[DEBUG]} no exemplo acima, ajuda a distinguir mensagens de depuração (que normalmente serão removidas ou desativadas depois) das mensagens de saída ``de verdade'' do programa. Ferramentas de depuração mais sofisticadas (como o \emph{debugger} \code{gdb}, capaz de pausar a execução e inspecionar variáveis sem precisar de nenhum \code{printf}) existem e são valiosas, mas a técnica de espalhar mensagens de saída pelo código continua sendo, de longe, a mais rápida e mais usada no dia a dia — especialmente em sistemas embarcados, como veremos a seguir.
+\end{dica}
+
+\begin{esp32box}
+O \ESP{} não tem, por padrão, teclado nem tela — mas tem algo funcionalmente equivalente: a \textbf{porta serial} (UART), conectada ao computador via USB. No framework Arduino, a saída não passa pelo \code{printf} da biblioteca padrão diretamente: usa-se o objeto \code{Serial}, inicializado uma única vez em \code{setup()} com \code{Serial.begin(115200);}. A partir daí, \code{Serial.println("mensagem")} exibe uma linha de texto, e \code{Serial.printf("valor: \%d\textbackslash n", x)} aceita exatamente os \textbf{mesmos especificadores de formato} de \code{printf} apresentados neste capítulo — o conhecimento é diretamente reaproveitável, só muda a forma de chamar a função. É assim que toda a técnica de depuração por mensagens de saída, vista acima, se transporta para o firmware: em vez de rodar em um terminal, as mensagens \code{[DEBUG]} aparecem no \textbf{monitor serial} do PlatformIO. O \cref{cap:serial} é dedicado inteiramente a essa prática no \ESP{}.
+
+Já \code{scanf} praticamente não tem uso em firmware embarcado — a ``entrada'' normalmente vem de sensores e botões, não de um teclado, como veremos a partir do \cref{cap:gpio}.
+
+Quanto a arquivos: o \ESP{} pode montar um sistema de arquivos dentro da própria memória flash (usando bibliotecas como LittleFS, também disponíveis no framework Arduino), permitindo abrir, ler e escrever arquivos com uma API muito parecida com a de \code{<stdio.h>} — extremamente útil para salvar configurações ou registros que precisam sobreviver a um desligamento.
+\end{esp32box}

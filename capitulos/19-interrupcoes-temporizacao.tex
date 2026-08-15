@@ -1,0 +1,87 @@
+\chapter{Interrupções e Temporização}
+\label{cap:interrupcoes}
+
+O botão lido no \cref{cap:gpio} foi verificado por \textbf{sondagem} (\emph{polling}): o laço principal pergunta repetidamente, a cada iteração, ``o botão está pressionado agora?''. Essa abordagem é simples, mas tem um custo — o processador gasta tempo verificando um evento que, na maior parte do tempo, ainda não aconteceu. \textbf{Interrupções} resolvem esse problema de forma elegante: em vez de perguntar, o firmware é \emph{avisado} pelo hardware exatamente no instante em que o evento ocorre.
+
+\section{O que é uma interrupção}
+
+Uma \textbf{interrupção} é um mecanismo de hardware que pausa imediatamente o que o processador está fazendo, executa uma função especial chamada \textbf{rotina de tratamento de interrupção} (\emph{Interrupt Service Routine}, ou \textbf{ISR}), e depois retoma exatamente de onde havia parado — tudo de forma transparente ao código que estava em execução.
+
+\begin{atencao}
+Uma ISR deve ser \textbf{extremamente curta e rápida}. Ela interrompe literalmente qualquer coisa que estivesse rodando, então mantê-la presa por muito tempo atrasa todo o resto do sistema. A prática recomendada — usada no exemplo a seguir — é: dentro da ISR, apenas \textbf{sinalizar} que o evento ocorreu (atualizando uma variável) e sair; o processamento de fato acontece depois, dentro de \code{loop()}. Chamar \code{Serial.print}, \code{delay}, ou qualquer função ``pesada'' de dentro de uma ISR deve ser evitado.
+\end{atencao}
+
+\section{Interrupções de GPIO com \code{attachInterrupt}}
+
+Vamos reescrever a leitura de botão do \cref{cap:gpio}, agora reagindo por interrupção em vez de sondagem.
+
+\begin{codigoc}{src/main.cpp — botão via interrupção}
+#define PINO_BOTAO 15
+
+volatile bool evento_botao = false;
+
+void IRAM_ATTR botao_isr() {
+    evento_botao = true;   // apenas sinaliza: nada de Serial aqui dentro
+}
+
+void setup() {
+    Serial.begin(115200);
+    pinMode(PINO_BOTAO, INPUT_PULLUP);
+
+    // dispara a ISR na borda de descida (quando o botao e pressionado)
+    attachInterrupt(digitalPinToInterrupt(PINO_BOTAO), botao_isr, FALLING);
+}
+
+void loop() {
+    if (evento_botao) {
+        evento_botao = false;   // consome o evento
+        Serial.println("Botao foi pressionado!");
+    }
+}
+\end{codigoc}
+
+\begin{itemize}
+    \item \code{attachInterrupt(pino, funcao, modo)} registra \code{botao\_isr} para ser chamada automaticamente pelo hardware sempre que o evento especificado ocorrer no pino indicado — \code{digitalPinToInterrupt()} converte o número do pino para o identificador de interrupção correspondente;
+    \item \code{FALLING} dispara a interrupção na \textbf{borda de descida} — o instante exato em que o nível do pino cai de alto para baixo (o momento em que um botão com pull-up é pressionado). Outras opções incluem \code{RISING} (borda de subida) e \code{CHANGE} (qualquer mudança de nível);
+    \item \code{IRAM\_ATTR} garante que o código da ISR fique carregado na memória RAM interna do \ESP{}, exigido pelo framework para funções chamadas a partir de uma interrupção;
+    \item A variável \code{evento\_botao} é declarada \code{volatile} — exatamente pelo motivo explicado no \cref{cap:funcoes}: seu valor é alterado de forma assíncrona pela ISR, e o compilador não pode assumir que ela permanece constante entre uma leitura e outra dentro de \code{loop()}.
+\end{itemize}
+
+\begin{dica}
+Esse padrão — ISR mínima apenas sinalizando uma variável \code{volatile}, processamento de fato feito depois em \code{loop()} — também resolve o problema de \emph{debounce} do \cref{cap:gpio} de forma mais robusta: é possível ignorar novos eventos por um curto período após o último processado (comparando o tempo decorrido, como veremos a seguir), sem nunca bloquear a interrupção em si.
+\end{dica}
+
+\section{Temporização sem bloquear o laço: a técnica de \code{millis()}}
+
+Até aqui, todos os atrasos usaram \code{delay(ms)} — mas \code{delay} \textbf{bloqueia completamente} a execução de \code{loop()} durante aquele intervalo, impedindo que qualquer outra coisa aconteça nesse meio tempo (ler outro sensor, verificar outro botão, atualizar outro dispositivo). Para tarefas periódicas que não podem se dar ao luxo de bloquear o resto do programa, o Arduino oferece a função \code{millis()}, que retorna o número de milissegundos desde que o \ESP{} foi ligado.
+
+\begin{codigoc}{Piscando um LED sem usar delay()}
+#define PINO_LED 2
+const unsigned long INTERVALO = 1000;   // 1000 ms
+
+unsigned long ultimo_instante = 0;
+bool estado_led = false;
+
+void setup() {
+    pinMode(PINO_LED, OUTPUT);
+}
+
+void loop() {
+    unsigned long agora = millis();
+
+    if (agora - ultimo_instante >= INTERVALO) {
+        ultimo_instante = agora;
+        estado_led = !estado_led;
+        digitalWrite(PINO_LED, estado_led);
+    }
+
+    // o resto de loop() continua livre para fazer outras coisas
+    // a cada volta, sem nunca ficar bloqueado esperando
+}
+\end{codigoc}
+
+Essa comparação — ``já se passou tempo suficiente desde a última vez?'' — é um padrão tão comum em firmware que tem nome: \textbf{temporização cooperativa} (ou, informalmente, o padrão \emph{blink without delay}). Ao contrário de um \code{delay()}, \code{loop()} continua girando livremente a cada iteração; a ação só acontece quando o tempo decorrido atinge o intervalo desejado, deixando o restante do código livre para tratar sensores, botões e outras tarefas no meio tempo.
+
+\begin{esp32box}
+Combinar \textbf{interrupções} (para eventos externos imprevisíveis, como um botão) com \textbf{temporização por \code{millis()}} (para tarefas periódicas e previsíveis, como ler um sensor a cada segundo) é o padrão de projeto mais comum em firmware Arduino para o \ESP{} — e é exatamente essa combinação que usaremos no projeto integrador do próximo capítulo.
+\end{esp32box}

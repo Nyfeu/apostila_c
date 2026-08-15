@@ -1,0 +1,132 @@
+\chapter{Ponteiros e Alocação Dinâmica de Memória}
+\label{cap:ponteiros}
+
+Ponteiros são, ao mesmo tempo, o recurso mais poderoso e o mais temido por quem está aprendendo C. Eles são também o motivo pelo qual C permanece tão relevante em programação de baixo nível: nenhuma outra construção da linguagem dá ao programador controle tão direto sobre a memória do computador.
+
+\section{O que é um ponteiro}
+
+Toda variável, ao ser declarada, ocupa um espaço na memória identificado por um \textbf{endereço}. Um \textbf{ponteiro} é uma variável cujo valor \emph{é} o endereço de outra variável — em vez de armazenar um dado diretamente, ele aponta para onde esse dado está guardado.
+
+\begin{codigoc}{Endereços e ponteiros}
+#include <stdio.h>
+
+int main(void) {
+    int idade = 25;
+    int *ptr_idade = &idade;   // ptr_idade guarda o ENDERECO de idade
+
+    printf("Valor de idade:        %d\n", idade);
+    printf("Endereco de idade:     %p\n", (void *) &idade);
+    printf("Valor de ptr_idade:    %p\n", (void *) ptr_idade);
+    printf("Valor apontado por ptr: %d\n", *ptr_idade);
+
+    return 0;
+}
+\end{codigoc}
+
+Dois operadores são essenciais para trabalhar com ponteiros:
+
+\begin{itemize}
+    \item \code{\&} (\emph{address-of}) — obtém o endereço de uma variável: \code{\&idade};
+    \item \code{*} (\emph{dereference}, ou ``desreferenciação'') — acessa o valor armazenado no endereço apontado: \code{*ptr\_idade}.
+\end{itemize}
+
+\begin{nota}
+O mesmo símbolo \code{*} tem dois papéis diferentes dependendo do contexto: na \textbf{declaração} (\code{int *ptr}), ele indica que a variável é um ponteiro; em uma \textbf{expressão} (\code{*ptr = 10}), ele desreferencia o ponteiro, acessando o valor apontado.
+\end{nota}
+
+\section{Ponteiros como parâmetros de função}
+
+Como vimos no \cref{cap:funcoes}, argumentos são passados por valor em C — uma função não pode alterar diretamente uma variável do código que a chamou. Ponteiros resolvem exatamente esse problema: em vez de passar o valor, passa-se o \emph{endereço}, permitindo que a função modifique o dado original.
+
+\begin{codigoc}{Modificando uma variável via ponteiro}
+#include <stdio.h>
+
+void dobrar(int *x) {
+    *x = *x * 2;   // modifica o valor no endereco apontado
+}
+
+int main(void) {
+    int numero = 10;
+    dobrar(&numero);
+    printf("%d\n", numero);   // agora imprime 20
+    return 0;
+}
+\end{codigoc}
+
+\begin{dica}
+É exatamente por esse mecanismo que \code{scanf("\%d", \&idade)} funciona: sem o \code{\&}, a função receberia apenas uma cópia do valor de \code{idade} e não teria como escrever o dado lido de volta na variável original.
+\end{dica}
+
+\section{Ponteiros e vetores}
+
+O nome de um vetor, usado sozinho em uma expressão, é convertido automaticamente para um ponteiro ao seu primeiro elemento — é por isso que, no \cref{cap:arranjos}, passar um vetor para uma função na prática passa um ponteiro.
+
+\begin{codigoc}{Aritmética de ponteiros}
+#include <stdio.h>
+
+int main(void) {
+    int valores[4] = {10, 20, 30, 40};
+    int *p = valores;   // p aponta para valores[0]
+
+    printf("%d\n", *p);        // 10
+    printf("%d\n", *(p + 1));  // 20  (equivalente a valores[1])
+    printf("%d\n", *(p + 2));  // 30  (equivalente a valores[2])
+
+    return 0;
+}
+\end{codigoc}
+
+Somar 1 a um ponteiro não avança um único byte — avança o \textbf{tamanho do tipo apontado}. Em \code{int *p}, \code{p + 1} avança 4 bytes (o tamanho de um \code{int}), apontando corretamente para o próximo elemento do vetor.
+
+\section{Alocação dinâmica de memória}
+
+Todas as variáveis vistas até agora têm tamanho fixo, decidido em tempo de compilação, e residem na \textbf{pilha} (\emph{stack}) — uma região de memória gerenciada automaticamente. Às vezes, porém, o tamanho necessário só é conhecido em tempo de execução (por exemplo, depende de uma entrada do usuário). Para esses casos, C permite reservar memória manualmente, em uma região chamada \textbf{heap}, usando funções da biblioteca \code{<stdlib.h>}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Função} & \textbf{Finalidade} \\
+\midrule
+\code{malloc(tamanho)}          & aloca \code{tamanho} bytes, sem inicializar \\
+\code{calloc(n, tamanho)}       & aloca \code{n} blocos de \code{tamanho} bytes, zerados \\
+\code{realloc(ptr, novo\_tam)}  & redimensiona um bloco previamente alocado \\
+\code{free(ptr)}                & libera a memória apontada por \code{ptr} \\
+\bottomrule
+\end{tabular}
+\caption{Funções de alocação dinâmica de \code{<stdlib.h>}.}
+\end{table}
+
+\begin{codigoc}{Alocando um vetor em tempo de execução}
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    int n;
+    printf("Quantos numeros deseja armazenar? ");
+    scanf("%d", &n);
+
+    int *vetor = (int *) malloc(n * sizeof(int));
+    if (vetor == NULL) {
+        printf("Falha ao alocar memoria!\n");
+        return 1;
+    }
+
+    for (int i = 0; i < n; i++) {
+        vetor[i] = i * i;
+        printf("%d ", vetor[i]);
+    }
+    printf("\n");
+
+    free(vetor);   // devolve a memoria ao sistema
+    return 0;
+}
+\end{codigoc}
+
+\begin{atencao}
+Toda chamada a \code{malloc} (ou \code{calloc}/\code{realloc}) bem-sucedida deve ter, mais cedo ou mais tarde, uma chamada correspondente a \code{free}. Esquecer de liberar memória alocada causa \textbf{vazamento de memória} (\emph{memory leak}) — o programa consome cada vez mais memória ao longo do tempo, até eventualmente esgotá-la. Usar um ponteiro \emph{depois} de liberá-lo (um \emph{dangling pointer}) ou liberá-lo duas vezes são igualmente perigosos, e podem causar comportamento indefinido ou travamentos difíceis de depurar.
+\end{atencao}
+
+\begin{esp32box}
+O \ESP{} tem apenas algumas centenas de kB de RAM disponíveis, compartilhados entre o programa, a pilha e o heap — e, diferente de um computador, não existe memória virtual em disco para ``salvar'' o sistema quando a memória se esgota: se um \code{malloc} falhar por falta de espaço, ele retorna \code{NULL}, e um firmware mal escrito que não verifica isso pode travar ou reiniciar sozinho (um \emph{crash}). Por essa razão, boa parte do código embarcado profissional evita alocação dinâmica sempre que possível, preferindo vetores de tamanho fixo, definidos em tempo de compilação — sacrificando um pouco de flexibilidade em troca de comportamento previsível, essencial em sistemas que muitas vezes precisam funcionar ininterruptamente por meses.
+\end{esp32box}

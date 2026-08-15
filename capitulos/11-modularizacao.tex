@@ -1,0 +1,89 @@
+\chapter{Modularização: Bibliotecas e Múltiplos Arquivos}
+\label{cap:modularizacao}
+
+Programas pequenos cabem confortavelmente em um único arquivo \code{.c}. Programas maiores — e todo firmware real se enquadra nessa categoria — precisam ser organizados em múltiplos arquivos, cada um responsável por uma parte coerente do sistema. Este capítulo fecha a Parte I mostrando como C organiza esse tipo de estrutura.
+
+\section{Bibliotecas de software}
+
+Uma \textbf{biblioteca} é um conjunto de funções, tipos e constantes já prontos, reutilizáveis por qualquer programa que a inclua. C distingue dois tipos principais:
+
+\begin{itemize}
+    \item \textbf{Biblioteca padrão} — faz parte da linguagem, vem com o compilador. Exemplos já vistos: \code{<stdio.h>} (entrada/saída), \code{<stdlib.h>} (alocação de memória, conversões, \code{rand}), \code{<string.h>} (manipulação de strings), \code{<math.h>} (funções matemáticas);
+    \item \textbf{Bibliotecas de terceiros} — escritas por outras pessoas ou equipes para propósitos específicos (por exemplo, comunicação com um sensor específico), instaladas separadamente.
+\end{itemize}
+
+\begin{codigoc}{Algumas funções úteis de string.h e math.h}
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+
+int main(void) {
+    char nome[20] = "ESP32";
+
+    printf("Tamanho: %zu\n", strlen(nome));      // 5
+    strcat(nome, "-DevKit");                     // concatena
+    printf("Concatenado: %s\n", nome);
+
+    printf("Raiz quadrada de 2: %f\n", sqrt(2)); // 1.414214
+    printf("2 elevado a 10: %f\n", pow(2, 10));  // 1024.000000
+
+    return 0;
+}
+\end{codigoc}
+
+\begin{atencao}
+Funções de \code{<math.h>} costumam exigir a ligação explícita da biblioteca matemática ao compilar no Linux: \code{gcc programa.c -o programa -lm}. Esse tipo de detalhe de configuração de build é, como veremos, um dos problemas que o PlatformIO resolve automaticamente.
+\end{atencao}
+
+\section{Dividindo um programa em múltiplos arquivos}
+
+Um projeto C real costuma ser dividido em pares de arquivos:
+
+\begin{itemize}
+    \item Um \textbf{cabeçalho} (\code{.h}) — contém apenas \textbf{declarações}: protótipos de funções, definições de \code{struct}/\code{enum}, macros. É o que outros arquivos precisam \emph{ver} para usar esse módulo;
+    \item Uma \textbf{implementação} (\code{.c}) — contém as \textbf{definições} completas correspondentes.
+\end{itemize}
+
+\begin{codigoc}{sensor.h}
+#ifndef SENSOR_H
+#define SENSOR_H
+
+float converter_para_celsius(int leitura_bruta);
+
+#endif
+\end{codigoc}
+
+\begin{codigoc}{sensor.c}
+#include "sensor.h"
+
+float converter_para_celsius(int leitura_bruta) {
+    return (leitura_bruta / 4095.0f) * 3.3f * 100.0f;
+}
+\end{codigoc}
+
+\begin{codigoc}{main.c}
+#include <stdio.h>
+#include "sensor.h"   // aspas: cabecalho local do projeto
+
+int main(void) {
+    float temp = converter_para_celsius(2048);
+    printf("Temperatura: %.1f C\n", temp);
+    return 0;
+}
+\end{codigoc}
+
+\begin{codigobash}{Compilando múltiplos arquivos}
+$ gcc main.c sensor.c -o programa
+$ ./programa
+Temperatura: 165.0 C
+\end{codigobash}
+
+Repare em \code{\#ifndef SENSOR\_H} / \code{\#define SENSOR\_H} / \code{\#endif} envolvendo todo o cabeçalho: essa é a \textbf{guarda de inclusão} (\emph{include guard}), que evita erros de redefinição caso o mesmo cabeçalho seja incluído, direta ou indiretamente, mais de uma vez pelo mesmo arquivo. É uma convenção tão universal em C que sua ausência é considerada um descuido grave.
+
+\begin{dica}
+Note também a diferença entre \code{\#include <arquivo.h>} (com sinais de menor/maior, para bibliotecas do sistema) e \code{\#include "arquivo.h"} (com aspas, para arquivos do próprio projeto) — introduzida rapidamente no \cref{cap:primeiros-passos} e agora com sentido completo.
+\end{dica}
+
+\begin{esp32box}
+A divisão em módulos \code{.h}/\code{.c} é o padrão universal de organização de qualquer projeto sério em PlatformIO — veremos sua estrutura de pastas específica (\code{src/}, \code{include/}, \code{lib/}) no \cref{cap:anatomia}. É especialmente valiosa em projetos de IoT que crescem além de um único arquivo: separar, por exemplo, a leitura de sensores (\code{sensores.h}/\code{sensores.c}) da lógica de conectividade ou da lógica de controle mantém cada parte do firmware testável e legível de forma independente.
+\end{esp32box}

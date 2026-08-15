@@ -1,0 +1,60 @@
+% ============================================================
+% capa.tex — Página de rosto
+% ============================================================
+\begin{titlepage}
+\newgeometry{margin=0cm}
+\pagecolor{primaria}
+\begin{tikzpicture}[remember picture, overlay]
+    % --- trilhas de circuito decorativas ---
+    \begin{scope}[white, opacity=0.10, line width=1.4pt]
+        \draw (2,-3) -- (2,-6) -- (5,-6) -- (5,-9);
+        \draw (3,-3) -- (3,-4.5) -- (7,-4.5);
+        \draw (16,-2) -- (16,-5) -- (13,-5) -- (13,-8);
+        \draw (17.5,-3) -- (17.5,-7) -- (15,-7);
+        \draw (1,-20) -- (1,-17) -- (4,-17);
+        \draw (18,-24) -- (18,-21) -- (15,-21) -- (15,-19);
+        \foreach \p in {(2,-3),(5,-6),(5,-9),(3,-3),(7,-4.5),
+                         (16,-2),(13,-5),(13,-8),(17.5,-3),(15,-7),
+                         (1,-20),(4,-17),(18,-24),(15,-19)}
+            \fill \p circle (2.2pt);
+    \end{scope}
+
+    % --- chip / microcontrolador estilizado (canto inferior direito) ---
+    \begin{scope}[shift={(15.3,-25.2)}, secundaria]
+        \fill[opacity=0.9] (0,0) rectangle (3.4,3.4);
+        \foreach \i in {0,...,6} {
+            \draw[white, opacity=0.9, line width=0.9pt] (0.4+\i*0.45,3.4) -- (0.4+\i*0.45,3.9);
+            \draw[white, opacity=0.9, line width=0.9pt] (0.4+\i*0.45,0) -- (0.4+\i*0.45,-0.5);
+            \draw[white, opacity=0.9, line width=0.9pt] (0,0.4+\i*0.45) -- (-0.5,0.4+\i*0.45);
+            \draw[white, opacity=0.9, line width=0.9pt] (3.4,0.4+\i*0.45) -- (3.9,0.4+\i*0.45);
+        }
+        \node[white, font=\footnotesize\bfseries\ttfamily] at (1.7,1.7) {ESP32};
+    \end{scope}
+
+    % --- faixa de acento ---
+    \fill[acento] (0,-8.6) rectangle (21,-8.85);
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=north west, text width=15cm, align=left, xshift=2cm, yshift=-3.2cm] at (current page.north west)
+        {\color{textoclaro}\fontsize{11}{13}\selectfont\textsc{Apostila Didática}};
+
+    \node[anchor=north west, text width=16.5cm, align=left, xshift=2cm, yshift=-4.3cm] at (current page.north west)
+        {\color{white}\fontsize{34}{40}\selectfont\bfseries Introdução à Linguagem C\\[2pt] para Sistemas Embarcados};
+
+    \node[anchor=north west, text width=15cm, align=left, xshift=2cm, yshift=-9.9cm] at (current page.north west)
+        {\color{acento}\fontsize{15}{18}\selectfont\bfseries Programação do ESP32 com o PlatformIO};
+
+    \node[anchor=north west, text width=13cm, align=left, xshift=2cm, yshift=-11.1cm] at (current page.north west)
+        {\color{textoclaro}\fontsize{11}{15}\selectfont
+         Dos fundamentos da linguagem C ao controle de periféricos em\\
+         microcontroladores: uma introdução prática à programação\\
+         voltada para sistemas embarcados.};
+
+    \node[anchor=south west, xshift=2cm, yshift=2.2cm] at (current page.south west)
+        {\color{textoclaro}\fontsize{10}{12}\selectfont\ttfamily EFB2006 \textbullet\ \the\year};
+\end{tikzpicture}
+\end{titlepage}
+\restoregeometry
+\nopagecolor
+\clearpage

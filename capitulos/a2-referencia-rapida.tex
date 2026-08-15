@@ -1,0 +1,108 @@
+\chapter{Referência Rápida}
+\label{ap:referencia}
+
+Este apêndice reúne, em formato de consulta rápida, tabelas já apresentadas ao longo da apostila — útil como cola de referência durante os primeiros projetos, sem precisar percorrer os capítulos inteiros novamente.
+
+\section{Precedência de operadores}
+
+Da maior para a menor precedência (operadores na mesma linha têm precedência igual, avaliados conforme sua associatividade):
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Operadores} & \textbf{Categoria} \\
+\midrule
+\code{()} \ \code{[]} \ \code{->} \ \code{.}        & chamada, indexação, acesso a membro \\
+\code{!} \ \code{\textasciitilde} \ \code{++} \ \code{--} \ \code{(tipo)} \ \code{*} \ \code{\&} \ \code{sizeof} & unários, cast, ponteiro \\
+\code{*} \ \code{/} \ \code{\%}                     & multiplicativos \\
+\code{+} \ \code{-}                                 & aditivos \\
+\code{<<} \ \code{>>}                               & deslocamento de bits \\
+\code{<} \ \code{<=} \ \code{>} \ \code{>=}         & relacionais \\
+\code{==} \ \code{!=}                               & igualdade \\
+\code{\&}                                            & E bit a bit \\
+\code{\textasciicircum}                             & OU exclusivo bit a bit \\
+\code{|}                                             & OU bit a bit \\
+\code{\&\&}                                          & E lógico \\
+\code{||}                                            & OU lógico \\
+\code{?:}                                            & ternário \\
+\code{=} \ \code{+=} \ \code{-=} \ \code{*=} \ldots  & atribuição \\
+\code{,}                                             & vírgula \\
+\bottomrule
+\end{tabular}
+\caption{Precedência de operadores em C, do maior para o menor.}
+\end{table}
+
+\begin{dica}
+Na dúvida sobre a ordem de avaliação de uma expressão complexa, use parênteses explícitos — isso nunca está errado, e deixa a intenção do código clara tanto para o compilador quanto para quem lê depois.
+\end{dica}
+
+\section{Especificadores de formato (\code{printf}/\code{scanf})}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Especificador} & \textbf{Tipo} \\
+\midrule
+\code{\%d} / \code{\%i} & \code{int} \\
+\code{\%u}              & \code{unsigned int} \\
+\code{\%ld} / \code{\%lu} & \code{long} / \code{unsigned long} \\
+\code{\%f}              & \code{float} / \code{double} \\
+\code{\%.Nf}            & ponto flutuante com N casas decimais \\
+\code{\%c}              & \code{char} \\
+\code{\%s}              & string (\code{char *}) \\
+\code{\%x} / \code{\%X} & hexadecimal (minúsculo / maiúsculo) \\
+\code{\%o}              & octal \\
+\code{\%p}              & endereço de ponteiro \\
+\code{\%zu}             & \code{size\_t} (retorno de \code{sizeof}) \\
+\bottomrule
+\end{tabular}
+\caption{Especificadores de formato mais usados.}
+\end{table}
+
+\section{Tipos de largura fixa (\code{stdint.h})}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lc@{}}
+\toprule
+\textbf{Tipo} & \textbf{Intervalo} \\
+\midrule
+\code{uint8\_t}  & 0 a 255 \\
+\code{int8\_t}   & $-128$ a 127 \\
+\code{uint16\_t} & 0 a 65\,535 \\
+\code{int16\_t}  & $-32\,768$ a 32\,767 \\
+\code{uint32\_t} & 0 a $2^{32}\!-\!1$ \\
+\code{int32\_t}  & $-2^{31}$ a $2^{31}\!-\!1$ \\
+\bottomrule
+\end{tabular}
+\caption{Tipos inteiros de largura fixa.}
+\end{table}
+
+\section{Funções essenciais do framework Arduino usadas nesta apostila}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Função / macro} & \textbf{Finalidade} \\
+\midrule
+\code{pinMode(pino, modo)}     & define um pino como \code{OUTPUT}, \code{INPUT} ou \code{INPUT\_PULLUP} \\
+\code{digitalWrite(pino, nivel)} & escreve nível lógico (\code{HIGH}/\code{LOW}) em um pino de saída \\
+\code{digitalRead(pino)}       & lê o nível lógico de um pino de entrada \\
+\code{analogRead(pino)}        & realiza uma leitura do ADC (0 a 4095 no \ESP{}) \\
+\code{delay(ms)}                & pausa cooperativa, em milissegundos \\
+\code{millis()}                 & milissegundos desde a inicialização (para temporização sem bloqueio) \\
+\code{Serial.begin(baud)}       & inicia a comunicação serial na velocidade indicada \\
+\code{Serial.print} / \code{Serial.println} & escreve na porta serial, com ou sem quebra de linha \\
+\code{Serial.printf(fmt, \ldots)} & escrita formatada na porta serial (especificadores de \code{printf}) \\
+\code{attachInterrupt(pino, isr, modo)} & associa uma função ISR a um pino (\code{RISING}/\code{FALLING}/\code{CHANGE}) \\
+\code{digitalPinToInterrupt(pino)} & converte um número de pino no identificador de interrupção \\
+\code{IRAM\_ATTR}               & garante que uma ISR fique carregada na RAM interna \\
+\code{log\_i} / \code{log\_w} / \code{log\_e} & mensagens de log por nível de severidade \\
+\code{randomSeed} / \code{random} & inicializa a semente e gera números pseudoaleatórios \\
+\bottomrule
+\end{tabular}
+\caption{Funções do framework Arduino apresentadas na Parte II desta apostila.}
+\end{table}

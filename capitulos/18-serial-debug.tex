@@ -1,0 +1,119 @@
+\chapter{Comunicação Serial e Depuração}
+\label{cap:serial}
+
+Sem teclado, tela ou depurador visual conectado por padrão, a \textbf{comunicação serial} é a principal janela do desenvolvedor para dentro de um firmware em execução — é como saber o que o programa está ``pensando'' a cada momento, essencial tanto para aprender quanto para depurar problemas.
+
+\section{UART e o monitor serial}
+
+O \ESP{} se comunica com o computador através de uma interface \textbf{UART} (\emph{Universal Asynchronous Receiver/Transmitter}), tipicamente ligada a um chip conversor USB-serial na própria placa de desenvolvimento. No framework Arduino, essa comunicação é controlada pelo objeto \code{Serial}, que precisa ser iniciado uma única vez, em \code{setup()}, com a velocidade de comunicação desejada.
+
+\begin{codigoc}{src/main.cpp — contador via Serial}
+void setup() {
+    Serial.begin(115200);
+}
+
+void loop() {
+    static int contador = 0;
+
+    Serial.print("Contador: ");
+    Serial.println(contador);
+    contador++;
+
+    delay(1000);
+}
+\end{codigoc}
+
+Para visualizar essa saída, use o \textbf{Serial Monitor} do PlatformIO (\cref{cap:platformio}) — ele abre uma conexão serial com a placa na velocidade definida por \code{monitor\_speed} no \code{platformio.ini} (que deve coincidir com o valor passado a \code{Serial.begin}) e exibe, em tempo real, tudo o que o firmware escreve.
+
+\subsection{As variantes de \code{Serial.print}}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Função} & \textbf{Comportamento} \\
+\midrule
+\code{Serial.print(x)}     & imprime \code{x}, sem quebra de linha ao final \\
+\code{Serial.println(x)}   & imprime \code{x}, seguido de uma quebra de linha \\
+\code{Serial.printf(fmt, \ldots)} & imprime com especificadores de formato, como \code{printf} \\
+\bottomrule
+\end{tabular}
+\caption{Formas de escrever na porta serial no framework Arduino.}
+\end{table}
+
+\begin{dica}
+\code{Serial.printf} aceita exatamente os mesmos especificadores de formato apresentados no \cref{cap:entrada-saida} (\code{\%d}, \code{\%f}, \code{\%s}, \code{\%.2f}, e assim por diante) — todo aquele conhecimento é diretamente reaproveitável aqui, bastando trocar \code{printf(...)} por \code{Serial.printf(...)}.
+\end{dica}
+
+\section{Saída como ferramenta de depuração, agora no firmware}
+
+A técnica de \emph{print debugging} apresentada no \cref{sec:printf-debug} — imprimir o valor de uma variável em pontos estratégicos do código para entender o comportamento de um programa — se transporta quase sem alterações para o firmware, usando \code{Serial} no lugar de \code{printf}:
+
+\begin{codigoc}{Depurando uma leitura de sensor}
+int leitura_bruta = analogRead(PINO_SENSOR);
+Serial.print("[DEBUG] leitura_bruta = ");
+Serial.println(leitura_bruta);
+
+float tensao = (leitura_bruta / 4095.0f) * 3.3f;
+Serial.print("[DEBUG] tensao = ");
+Serial.println(tensao);
+\end{codigoc}
+
+\section{Log por nível de severidade}
+
+O núcleo Arduino do \ESP{} também oferece um sistema de \textbf{log por nível de severidade} — uma alternativa mais expressiva que \code{Serial.print} puro, com macros que já indicam a gravidade da mensagem:
+
+\begin{codigoc}{Usando as macros de log}
+void setup() {
+    Serial.begin(115200);
+}
+
+void loop() {
+    int leitura = analogRead(34);
+
+    log_i("Sistema em operacao normal.");
+    if (leitura < 100) {
+        log_w("Leitura muito baixa: %d", leitura);
+    }
+    if (leitura == 0) {
+        log_e("Sensor parece desconectado!");
+    }
+
+    delay(1000);
+}
+\end{codigoc}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Macro} & \textbf{Nível} & \textbf{Uso típico} \\
+\midrule
+\code{log\_e} & Error   & falhas que impedem o funcionamento normal \\
+\code{log\_w} & Warning & situações anormais, mas não fatais \\
+\code{log\_i} & Info    & mensagens informativas de operação normal \\
+\code{log\_d} & Debug   & detalhes úteis apenas durante desenvolvimento \\
+\code{log\_v} & Verbose & o nível mais detalhado, quase sempre desativado \\
+\bottomrule
+\end{tabular}
+\caption{Níveis de log disponíveis no núcleo Arduino do ESP32.}
+\end{table}
+
+O nível mínimo de mensagens exibidas é controlado por uma opção de compilação, ajustável diretamente no \code{platformio.ini}:
+
+\begin{codigoini}{platformio.ini com nível de log elevado}
+[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = arduino
+monitor_speed = 115200
+build_flags = -DCORE_DEBUG_LEVEL=4   ; 0=Nenhum ... 5=Verbose
+\end{codigoini}
+
+\begin{dica}
+A grande vantagem de usar \code{log\_x} em vez de \code{Serial.print} puro é justamente essa: o nível mínimo de log pode ser reduzido em uma versão ``de produção'' do firmware (silenciando mensagens de depuração detalhadas) sem precisar remover ou comentar cada chamada manualmente — basta alterar um único número em \code{platformio.ini}.
+\end{dica}
+
+\begin{esp32box}
+Uma armadilha clássica ao depurar por log em sistemas embarcados: mensagens de log \emph{também} consomem tempo de processamento e, no caso da UART, banda de comunicação limitada. Excesso de logs dentro de um laço executado milhares de vezes por segundo pode, ele próprio, atrasar o firmware o suficiente para mascarar ou até causar o problema que se está tentando diagnosticar — um efeito colateral que vale ter em mente ao decidir onde e com que frequência logar.
+\end{esp32box}

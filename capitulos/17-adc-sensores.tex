@@ -1,0 +1,128 @@
+\chapter{Leitura de Sensores Analógicos (ADC)}
+\label{cap:adc}
+
+Muitos sensores — potenciômetros, sensores de luminosidade (LDR), sensores de temperatura analógicos — não respondem apenas com ``ligado'' ou ``desligado'': eles produzem uma \textbf{tensão contínua e variável}, proporcional à grandeza física medida. Para ler esse tipo de sinal, usamos um \textbf{ADC} (\emph{Analog-to-Digital Converter}, ou conversor analógico-digital) — a porta de entrada de praticamente todo projeto de monitoramento IoT.
+
+\section{Como um ADC funciona}
+
+Um ADC amostra uma tensão analógica de entrada e a converte em um número inteiro, dentro de uma faixa determinada pela sua \textbf{resolução}, medida em bits. O \ESP{} possui ADCs de \textbf{12 bits}, o que significa que cada leitura retorna um valor entre 0 e $2^{12}-1 = 4095$ — quanto mais próxima a tensão de entrada estiver da tensão máxima suportada, mais próximo de 4095 será o valor lido.
+
+\begin{atencao}
+Se você já programou com placas Arduino clássicas (como o Arduino Uno), tenha atenção: lá, \code{analogRead()} retorna valores de \textbf{10 bits} (0 a 1023). No \ESP{}, por padrão, a resolução é de \textbf{12 bits} (0 a 4095) — o dobro de precisão, mas também uma faixa de valores diferente da que você talvez esteja acostumado.
+\end{atencao}
+
+\begin{esp32box}
+O \ESP{} possui duas unidades ADC independentes: \textbf{ADC1} (8 canais, nos pinos GPIO32 a GPIO39) e \textbf{ADC2} (10 canais, compartilhados com o rádio Wi-Fi — por isso, leituras em ADC2 podem falhar ou ficar imprecisas enquanto o Wi-Fi está ativo). Por essa razão, esta apostila usa exclusivamente pinos da \textbf{ADC1} nos exemplos a seguir.
+\end{esp32box}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}cc@{}}
+\toprule
+\textbf{Pino GPIO} & \textbf{Unidade ADC} \\
+\midrule
+GPIO32 & ADC1 \\
+GPIO33 & ADC1 \\
+GPIO34 & ADC1 \\
+GPIO35 & ADC1 \\
+GPIO36 & ADC1 \\
+GPIO39 & ADC1 \\
+\bottomrule
+\end{tabular}
+\caption{Alguns pinos da ADC1 disponíveis no ESP32.}
+\end{table}
+
+\section{Lendo um sensor analógico}
+
+No framework Arduino, uma única função basta para realizar uma leitura: \code{analogRead(pino)}.
+
+\begin{codigoc}{src/main.cpp — lendo um potenciômetro ou LDR}
+#define PINO_SENSOR 34
+
+void setup() {
+    Serial.begin(115200);
+}
+
+void loop() {
+    int leitura_bruta = analogRead(PINO_SENSOR);
+    float tensao = (leitura_bruta / 4095.0f) * 3.3f;
+
+    Serial.print("Bruto: ");
+    Serial.print(leitura_bruta);
+    Serial.print("  |  Aproximadamente: ");
+    Serial.print(tensao);
+    Serial.println(" V");
+
+    delay(500);
+}
+\end{codigoc}
+
+\begin{atencao}
+A conversão \code{(leitura\_bruta / 4095.0f) * 3.3f} usada acima é uma \textbf{aproximação} — assume uma relação perfeitamente linear entre o valor lido e a tensão real, o que não é exatamente verdade na prática devido a não linearidades do hardware do ADC. Para a maioria dos sensores simples em um projeto de aprendizado — um LDR, um potenciômetro, um sensor de temperatura analógico — essa aproximação linear costuma ser suficiente.
+\end{atencao}
+
+\section{De leitura bruta a informação: um sensor de luminosidade}
+
+Uma leitura analógica isolada raramente é o objetivo final — o valor bruto do ADC quase sempre precisa ser \textbf{traduzido} para uma grandeza com significado físico, e depois \textbf{registrado} ou \textbf{avaliado}. O exemplo a seguir lê um LDR (fotorresistor), estima um percentual de luminosidade e usa o próprio monitor serial como ferramenta de depuração e acompanhamento — a técnica de \emph{print debugging} apresentada no \cref{cap:entrada-saida}, agora aplicada a um sensor real:
+
+\begin{codigoc}{Estimando luminosidade e registrando via Serial}
+#define PINO_LDR 34
+
+void setup() {
+    Serial.begin(115200);
+}
+
+void loop() {
+    int leitura_bruta = analogRead(PINO_LDR);
+    float luminosidade_pct = (leitura_bruta / 4095.0f) * 100.0f;
+
+    Serial.print("[SENSOR] LDR bruto=");
+    Serial.print(leitura_bruta);
+    Serial.print(" luminosidade=");
+    Serial.print(luminosidade_pct);
+    Serial.println("%");
+
+    if (luminosidade_pct < 20.0f) {
+        Serial.println("[ALERTA] Ambiente escuro detectado!");
+    }
+
+    delay(1000);
+}
+\end{codigoc}
+
+\section{Suavizando leituras com um vetor: média móvel}
+
+Sensores analógicos são naturalmente ruidosos — duas leituras consecutivas do mesmo ambiente raramente retornam exatamente o mesmo valor. Uma técnica simples e eficaz para suavizar esse ruído é a \textbf{média móvel}: manter um pequeno histórico das últimas N leituras (usando um vetor, como no \cref{cap:arranjos}) e trabalhar sempre com a média desse histórico, em vez de uma leitura isolada.
+
+\begin{codigoc}{Média móvel das últimas 10 leituras}
+#define PINO_SENSOR 34
+#define TAMANHO_HISTORICO 10
+
+int historico[TAMANHO_HISTORICO];
+int indice_atual = 0;
+
+void setup() {
+    Serial.begin(115200);
+    for (int i = 0; i < TAMANHO_HISTORICO; i++) {
+        historico[i] = 0;
+    }
+}
+
+void loop() {
+    historico[indice_atual] = analogRead(PINO_SENSOR);
+    indice_atual = (indice_atual + 1) % TAMANHO_HISTORICO;
+
+    long soma = 0;
+    for (int i = 0; i < TAMANHO_HISTORICO; i++) {
+        soma += historico[i];
+    }
+    float media = (float) soma / TAMANHO_HISTORICO;
+
+    Serial.print("[SENSOR] media movel = ");
+    Serial.println(media);
+
+    delay(100);
+}
+\end{codigoc}
+
+O operador \code{\%} (resto da divisão, \cref{cap:tipos}) faz o índice \code{indice\_atual} voltar a 0 automaticamente ao chegar em \code{TAMANHO\_HISTORICO} — o vetor se comporta como um \textbf{buffer circular}, sempre sobrescrevendo a leitura mais antiga com a mais nova. Essa é exatamente a técnica que usaremos no projeto integrador do \cref{cap:projeto-final}.

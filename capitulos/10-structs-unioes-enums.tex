@@ -1,0 +1,85 @@
+\chapter{Structs e Enumerações}
+\label{cap:structs}
+
+Até aqui, cada variável guardava um único valor de um único tipo. Esta seção apresenta ferramentas para agrupar dados relacionados em uma única unidade — essencial para modelar informações do mundo real, como a leitura de um sensor (valor, unidade, instante da medição) ou a configuração de um periférico.
+
+\section{Registros e \code{structs}}
+
+Uma \code{struct} agrupa múltiplas variáveis, de tipos possivelmente diferentes, sob um único nome — cada uma acessível por um \textbf{campo} (\emph{field}).
+
+\begin{codigoc}{Definindo e usando uma struct}
+#include <stdio.h>
+
+typedef struct {
+    char nome[20];
+    float temperatura;
+    int  umidade;
+} Leitura;
+
+int main(void) {
+    Leitura sala = {"Sala de estar", 23.5f, 60};
+
+    printf("%s: %.1f C, %d%% umidade\n",
+           sala.nome, sala.temperatura, sala.umidade);
+
+    sala.temperatura = 24.0f;   // acessando e alterando um campo
+    return 0;
+}
+\end{codigoc}
+
+O \code{typedef} antes de \code{struct} cria um \textbf{apelido de tipo}: em vez de escrever \code{struct Leitura sala;} toda vez, basta \code{Leitura sala;}. Campos são acessados com o operador ponto (\code{.}).
+
+\subsection{Structs e ponteiros}
+
+Quando se tem um \textbf{ponteiro} para uma struct (comum ao passá-la para funções, evitando copiar todos os seus campos), o acesso aos campos usa o operador seta (\code{->}) em vez do ponto:
+
+\begin{codigoc}{Acessando campos via ponteiro}
+#include <stdio.h>
+
+typedef struct {
+    float temperatura;
+    int umidade;
+} Leitura;
+
+void exibir(Leitura *l) {
+    printf("%.1f C, %d%%\n", l->temperatura, l->umidade);
+    // equivalente a: (*l).temperatura, (*l).umidade
+}
+
+int main(void) {
+    Leitura sala = {23.5f, 60};
+    exibir(&sala);
+    return 0;
+}
+\end{codigoc}
+
+\section{Enumerações (\code{enum})}
+
+Uma \code{enum} define um conjunto nomeado de constantes inteiras, tornando o código mais legível do que usar números ``mágicos'' soltos pelo texto.
+
+\begin{codigoc}{Definindo uma enumeração}
+#include <stdio.h>
+
+typedef enum {
+    ESTADO_AGUARDANDO,   // vale 0
+    ESTADO_CONECTANDO,   // vale 1
+    ESTADO_ATIVO,        // vale 2
+    ESTADO_ERRO          // vale 3
+} EstadoSistema;
+
+int main(void) {
+    EstadoSistema estado = ESTADO_CONECTANDO;
+
+    if (estado == ESTADO_CONECTANDO) {
+        printf("Conectando...\n");
+    }
+
+    return 0;
+}
+\end{codigoc}
+
+Por padrão, o primeiro valor de uma \code{enum} vale 0, e cada valor seguinte é o anterior mais 1 — mas isso pode ser sobrescrito explicitamente (\code{ESTADO\_ERRO = 100}, por exemplo). Combinada com um \code{switch} (\cref{cap:decisao}), uma \code{enum} é a base clássica para implementar máquinas de estado em C.
+
+\begin{esp32box}
+\code{structs} e \code{enums} são ferramentas centrais para organizar o estado de um projeto de IoT. Uma \code{struct} agrupa naturalmente tudo o que pertence a uma mesma leitura de sensor — valor, unidade, instante da medição —, em vez de espalhar essa informação em várias variáveis soltas; uma \code{enum} representa, de forma legível, os diferentes \textbf{modos de operação} de um dispositivo (por exemplo, \code{MODO\_NORMAL}, \code{MODO\_ALERTA}, \code{MODO\_ECONOMIA}), testados com um \code{switch} a cada iteração do \code{loop()}. Usaremos exatamente essa combinação no projeto integrador do \cref{cap:projeto-final}.
+\end{esp32box}

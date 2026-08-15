@@ -1,0 +1,96 @@
+\chapter{Entradas e Saídas Digitais (GPIO)}
+\label{cap:gpio}
+
+GPIO (\emph{General Purpose Input/Output}) são os pinos de propósito geral de um microcontrolador — a interface mais básica e mais usada entre o firmware e o mundo físico. Cada pino GPIO pode ser configurado por software como \textbf{saída} (o chip impõe um nível de tensão sobre ele — ligado ou desligado) ou como \textbf{entrada} (o chip lê o nível de tensão presente nele, imposto por algum circuito externo, como um botão).
+
+\begin{esp32box}
+O \ESP{} tem várias dezenas de pinos GPIO, numerados (por exemplo, 2, 4, 5, \ldots{} 23). Nem todos podem ser usados livremente: alguns são reservados para a memória flash interna e não devem ser manipulados, outros têm comportamento especial ao ligar (\emph{strapping pins}) e podem interferir no boot se conectados incorretamente. Consulte sempre o \emph{datasheet} ou o diagrama de pinos (\emph{pinout}) da sua placa específica antes de escolher quais pinos usar.
+\end{esp32box}
+
+\section{Configurando um pino como saída: o LED}
+
+O exemplo mais tradicional de programação embarcada — o equivalente ao \emph{Hello, World!} — é piscar um LED, o chamado \textbf{blink}.
+
+\begin{codigoc}{src/main.cpp — blink}
+#define PINO_LED 2
+
+void setup() {
+    pinMode(PINO_LED, OUTPUT);
+}
+
+void loop() {
+    digitalWrite(PINO_LED, HIGH);   // liga o LED
+    delay(500);
+
+    digitalWrite(PINO_LED, LOW);    // desliga o LED
+    delay(500);
+}
+\end{codigoc}
+
+Três funções do Arduino fazem todo o trabalho:
+
+\begin{itemize}
+    \item \code{pinMode(pino, modo)} — define se o pino é \code{OUTPUT} (saída) ou \code{INPUT} (entrada), chamada uma única vez em \code{setup()};
+    \item \code{digitalWrite(pino, nivel)} — em modo saída, impõe o nível lógico \code{HIGH} (ligado, 3,3~V) ou \code{LOW} (desligado, 0~V);
+    \item \code{delay(ms)} — pausa a execução pelo número de milissegundos indicado, como visto no \cref{cap:anatomia}.
+\end{itemize}
+
+\begin{atencao}
+Os pinos GPIO do \ESP{} operam em \textbf{3,3~V}, não em 5~V como muitas placas Arduino clássicas (como o Arduino Uno). Conectar um sinal de 5~V diretamente a um pino GPIO pode danificar permanentemente o chip. Sempre verifique o nível de tensão de qualquer módulo externo antes de conectá-lo.
+\end{atencao}
+
+\section{Configurando um pino como entrada: o botão}
+
+Ler o estado de um botão segue a mesma lógica, com a direção invertida:
+
+\begin{codigoc}{Lendo um botão com resistor de pull-up interno}
+#define PINO_LED    2
+#define PINO_BOTAO  15
+
+void setup() {
+    pinMode(PINO_LED, OUTPUT);
+    pinMode(PINO_BOTAO, INPUT_PULLUP);   // resistor de pull-up interno
+}
+
+void loop() {
+    bool pressionado = (digitalRead(PINO_BOTAO) == LOW);
+    // com pull-up, o pino le LOW quando o botao conecta o pino ao GND
+
+    digitalWrite(PINO_LED, pressionado);
+    delay(20);   // pequena pausa (debounce simples)
+}
+\end{codigoc}
+
+\begin{nota}
+Um botão simples, ligado entre um pino GPIO e o terra (GND), deixa o pino em um estado \textbf{flutuante} (indefinido) quando não está sendo pressionado, a menos que exista um resistor conectando-o a um nível de tensão conhecido. O modo \code{INPUT\_PULLUP} ativa um resistor de \emph{pull-up} interno ao próprio chip, eliminando a necessidade de um resistor externo para esse caso comum: o pino lê \code{HIGH} quando o botão está solto, e \code{LOW} quando pressionado (conectando o pino ao GND).
+\end{nota}
+
+\begin{dica}
+Botões mecânicos produzem múltiplas transições elétricas rápidas e espúrias no instante em que são pressionados ou soltos — um fenômeno chamado \emph{bounce}. Um pequeno atraso após cada leitura, como o \code{delay(20)} do exemplo, é uma forma simples (ainda que rudimentar) de filtrar esse ruído, chamada \emph{debouncing}. O \cref{cap:interrupcoes} apresenta uma abordagem mais robusta, baseada em interrupções.
+\end{dica}
+
+\section{Controlando vários pinos com um vetor}
+
+Quando um projeto usa vários pinos com o mesmo papel — por exemplo, uma fileira de LEDs —, vale a pena aplicar o que vimos no \cref{cap:arranjos}: guardar os números dos pinos em um \textbf{vetor} e percorrê-lo com um laço, em vez de repetir o mesmo código uma vez para cada pino.
+
+\begin{codigoc}{Controlando vários LEDs com um vetor}
+const int pinos_leds[] = {2, 4, 5, 18};
+const int quantidade = 4;
+
+void setup() {
+    for (int i = 0; i < quantidade; i++) {
+        pinMode(pinos_leds[i], OUTPUT);
+    }
+}
+
+void loop() {
+    // acende um LED de cada vez, em sequencia (efeito "corrente")
+    for (int i = 0; i < quantidade; i++) {
+        digitalWrite(pinos_leds[i], HIGH);
+        delay(150);
+        digitalWrite(pinos_leds[i], LOW);
+    }
+}
+\end{codigoc}
+
+Além de evitar repetição, essa abordagem torna o código mais fácil de estender: adicionar um quinto LED exige apenas um novo número no vetor \code{pinos\_leds} (e ajustar \code{quantidade}), sem tocar no restante da lógica.

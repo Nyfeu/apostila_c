@@ -1,0 +1,128 @@
+\chapter{Funções e Protótipos}
+\label{cap:funcoes}
+
+Uma \textbf{função} é um bloco de código nomeado, reutilizável, que realiza uma tarefa específica. Já usamos várias — \code{printf}, \code{scanf}, \code{main} — mas até agora sempre prontas, fornecidas por bibliotecas. Esta seção mostra como criar as suas próprias.
+
+\section{Declarando e chamando funções}
+
+\begin{codigoc}{Uma função simples}
+#include <stdio.h>
+
+int soma(int a, int b) {
+    int resultado = a + b;
+    return resultado;
+}
+
+int main(void) {
+    int total = soma(5, 3);
+    printf("A soma e %d\n", total);
+    return 0;
+}
+\end{codigoc}
+
+Uma definição de função tem quatro partes:
+
+\begin{itemize}
+    \item \textbf{Tipo de retorno} (\code{int}) — o tipo do valor devolvido por \code{return}. Use \code{void} quando a função não retorna nenhum valor;
+    \item \textbf{Nome} (\code{soma}) — usado para chamá-la em outros pontos do código;
+    \item \textbf{Parâmetros} (\code{int a, int b}) — as variáveis que a função recebe como entrada, entre parênteses;
+    \item \textbf{Corpo} — o bloco de instruções entre chaves, executado a cada chamada.
+\end{itemize}
+
+\section{Passagem de parâmetros por valor}
+
+Em C, argumentos são passados para funções \textbf{por valor}: a função recebe uma \emph{cópia} do dado, não o dado original. Alterações feitas dentro da função não afetam a variável usada na chamada.
+
+\begin{codigoc}{Passagem por valor}
+#include <stdio.h>
+
+void dobrar(int x) {
+    x = x * 2;   // altera apenas a copia local
+}
+
+int main(void) {
+    int numero = 10;
+    dobrar(numero);
+    printf("%d\n", numero);   // ainda imprime 10!
+    return 0;
+}
+\end{codigoc}
+
+Para que uma função possa modificar uma variável do código que a chamou, é preciso passar seu \textbf{endereço} (um ponteiro) em vez do valor — técnica detalhada no \cref{cap:ponteiros}.
+
+\section{Protótipos de funções}
+
+Em C, uma função precisa ser \textbf{conhecida} pelo compilador antes de ser usada. Quando a definição completa de uma função vem depois do ponto onde ela é chamada (ou está em outro arquivo), é preciso declarar um \textbf{protótipo}: a assinatura da função, sem o corpo, terminada em ponto e vírgula.
+
+\begin{codigoc}{Protótipo declarado antes do uso}
+#include <stdio.h>
+
+int soma(int a, int b);   // prototipo
+
+int main(void) {
+    printf("%d\n", soma(4, 6));  // ja pode ser chamada aqui
+    return 0;
+}
+
+int soma(int a, int b) {   // definicao completa, depois do uso
+    return a + b;
+}
+\end{codigoc}
+
+\begin{dica}
+Protótipos são a razão de existir dos arquivos de cabeçalho (\code{.h}): eles reúnem as assinaturas das funções de um módulo, permitindo que outros arquivos \code{.c} as usem sem precisar ver (ou recompilar) sua implementação completa. Esse padrão é explorado a fundo no \cref{cap:modularizacao}.
+\end{dica}
+
+\section{Escopo de variáveis}
+
+O \textbf{escopo} de uma variável é a região do código onde ela existe e pode ser acessada. Variáveis declaradas dentro de uma função (ou de qualquer bloco \code{\{ \}}) são \textbf{locais} — existem apenas enquanto aquele bloco está em execução, e são invisíveis fora dele. Variáveis declaradas fora de qualquer função são \textbf{globais} — visíveis (e modificáveis) por todas as funções do arquivo.
+
+\begin{codigoc}{Escopo local vs. global}
+#include <stdio.h>
+
+int contador_global = 0;   // variavel global
+
+void incrementar(void) {
+    int passo = 1;          // variavel local a "incrementar"
+    contador_global += passo;
+}
+
+int main(void) {
+    incrementar();
+    incrementar();
+    printf("%d\n", contador_global);   // imprime 2
+    // printf("%d\n", passo);          // ERRO: "passo" nao existe aqui
+    return 0;
+}
+\end{codigoc}
+
+\begin{atencao}
+Variáveis globais são convenientes, mas usadas em excesso tornam o código difícil de entender e depurar — qualquer função pode alterá-las a qualquer momento, criando dependências ocultas. Prefira sempre passar dados explicitamente por parâmetros e devolvê-los por \code{return} quando possível.
+\end{atencao}
+
+\subsection{Variáveis locais \code{static}}
+
+Uma variável local declarada com o qualificador \code{static} tem um comportamento híbrido: continua visível apenas dentro da função onde foi declarada (como qualquer variável local), mas seu valor \textbf{persiste entre chamadas} — em vez de ser recriada do zero a cada chamada da função, ela é inicializada uma única vez, na primeira execução, e mantém seu valor de uma chamada para a próxima.
+
+\begin{codigoc}{Uma variável static mantém seu valor entre chamadas}
+#include <stdio.h>
+
+void contar_chamadas(void) {
+    static int chamadas = 0;   // inicializada uma unica vez
+    chamadas++;
+    printf("Esta funcao ja foi chamada %d vez(es)\n", chamadas);
+}
+
+int main(void) {
+    contar_chamadas();   // "1 vez(es)"
+    contar_chamadas();   // "2 vez(es)"
+    contar_chamadas();   // "3 vez(es)"
+    return 0;
+}
+\end{codigoc}
+
+Isso é útil sempre que uma função precisa ``lembrar'' algo de sua execução anterior — um contador de eventos, o último valor processado — sem recorrer a uma variável global.
+
+\begin{esp32box}
+Em firmware embarcado, algumas variáveis globais são difíceis de evitar por completo — por exemplo, uma variável compartilhada entre a rotina principal e uma \textbf{interrupção} (\cref{cap:interrupcoes}), que roda de forma assíncrona e precisa sinalizar eventos para o resto do programa. Nesses casos, a variável costuma ser declarada com o qualificador \code{volatile}, que instrui o compilador a nunca otimizar (ou assumir como constante) o acesso àquela variável — porque seu valor pode mudar a qualquer momento, fora do fluxo normal do código.
+\end{esp32box}

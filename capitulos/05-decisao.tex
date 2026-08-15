@@ -1,0 +1,77 @@
+\chapter{Estruturas de Decisão}
+\label{cap:decisao}
+
+Até aqui, todo código apresentado executa suas instruções sequencialmente, uma após a outra, do início ao fim. Estruturas de decisão permitem que o programa escolha \emph{qual} caminho seguir, dependendo de uma condição — é isso que dá a um programa a capacidade de reagir de forma diferente a diferentes situações.
+
+\section{\code{if} / \code{else}}
+
+\begin{codigoc}{Estrutura if / else if / else}
+#include <stdio.h>
+
+int main(void) {
+    int temperatura = 32;
+
+    if (temperatura > 30) {
+        printf("Esta quente!\n");
+    } else if (temperatura < 15) {
+        printf("Esta frio!\n");
+    } else {
+        printf("Temperatura agradavel.\n");
+    }
+
+    return 0;
+}
+\end{codigoc}
+
+Em C, \textbf{qualquer valor diferente de zero é considerado verdadeiro}; apenas o valor \code{0} é considerado falso. Isso significa que \code{if (10)} sempre executa seu bloco, e \code{if (0)} nunca executa — mesmo sem envolver nenhum operador relacional explícito.
+
+\begin{dica}
+Quando o bloco de um \code{if} (ou de qualquer estrutura de controle) contém uma única instrução, as chaves são opcionais. Ainda assim, é considerada boa prática sempre usá-las — isso evita um erro clássico onde uma segunda linha, adicionada depois por engano fora das chaves, passa a ser executada incondicionalmente.
+\end{dica}
+
+\section{Operador ternário}
+
+Para condicionais simples que retornam um valor, C oferece uma forma compacta:
+
+\begin{codigoc}{Operador ternário}
+int a = 10, b = 20;
+int maior = (a > b) ? a : b;   // "se a > b, entao a, senao b"
+
+printf("O maior valor e %d\n", maior);
+\end{codigoc}
+
+\section{\code{switch}}
+
+Quando uma mesma variável precisa ser comparada contra vários valores possíveis, o \code{switch} costuma ser mais legível do que uma longa cadeia de \code{else if}:
+
+\begin{codigoc}{Estrutura switch}
+#include <stdio.h>
+
+int main(void) {
+    int dia = 3;
+
+    switch (dia) {
+        case 1:
+            printf("Segunda-feira\n");
+            break;
+        case 2:
+            printf("Terca-feira\n");
+            break;
+        case 3:
+            printf("Quarta-feira\n");
+            break;
+        default:
+            printf("Dia invalido\n");
+    }
+
+    return 0;
+}
+\end{codigoc}
+
+\begin{atencao}
+Esquecer o \code{break} ao final de um \code{case} faz a execução ``cair'' (\emph{fall-through}) para o próximo \code{case}, executando-o também — mesmo que sua condição não tenha sido satisfeita. Às vezes esse comportamento é usado intencionalmente (para agrupar vários casos com a mesma ação), mas na grande maioria das vezes é um bug. O \code{default}, por convenção o último caso, captura qualquer valor não tratado pelos \code{case}s anteriores.
+\end{atencao}
+
+\begin{esp32box}
+Estruturas \code{switch} são extremamente comuns em firmware para implementar \textbf{máquinas de estado} — por exemplo, controlar as diferentes fases de operação de um dispositivo (``aguardando'', ``conectando ao Wi-Fi'', ``lendo sensor'', ``enviando dados'', ``erro''), onde cada estado é representado por um valor de um \code{enum} (\cref{cap:structs}) e o \code{switch} decide o que fazer em cada um deles a cada iteração do laço principal do programa.
+\end{esp32box}

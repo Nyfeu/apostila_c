@@ -1,0 +1,46 @@
+\chapter*{Prefácio}
+\addcontentsline{toc}{chapter}{Prefácio}
+\markboth{Prefácio}{Prefácio}
+
+Esta apostila foi escrita para quem está dando os primeiros passos em programação e, ao mesmo tempo, quer entender \emph{para onde} esses passos levam quando o assunto é \textbf{sistemas embarcados}. Em vez de tratar a linguagem C como um fim em si mesma — como costuma acontecer em cursos introdutórios genéricos —, cada conceito aqui apresentado é conduzido com um destino em mente: o controle de um microcontrolador real, o \textbf{ESP32}, programado através do ambiente \textbf{PlatformIO}.
+
+\section*{Por que C e por que o ESP32?}
+
+A linguagem C continua sendo, décadas após sua criação, a linguagem mais próxima do hardware que ainda é acessível a iniciantes. Ela expõe conceitos que linguagens de alto nível escondem — como a organização da memória, o tamanho exato de cada tipo de dado e a manipulação direta de endereços — e é exatamente esse tipo de controle que se exige ao programar um microcontrolador, onde os recursos de memória e processamento são limitados e cada byte importa.
+
+O ESP32 foi escolhido como plataforma de referência por ser barato, extremamente popular, bem documentado e por reunir em um único chip um processador dual-core, Wi-Fi, Bluetooth e uma quantidade generosa de periféricos (GPIOs, conversores analógico-digitais, saídas PWM, interfaces de comunicação serial). Isso permite que, com poucas linhas de código C, o estudante veja resultados físicos e imediatos: um LED que acende, um sensor que responde, um motor que gira.
+
+\section*{Como este material está organizado}
+
+A apostila é dividida em duas partes:
+
+\begin{itemize}
+    \item \textbf{Parte I — Fundamentos da Linguagem C:} cobre a sintaxe, os tipos de dados, as estruturas de controle, funções, arranjos, ponteiros, alocação de memória e organização de código em múltiplos arquivos. Os exemplos desta parte rodam tanto em um computador comum (compilados com \code{gcc}) quanto, quando fizer sentido, diretamente no ESP32.
+    \item \textbf{Parte II — Sistemas Embarcados com o ESP32 e o PlatformIO:} apresenta o ambiente de desenvolvimento PlatformIO, a arquitetura do ESP32 e o uso de seus periféricos — entradas e saídas digitais, PWM, conversão analógico-digital, comunicação serial, interrupções e temporizadores — sempre com projetos completos e funcionais.
+\end{itemize}
+
+Ao longo dos capítulos você encontrará três tipos de caixas de destaque:
+
+\begin{nota}
+Informações complementares que aprofundam ou contextualizam o conceito tratado.
+\end{nota}
+
+\begin{dica}
+Sugestões práticas, atalhos e boas práticas de programação.
+\end{dica}
+
+\begin{atencao}
+Armadilhas comuns e erros frequentes — vale a pena prestar atenção especial aqui.
+\end{atencao}
+
+\section*{O que você vai precisar}
+
+\begin{itemize}
+    \item Um computador com \href{https://code.visualstudio.com/}{Visual Studio Code} e a extensão \textbf{PlatformIO IDE} instalada (o \cref{cap:platformio} explica o processo completo);
+    \item Uma placa de desenvolvimento com o chip \textbf{ESP32} (qualquer variante — DevKit, WROOM, WROVER — e um cabo USB compatível);
+    \item Curiosidade para errar, compilar de novo e tentar outra vez — é assim que se aprende a programar.
+\end{itemize}
+
+Bons estudos!
+
+\newpage
