@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{\PYGZdl{}}\PYG{+w}{ }\PYG{n}{git}\PYG{+w}{ }\PYG{n}{remote}\PYG{+w}{ }\PYG{n}{add}\PYG{+w}{ }\PYG{n}{origin}\PYG{+w}{ }\PYG{n}{https}\PYG{o}{:}\PYG{c+c1}{//github.com/seu\PYGZhy{}usuario/meu\PYGZhy{}projeto.git}
+\PYG{n}{\PYGZdl{}}\PYG{+w}{ }\PYG{n}{git}\PYG{+w}{ }\PYG{n}{branch}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{n}{M}\PYG{+w}{ }\PYG{n}{main}
+\PYG{n}{\PYGZdl{}}\PYG{+w}{ }\PYG{n}{git}\PYG{+w}{ }\PYG{n}{push}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{n}{u}\PYG{+w}{ }\PYG{n}{origin}\PYG{+w}{ }\PYG{n}{main}
+\end{Verbatim}

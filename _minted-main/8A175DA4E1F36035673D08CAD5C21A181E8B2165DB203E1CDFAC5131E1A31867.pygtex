@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+int\PYG{+w}{ }\PYG{n+nv}{contador}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m}{0}\PYG{p}{;}
+
+\PYG{n+nv}{contador}\PYG{+w}{ }\PYG{o}{+=}\PYG{+w}{ }\PYG{l+m}{5}\PYG{p}{;}\PYG{+w}{   }//\PYG{+w}{ }equivalente\PYG{+w}{ }a:\PYG{+w}{ }\PYG{n+nv}{contador}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }contador\PYG{+w}{ }+\PYG{+w}{ }\PYG{l+m}{5}\PYG{p}{;}
+contador\PYG{+w}{ }\PYGZhy{}\PYG{o}{=}\PYG{+w}{ }\PYG{l+m}{2}\PYG{p}{;}\PYG{+w}{   }//\PYG{+w}{ }equivalente\PYG{+w}{ }a:\PYG{+w}{ }\PYG{n+nv}{contador}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }contador\PYG{+w}{ }\PYGZhy{}\PYG{+w}{ }\PYG{l+m}{2}\PYG{p}{;}
+contador\PYG{+w}{ }*\PYG{o}{=}\PYG{+w}{ }\PYG{l+m}{3}\PYG{p}{;}\PYG{+w}{   }//\PYG{+w}{ }equivalente\PYG{+w}{ }a:\PYG{+w}{ }\PYG{n+nv}{contador}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }contador\PYG{+w}{ }*\PYG{+w}{ }\PYG{l+m}{3}\PYG{p}{;}
+contador\PYG{+w}{ }/\PYG{o}{=}\PYG{+w}{ }\PYG{l+m}{2}\PYG{p}{;}\PYG{+w}{   }//\PYG{+w}{ }equivalente\PYG{+w}{ }a:\PYG{+w}{ }\PYG{n+nv}{contador}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }contador\PYG{+w}{ }/\PYG{+w}{ }\PYG{l+m}{2}\PYG{p}{;}
+
+contador++\PYG{p}{;}\PYG{+w}{      }//\PYG{+w}{ }incrementa\PYG{+w}{ }em\PYG{+w}{ }\PYG{l+m}{1}\PYG{+w}{ }\PYG{o}{(}equivalente\PYG{+w}{ }a\PYG{+w}{ }\PYG{n+nv}{contador}\PYG{+w}{ }\PYG{o}{+=}\PYG{+w}{ }\PYG{l+m}{1}\PYG{o}{)}
+contador\PYGZhy{}\PYGZhy{}\PYG{p}{;}\PYG{+w}{      }//\PYG{+w}{ }decrementa\PYG{+w}{ }em\PYG{+w}{ }\PYG{l+m}{1}\PYG{+w}{ }\PYG{o}{(}equivalente\PYG{+w}{ }a\PYG{+w}{ }contador\PYG{+w}{ }\PYGZhy{}\PYG{o}{=}\PYG{+w}{ }\PYG{l+m}{1}\PYG{o}{)}
+\end{Verbatim}

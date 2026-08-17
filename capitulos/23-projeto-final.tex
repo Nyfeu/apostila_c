@@ -52,63 +52,87 @@ Agrupar essas variáveis em uma única \code{struct}, em vez de espalhá-las com
 \section{Firmware completo}
 
 \begin{codigoc}{src/main.cpp — estação de monitoramento IoT}
-#include <WiFi.h>
-#include <HTTPClient.h>
-#include <ArduinoOTA.h>
-#include <esp_task_wdt.h>
+// Bibliotecas do framework Arduino/ESP32 usadas neste projeto:
+#include <WiFi.h>          // conexao a rede Wi-Fi (cap. 21)
+#include <HTTPClient.h>    // requisicoes HTTP para reportar alertas (cap. 21)
+#include <ArduinoOTA.h>    // atualizacao de firmware pela rede (cap. 22)
+#include <esp_task_wdt.h>  // Watchdog Timer, protege contra travamentos (cap. 19)
 
-#define PINO_LED    2
-#define PINO_LDR    34
-#define PINO_BOTAO  15
+// Pinos usados no projeto (ver secao "Ligacoes sugeridas")
+#define PINO_LED    2    // LED de alerta
+#define PINO_LDR    34   // sensor de luminosidade (entrada ADC1)
+#define PINO_BOTAO  15   // botao que alterna o modo de operacao
 
-#define TAMANHO_HISTORICO   10
+// Parametros de comportamento do firmware, centralizados aqui para
+// facilitar ajustes sem precisar caçar "numeros magicos" pelo codigo
+#define TAMANHO_HISTORICO   10      // quantas leituras entram na media movel
 #define LIMIAR_ESCURO       25.0f   // abaixo disso, ambiente "escuro" (%)
 #define INTERVALO_LEITURA   500UL   // ms entre leituras do sensor
 #define WDT_TIMEOUT         5       // segundos ate o reset do watchdog
 
+// Credenciais e destino da rede -- em um projeto real, evite deixar
+// senhas fixas no codigo-fonte (considere um arquivo separado e ignorado
+// pelo controle de versao, como discutido no cap. 23 do apendice de Git)
 #define WIFI_SSID     "MinhaRede"
 #define WIFI_PASSWORD "minha_senha"
 #define URL_SERVIDOR  "http://exemplo.com/api/alertas"
 
+// Os dois modos de operacao alternados pelo botao (cap. 10)
 enum ModoOperacao {
-    MODO_NORMAL,
-    MODO_VERBOSO,
+    MODO_NORMAL,    // registra apenas quando um alerta comeca
+    MODO_VERBOSO,   // registra toda leitura do sensor
 };
 
+// Todo o estado "vivo" do sistema, reunido em uma unica struct (cap. 10)
+// em vez de espalhado em variaveis globais soltas
 struct EstadoEstacao {
-    ModoOperacao modo;
-    int ultima_leitura;
-    float media_movel;
-    bool alerta_ativo;
+    ModoOperacao modo;     // modo atual (NORMAL ou VERBOSO)
+    int ultima_leitura;    // valor bruto (0-4095) da ultima leitura do ADC
+    float media_movel;     // media das ultimas TAMANHO_HISTORICO leituras
+    bool alerta_ativo;     // true enquanto o ambiente esta "escuro"
 };
 
+// Estado inicial: modo normal, nenhuma leitura ainda, sem alerta
 EstadoEstacao estado = {MODO_NORMAL, 0, 0.0f, false};
 
+// Buffer circular (cap. 8) com as ultimas leituras, usado para calcular
+// a media movel que suaviza o ruido natural do sensor LDR
 int historico[TAMANHO_HISTORICO];
-int indice_historico = 0;
+int indice_historico = 0;   // proxima posicao do buffer a ser sobrescrita
 
+// 'volatile' avisa o compilador que esta variavel pode mudar a qualquer
+// momento por causa de uma interrupcao -- sem isso, o compilador poderia
+// otimizar o codigo assumindo (erradamente) que ela nunca muda em loop()
 volatile bool evento_botao = false;
-unsigned long ultima_leitura_ms = 0;
+unsigned long ultima_leitura_ms = 0;   // controla a temporizacao sem delay()
 
+// Rotina de interrupcao (ISR) do botao: deve ser curta e rapida, apenas
+// sinalizando o evento -- todo o trabalho de fato acontece em loop().
+// IRAM_ATTR garante que o codigo da ISR fique carregado na RAM interna,
+// para nao depender de uma leitura da flash externa durante a interrupcao
 void IRAM_ATTR botao_isr() {
     evento_botao = true;
 }
 
+// Calcula a media aritmetica simples do buffer circular 'historico'
 float calcular_media(void) {
-    long soma = 0;
+    long soma = 0;   // 'long' evita overflow ao somar ate 10 leituras de 12 bits
     for (int i = 0; i < TAMANHO_HISTORICO; i++) {
         soma += historico[i];
     }
+    // cast para float antes de dividir: divisao inteira arredondaria a media
     return (float) soma / TAMANHO_HISTORICO;
 }
 
+// Conecta ao Wi-Fi, bloqueando ate a conexao ser estabelecida -- aceitavel
+// aqui porque so acontece uma vez, dentro de setup(), antes do laco comecar
 void conectar_wifi(void) {
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     Serial.print("Conectando ao Wi-Fi");
 
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
-        Serial.print(".");
+        Serial.print(".");   // feedback visual de que o firmware nao travou
     }
 
     Serial.println();
@@ -116,7 +140,10 @@ void conectar_wifi(void) {
     Serial.println(WiFi.localIP());
 }
 
+// Envia o percentual de luminosidade atual para o servidor via HTTP POST,
+// no formato JSON, sempre que um novo alerta comeca
 void enviar_alerta(float luminosidade_pct) {
+    // sem Wi-Fi conectado, nao ha para onde enviar -- desiste sem travar
     if (WiFi.status() != WL_CONNECTED) {
         return;
     }
@@ -125,14 +152,17 @@ void enviar_alerta(float luminosidade_pct) {
     http.begin(URL_SERVIDOR);
     http.addHeader("Content-Type", "application/json");
 
+    // snprintf monta o corpo da requisicao em um buffer de tamanho fixo,
+    // evitando a fragmentacao de memoria associada a concatenar String
+    // (cap. 18) -- sizeof(corpo) impede que a escrita ultrapasse o buffer
     char corpo[64];
     snprintf(corpo, sizeof(corpo), "{\"luminosidade\": %.1f}", luminosidade_pct);
 
     int codigo = http.POST(corpo);
     Serial.print("[HTTP] Alerta enviado, resposta: ");
-    Serial.println(codigo);
+    Serial.println(codigo);   // codigo de status HTTP (200, 404, etc.)
 
-    http.end();
+    http.end();   // libera os recursos da requisicao
 }
 
 void setup() {
@@ -140,19 +170,26 @@ void setup() {
 
     pinMode(PINO_LED, OUTPUT);
     pinMode(PINO_BOTAO, INPUT_PULLUP);
+    // dispara botao_isr() na borda de descida (botao pressionado, pull-up)
     attachInterrupt(digitalPinToInterrupt(PINO_BOTAO), botao_isr, FALLING);
 
+    // zera o historico para que a primeira media movel nao misture
+    // leituras validas com "lixo" de memoria nao inicializada
     for (int i = 0; i < TAMANHO_HISTORICO; i++) {
         historico[i] = 0;
     }
 
-    conectar_wifi();
+    conectar_wifi();   // bloqueia aqui ate a rede estar pronta
 
+    // deixa a estacao pronta para receber uma atualizacao de firmware
+    // pela rede a qualquer momento, sem precisar de cabo (cap. 22)
     ArduinoOTA.setHostname("estacao-iot");
     ArduinoOTA.begin();
 
+    // segundo argumento 'true': trava (panic) o sistema em vez de so
+    // resetar, o que ajuda a diagnosticar travamentos durante o desenvolvimento
     esp_task_wdt_init(WDT_TIMEOUT, true);
-    esp_task_wdt_add(NULL);
+    esp_task_wdt_add(NULL);   // registra a tarefa atual (loop) no watchdog
 
     Serial.println("Estacao de monitoramento iniciada em modo NORMAL.");
 }
@@ -162,29 +199,41 @@ void loop() {
 
     // 1) verifica se o botao foi pressionado (sem bloquear o laco)
     if (evento_botao) {
-        evento_botao = false;
+        evento_botao = false;   // consome o evento, para nao tratar de novo
+        // alterna entre os dois modos com o operador ternario (cap. 5)
         estado.modo = (estado.modo == MODO_NORMAL) ? MODO_VERBOSO : MODO_NORMAL;
 
         Serial.print("Modo alterado para: ");
         Serial.println(estado.modo == MODO_NORMAL ? "NORMAL" : "VERBOSO");
     }
 
-    // 2) le o sensor periodicamente, sem usar delay()
+    // 2) le o sensor periodicamente, sem usar delay() -- temporizacao
+    //    por millis(), a mesma tecnica usada nos exemplos do cap. 19
     unsigned long agora = millis();
     if (agora - ultima_leitura_ms >= INTERVALO_LEITURA) {
-        ultima_leitura_ms = agora;
+        ultima_leitura_ms = agora;   // reinicia a contagem do intervalo
 
+        // leitura bruta do ADC (0 a 4095, resolucao de 12 bits no ESP32)
         estado.ultima_leitura = analogRead(PINO_LDR);
+
+        // grava a leitura na posicao atual do buffer circular e avanca
+        // o indice, voltando a 0 automaticamente com o operador '%'
         historico[indice_historico] = estado.ultima_leitura;
         indice_historico = (indice_historico + 1) % TAMANHO_HISTORICO;
 
         estado.media_movel = calcular_media();
+        // converte o valor bruto do ADC (0-4095) para um percentual (0-100)
         float luminosidade_pct = (estado.media_movel / 4095.0f) * 100.0f;
+
+        // guarda o estado anterior do alerta para detectar a TRANSICAO
+        // de "sem alerta" para "em alerta" logo abaixo
         bool estava_em_alerta = estado.alerta_ativo;
         estado.alerta_ativo = (luminosidade_pct < LIMIAR_ESCURO);
 
-        digitalWrite(PINO_LED, estado.alerta_ativo);
+        digitalWrite(PINO_LED, estado.alerta_ativo);   // acende/apaga o LED
 
+        // no modo verboso, registra toda leitura; no modo normal, so
+        // os alertas sao registrados (ver bloco de alerta logo abaixo)
         if (estado.modo == MODO_VERBOSO) {
             Serial.print("[LEITURA] bruta=");
             Serial.print(estado.ultima_leitura);
@@ -195,7 +244,8 @@ void loop() {
             Serial.println("%");
         }
 
-        // envia o alerta apenas no instante em que ele comeca (nao a cada leitura)
+        // envia o alerta apenas no instante em que ele comeca (nao a cada
+        // leitura) -- e por isso que 'estava_em_alerta' foi guardado acima
         if (estado.alerta_ativo && !estava_em_alerta) {
             Serial.println("[ALERTA] Ambiente escuro detectado!");
             enviar_alerta(luminosidade_pct);
@@ -214,7 +264,7 @@ void loop() {
     \item A leitura do LDR usa a \textbf{ADC} (\cref{cap:adc}) para medir luminosidade de forma contínua, convertida de valor bruto para porcentagem com um \emph{cast} (\cref{cap:tipos});
     \item O botão é lido por \textbf{interrupção} (\cref{cap:interrupcoes}), sinalizando o laço principal por meio de uma variável \code{volatile}, sem nunca bloquear a leitura contínua do sensor;
     \item A leitura periódica do sensor usa a técnica de \textbf{temporização por \code{millis()}} (\cref{cap:interrupcoes}), mantendo \code{loop()} sempre livre para reagir ao botão e às atualizações OTA a qualquer momento;
-    \item Um \textbf{Watchdog Timer} (\cref{sec:watchdog}) protege o laço principal como um todo: \code{esp\_task\_wdt\_reset()} é chamado ao final de cada volta saudável de \code{loop()}, e reiniciaria o dispositivo automaticamente caso algo travasse a execução;
+    \item Um \textbf{Watchdog Timer} (\cref{sec:watchdog}) protege o laço principal como um todo, reiniciando o dispositivo automaticamente caso algo trave a execução: a cada volta saudável de \code{loop()}, o firmware chama \code{esp\_task\_wdt\_reset()} para ``alimentá-lo'';
     \item A estação se conecta à rede via \textbf{Wi-Fi} (\cref{cap:wifi}) e reporta cada novo alerta a um servidor por \textbf{HTTP}, usando \code{snprintf} para montar o corpo da requisição sem a fragmentação de memória associada a concatenar \code{String};
     \item O firmware aceita \textbf{atualizações OTA} (\cref{cap:ota}) através de \code{ArduinoOTA.handle()}, chamado a cada volta do laço — a estação pode receber correções e melhorias sem nunca precisar ser desconectada e levada até um computador;
     \item Todo o comportamento é registrado pela \textbf{porta serial} (\cref{cap:serial}) — mensagens de leitura apenas em modo verboso, e alertas sempre, independentemente do modo.

@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{}include \PYGZlt{}stdio.h\PYGZgt{}}
+
+\PYG{n+na}{int main(void) \PYGZob{}}
+\PYG{+w}{    }\PYG{n+na}{int senha, tentativas}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{0}\PYG{c+c1}{;}
+
+\PYG{+w}{    }\PYG{n+na}{do \PYGZob{}}
+\PYG{+w}{        }\PYG{n+na}{printf(\PYGZdq{}Digite a senha}\PYG{o}{:}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{})}\PYG{c+c1}{;}
+\PYG{+w}{        }\PYG{n+na}{scanf(\PYGZdq{}\PYGZpc{}d\PYGZdq{}, \PYGZam{}senha);}
+\PYG{+w}{        }\PYG{n+na}{tentativas++;}
+\PYG{+w}{    }\PYG{n+na}{\PYGZcb{} while (senha !}\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{1234 \PYGZam{}\PYGZam{} tentativas \PYGZlt{} 3)}\PYG{c+c1}{;}
+
+\PYG{+w}{    }\PYG{n+na}{if (senha}\PYG{+w}{ }\PYG{o}{=}\PYG{l+s}{= 1234) \PYGZob{}}
+\PYG{+w}{        }\PYG{n+na}{printf(\PYGZdq{}Acesso liberado!\PYGZbs{}n\PYGZdq{});}
+\PYG{+w}{    }\PYG{n+na}{\PYGZcb{} else \PYGZob{}}
+\PYG{+w}{        }\PYG{n+na}{printf(\PYGZdq{}Numero de tentativas excedido.\PYGZbs{}n\PYGZdq{});}
+\PYG{+w}{    }\PYG{n+na}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{n+na}{return 0;}
+\PYG{n+na}{\PYGZcb{}}
+\end{Verbatim}

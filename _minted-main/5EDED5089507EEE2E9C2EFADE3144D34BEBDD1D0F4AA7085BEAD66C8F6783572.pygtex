@@ -2,11 +2,13 @@
 \PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}stdio.h\PYGZgt{}}
 
 \PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{k+kt}{void}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
-\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{temperaturas}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{l+m+mi}{21}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{23}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{19}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{25}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{22}\PYG{p}{\PYGZcb{};}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{idade}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{25}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{ptr\PYGZus{}idade}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{idade}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// ptr\PYGZus{}idade guarda o ENDERECO de idade}
 
-\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+m+mi}{5}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{++}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
-\PYG{+w}{        }\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Dia \PYGZpc{}d: \PYGZpc{}d C}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{temperaturas}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]);}
-\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Valor de idade:        \PYGZpc{}d}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{idade}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Endereco de idade:     \PYGZpc{}p}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{void}\PYG{+w}{ }\PYG{o}{*}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{idade}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Valor de ptr\PYGZus{}idade:    \PYGZpc{}p}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{void}\PYG{+w}{ }\PYG{o}{*}\PYG{p}{)}\PYG{+w}{ }\PYG{n}{ptr\PYGZus{}idade}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Valor apontado por ptr: \PYGZpc{}d}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{ptr\PYGZus{}idade}\PYG{p}{);}
 
 \PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
 \PYG{p}{\PYGZcb{}}

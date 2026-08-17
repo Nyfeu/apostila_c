@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+na}{void setup() \PYGZob{}}
+\PYG{+w}{    }\PYG{n+na}{// executado uma unica vez, ao ligar ou reiniciar o ESP32}
+\PYG{n+na}{\PYGZcb{}}
+
+\PYG{n+na}{void loop() \PYGZob{}}
+\PYG{+w}{    }\PYG{n+na}{// executado repetidamente, para sempre, enquanto houver energia}
+\PYG{n+na}{\PYGZcb{}}
+\end{Verbatim}

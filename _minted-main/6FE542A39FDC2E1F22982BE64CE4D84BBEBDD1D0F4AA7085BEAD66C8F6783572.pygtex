@@ -1,0 +1,204 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// Bibliotecas do framework Arduino/ESP32 usadas neste projeto:}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}WiFi.h\PYGZgt{}}\PYG{c+c1}{          // conexao a rede Wi\PYGZhy{}Fi (cap. 21)}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}HTTPClient.h\PYGZgt{}}\PYG{c+c1}{    // requisicoes HTTP para reportar alertas (cap. 21)}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}ArduinoOTA.h\PYGZgt{}}\PYG{c+c1}{    // atualizacao de firmware pela rede (cap. 22)}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}esp\PYGZus{}task\PYGZus{}wdt.h\PYGZgt{}}\PYG{c+c1}{  // Watchdog Timer, protege contra travamentos (cap. 19)}
+
+\PYG{c+c1}{// Pinos usados no projeto (ver secao \PYGZdq{}Ligacoes sugeridas\PYGZdq{})}
+\PYG{c+cp}{\PYGZsh{}define PINO\PYGZus{}LED    2    }\PYG{c+c1}{// LED de alerta}
+\PYG{c+cp}{\PYGZsh{}define PINO\PYGZus{}LDR    34   }\PYG{c+c1}{// sensor de luminosidade (entrada ADC1)}
+\PYG{c+cp}{\PYGZsh{}define PINO\PYGZus{}BOTAO  15   }\PYG{c+c1}{// botao que alterna o modo de operacao}
+
+\PYG{c+c1}{// Parametros de comportamento do firmware, centralizados aqui para}
+\PYG{c+c1}{// facilitar ajustes sem precisar caçar \PYGZdq{}numeros magicos\PYGZdq{} pelo codigo}
+\PYG{c+cp}{\PYGZsh{}define TAMANHO\PYGZus{}HISTORICO   10      }\PYG{c+c1}{// quantas leituras entram na media movel}
+\PYG{c+cp}{\PYGZsh{}define LIMIAR\PYGZus{}ESCURO       25.0f   }\PYG{c+c1}{// abaixo disso, ambiente \PYGZdq{}escuro\PYGZdq{} (\PYGZpc{})}
+\PYG{c+cp}{\PYGZsh{}define INTERVALO\PYGZus{}LEITURA   500UL   }\PYG{c+c1}{// ms entre leituras do sensor}
+\PYG{c+cp}{\PYGZsh{}define WDT\PYGZus{}TIMEOUT         5       }\PYG{c+c1}{// segundos ate o reset do watchdog}
+
+\PYG{c+c1}{// Credenciais e destino da rede \PYGZhy{}\PYGZhy{} em um projeto real, evite deixar}
+\PYG{c+c1}{// senhas fixas no codigo\PYGZhy{}fonte (considere um arquivo separado e ignorado}
+\PYG{c+c1}{// pelo controle de versao, como discutido no cap. 23 do apendice de Git)}
+\PYG{c+cp}{\PYGZsh{}define WIFI\PYGZus{}SSID     \PYGZdq{}MinhaRede\PYGZdq{}}
+\PYG{c+cp}{\PYGZsh{}define WIFI\PYGZus{}PASSWORD \PYGZdq{}minha\PYGZus{}senha\PYGZdq{}}
+\PYG{c+cp}{\PYGZsh{}define URL\PYGZus{}SERVIDOR  \PYGZdq{}http:}\PYG{c+c1}{//exemplo.com/api/alertas\PYGZdq{}}
+
+\PYG{c+c1}{// Os dois modos de operacao alternados pelo botao (cap. 10)}
+\PYG{k}{enum}\PYG{+w}{ }\PYG{n}{ModoOperacao}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{MODO\PYGZus{}NORMAL}\PYG{p}{,}\PYG{+w}{    }\PYG{c+c1}{// registra apenas quando um alerta comeca}
+\PYG{+w}{    }\PYG{n}{MODO\PYGZus{}VERBOSO}\PYG{p}{,}\PYG{+w}{   }\PYG{c+c1}{// registra toda leitura do sensor}
+\PYG{p}{\PYGZcb{};}
+
+\PYG{c+c1}{// Todo o estado \PYGZdq{}vivo\PYGZdq{} do sistema, reunido em uma unica struct (cap. 10)}
+\PYG{c+c1}{// em vez de espalhado em variaveis globais soltas}
+\PYG{k}{struct}\PYG{+w}{ }\PYG{n+nc}{EstadoEstacao}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{ModoOperacao}\PYG{+w}{ }\PYG{n}{modo}\PYG{p}{;}\PYG{+w}{     }\PYG{c+c1}{// modo atual (NORMAL ou VERBOSO)}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{ultima\PYGZus{}leitura}\PYG{p}{;}\PYG{+w}{    }\PYG{c+c1}{// valor bruto (0\PYGZhy{}4095) da ultima leitura do ADC}
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{media\PYGZus{}movel}\PYG{p}{;}\PYG{+w}{     }\PYG{c+c1}{// media das ultimas TAMANHO\PYGZus{}HISTORICO leituras}
+\PYG{+w}{    }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{alerta\PYGZus{}ativo}\PYG{p}{;}\PYG{+w}{     }\PYG{c+c1}{// true enquanto o ambiente esta \PYGZdq{}escuro\PYGZdq{}}
+\PYG{p}{\PYGZcb{};}
+
+\PYG{c+c1}{// Estado inicial: modo normal, nenhuma leitura ainda, sem alerta}
+\PYG{n}{EstadoEstacao}\PYG{+w}{ }\PYG{n}{estado}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{n}{MODO\PYGZus{}NORMAL}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{0.0f}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nb}{false}\PYG{p}{\PYGZcb{};}
+
+\PYG{c+c1}{// Buffer circular (cap. 8) com as ultimas leituras, usado para calcular}
+\PYG{c+c1}{// a media movel que suaviza o ruido natural do sensor LDR}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{historico}\PYG{p}{[}\PYG{n}{TAMANHO\PYGZus{}HISTORICO}\PYG{p}{];}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{indice\PYGZus{}historico}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// proxima posicao do buffer a ser sobrescrita}
+
+\PYG{c+c1}{// \PYGZsq{}volatile\PYGZsq{} avisa o compilador que esta variavel pode mudar a qualquer}
+\PYG{c+c1}{// momento por causa de uma interrupcao \PYGZhy{}\PYGZhy{} sem isso, o compilador poderia}
+\PYG{c+c1}{// otimizar o codigo assumindo (erradamente) que ela nunca muda em loop()}
+\PYG{k}{volatile}\PYG{+w}{ }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{evento\PYGZus{}botao}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nb}{false}\PYG{p}{;}
+\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{long}\PYG{+w}{ }\PYG{n}{ultima\PYGZus{}leitura\PYGZus{}ms}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// controla a temporizacao sem delay()}
+
+\PYG{c+c1}{// Rotina de interrupcao (ISR) do botao: deve ser curta e rapida, apenas}
+\PYG{c+c1}{// sinalizando o evento \PYGZhy{}\PYGZhy{} todo o trabalho de fato acontece em loop().}
+\PYG{c+c1}{// IRAM\PYGZus{}ATTR garante que o codigo da ISR fique carregado na RAM interna,}
+\PYG{c+c1}{// para nao depender de uma leitura da flash externa durante a interrupcao}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{IRAM\PYGZus{}ATTR}\PYG{+w}{ }\PYG{n+nf}{botao\PYGZus{}isr}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{evento\PYGZus{}botao}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nb}{true}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// Calcula a media aritmetica simples do buffer circular \PYGZsq{}historico\PYGZsq{}}
+\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n+nf}{calcular\PYGZus{}media}\PYG{p}{(}\PYG{k+kt}{void}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kt}{long}\PYG{+w}{ }\PYG{n}{soma}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// \PYGZsq{}long\PYGZsq{} evita overflow ao somar ate 10 leituras de 12 bits}
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{TAMANHO\PYGZus{}HISTORICO}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{++}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{soma}\PYG{+w}{ }\PYG{o}{+=}\PYG{+w}{ }\PYG{n}{historico}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{c+c1}{// cast para float antes de dividir: divisao inteira arredondaria a media}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{float}\PYG{p}{)}\PYG{+w}{ }\PYG{n}{soma}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n}{TAMANHO\PYGZus{}HISTORICO}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// Conecta ao Wi\PYGZhy{}Fi, bloqueando ate a conexao ser estabelecida \PYGZhy{}\PYGZhy{} aceitavel}
+\PYG{c+c1}{// aqui porque so acontece uma vez, dentro de setup(), antes do laco comecar}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{conectar\PYGZus{}wifi}\PYG{p}{(}\PYG{k+kt}{void}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{WiFi}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(}\PYG{n}{WIFI\PYGZus{}SSID}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{WIFI\PYGZus{}PASSWORD}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Conectando ao Wi\PYGZhy{}Fi\PYGZdq{}}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{k}{while}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{WiFi}\PYG{p}{.}\PYG{n}{status}\PYG{p}{()}\PYG{+w}{ }\PYG{o}{!=}\PYG{+w}{ }\PYG{n}{WL\PYGZus{}CONNECTED}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{delay}\PYG{p}{(}\PYG{l+m+mi}{500}\PYG{p}{);}
+\PYG{+w}{        }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}.\PYGZdq{}}\PYG{p}{);}\PYG{+w}{   }\PYG{c+c1}{// feedback visual de que o firmware nao travou}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{();}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Conectado! IP: \PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{n}{WiFi}\PYG{p}{.}\PYG{n}{localIP}\PYG{p}{());}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// Envia o percentual de luminosidade atual para o servidor via HTTP POST,}
+\PYG{c+c1}{// no formato JSON, sempre que um novo alerta comeca}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{enviar\PYGZus{}alerta}\PYG{p}{(}\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{luminosidade\PYGZus{}pct}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{c+c1}{// sem Wi\PYGZhy{}Fi conectado, nao ha para onde enviar \PYGZhy{}\PYGZhy{} desiste sem travar}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{WiFi}\PYG{p}{.}\PYG{n}{status}\PYG{p}{()}\PYG{+w}{ }\PYG{o}{!=}\PYG{+w}{ }\PYG{n}{WL\PYGZus{}CONNECTED}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{return}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{n}{HTTPClient}\PYG{+w}{ }\PYG{n}{http}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{http}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(}\PYG{n}{URL\PYGZus{}SERVIDOR}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{http}\PYG{p}{.}\PYG{n}{addHeader}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Content\PYGZhy{}Type\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}application/json\PYGZdq{}}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{c+c1}{// snprintf monta o corpo da requisicao em um buffer de tamanho fixo,}
+\PYG{+w}{    }\PYG{c+c1}{// evitando a fragmentacao de memoria associada a concatenar String}
+\PYG{+w}{    }\PYG{c+c1}{// (cap. 18) \PYGZhy{}\PYGZhy{} sizeof(corpo) impede que a escrita ultrapasse o buffer}
+\PYG{+w}{    }\PYG{k+kt}{char}\PYG{+w}{ }\PYG{n}{corpo}\PYG{p}{[}\PYG{l+m+mi}{64}\PYG{p}{];}
+\PYG{+w}{    }\PYG{n}{snprintf}\PYG{p}{(}\PYG{n}{corpo}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{corpo}\PYG{p}{),}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}\PYGZob{}}\PYG{l+s+se}{\PYGZbs{}\PYGZdq{}}\PYG{l+s}{luminosidade}\PYG{l+s+se}{\PYGZbs{}\PYGZdq{}}\PYG{l+s}{: \PYGZpc{}.1f\PYGZcb{}\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{luminosidade\PYGZus{}pct}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{codigo}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{http}\PYG{p}{.}\PYG{n}{POST}\PYG{p}{(}\PYG{n}{corpo}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}[HTTP] Alerta enviado, resposta: \PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{n}{codigo}\PYG{p}{);}\PYG{+w}{   }\PYG{c+c1}{// codigo de status HTTP (200, 404, etc.)}
+
+\PYG{+w}{    }\PYG{n}{http}\PYG{p}{.}\PYG{n}{end}\PYG{p}{();}\PYG{+w}{   }\PYG{c+c1}{// libera os recursos da requisicao}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{setup}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(}\PYG{l+m+mi}{115200}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{n}{pinMode}\PYG{p}{(}\PYG{n}{PINO\PYGZus{}LED}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{OUTPUT}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{pinMode}\PYG{p}{(}\PYG{n}{PINO\PYGZus{}BOTAO}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{INPUT\PYGZus{}PULLUP}\PYG{p}{);}
+\PYG{+w}{    }\PYG{c+c1}{// dispara botao\PYGZus{}isr() na borda de descida (botao pressionado, pull\PYGZhy{}up)}
+\PYG{+w}{    }\PYG{n}{attachInterrupt}\PYG{p}{(}\PYG{n}{digitalPinToInterrupt}\PYG{p}{(}\PYG{n}{PINO\PYGZus{}BOTAO}\PYG{p}{),}\PYG{+w}{ }\PYG{n}{botao\PYGZus{}isr}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{FALLING}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{c+c1}{// zera o historico para que a primeira media movel nao misture}
+\PYG{+w}{    }\PYG{c+c1}{// leituras validas com \PYGZdq{}lixo\PYGZdq{} de memoria nao inicializada}
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{TAMANHO\PYGZus{}HISTORICO}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{++}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{historico}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{n}{conectar\PYGZus{}wifi}\PYG{p}{();}\PYG{+w}{   }\PYG{c+c1}{// bloqueia aqui ate a rede estar pronta}
+
+\PYG{+w}{    }\PYG{c+c1}{// deixa a estacao pronta para receber uma atualizacao de firmware}
+\PYG{+w}{    }\PYG{c+c1}{// pela rede a qualquer momento, sem precisar de cabo (cap. 22)}
+\PYG{+w}{    }\PYG{n}{ArduinoOTA}\PYG{p}{.}\PYG{n}{setHostname}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}estacao\PYGZhy{}iot\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{ArduinoOTA}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{();}
+
+\PYG{+w}{    }\PYG{c+c1}{// segundo argumento \PYGZsq{}true\PYGZsq{}: trava (panic) o sistema em vez de so}
+\PYG{+w}{    }\PYG{c+c1}{// resetar, o que ajuda a diagnosticar travamentos durante o desenvolvimento}
+\PYG{+w}{    }\PYG{n}{esp\PYGZus{}task\PYGZus{}wdt\PYGZus{}init}\PYG{p}{(}\PYG{n}{WDT\PYGZus{}TIMEOUT}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nb}{true}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{esp\PYGZus{}task\PYGZus{}wdt\PYGZus{}add}\PYG{p}{(}\PYG{n+nb}{NULL}\PYG{p}{);}\PYG{+w}{   }\PYG{c+c1}{// registra a tarefa atual (loop) no watchdog}
+
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Estacao de monitoramento iniciada em modo NORMAL.\PYGZdq{}}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{loop}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{ArduinoOTA}\PYG{p}{.}\PYG{n}{handle}\PYG{p}{();}\PYG{+w}{   }\PYG{c+c1}{// fica pronta para uma atualizacao a qualquer momento}
+
+\PYG{+w}{    }\PYG{c+c1}{// 1) verifica se o botao foi pressionado (sem bloquear o laco)}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{evento\PYGZus{}botao}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{evento\PYGZus{}botao}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nb}{false}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// consome o evento, para nao tratar de novo}
+\PYG{+w}{        }\PYG{c+c1}{// alterna entre os dois modos com o operador ternario (cap. 5)}
+\PYG{+w}{        }\PYG{n}{estado}\PYG{p}{.}\PYG{n}{modo}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{estado}\PYG{p}{.}\PYG{n}{modo}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{n}{MODO\PYGZus{}NORMAL}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{?}\PYG{+w}{ }\PYG{n}{MODO\PYGZus{}VERBOSO}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{MODO\PYGZus{}NORMAL}\PYG{p}{;}
+
+\PYG{+w}{        }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Modo alterado para: \PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{        }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{n}{estado}\PYG{p}{.}\PYG{n}{modo}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{n}{MODO\PYGZus{}NORMAL}\PYG{+w}{ }\PYG{o}{?}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}NORMAL\PYGZdq{}}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}VERBOSO\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{c+c1}{// 2) le o sensor periodicamente, sem usar delay() \PYGZhy{}\PYGZhy{} temporizacao}
+\PYG{+w}{    }\PYG{c+c1}{//    por millis(), a mesma tecnica usada nos exemplos do cap. 19}
+\PYG{+w}{    }\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{long}\PYG{+w}{ }\PYG{n}{agora}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{millis}\PYG{p}{();}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{agora}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{ultima\PYGZus{}leitura\PYGZus{}ms}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{n}{INTERVALO\PYGZus{}LEITURA}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{ultima\PYGZus{}leitura\PYGZus{}ms}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{agora}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// reinicia a contagem do intervalo}
+
+\PYG{+w}{        }\PYG{c+c1}{// leitura bruta do ADC (0 a 4095, resolucao de 12 bits no ESP32)}
+\PYG{+w}{        }\PYG{n}{estado}\PYG{p}{.}\PYG{n}{ultima\PYGZus{}leitura}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{analogRead}\PYG{p}{(}\PYG{n}{PINO\PYGZus{}LDR}\PYG{p}{);}
+
+\PYG{+w}{        }\PYG{c+c1}{// grava a leitura na posicao atual do buffer circular e avanca}
+\PYG{+w}{        }\PYG{c+c1}{// o indice, voltando a 0 automaticamente com o operador \PYGZsq{}\PYGZpc{}\PYGZsq{}}
+\PYG{+w}{        }\PYG{n}{historico}\PYG{p}{[}\PYG{n}{indice\PYGZus{}historico}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{estado}\PYG{p}{.}\PYG{n}{ultima\PYGZus{}leitura}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{indice\PYGZus{}historico}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{indice\PYGZus{}historico}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZpc{}}\PYG{+w}{ }\PYG{n}{TAMANHO\PYGZus{}HISTORICO}\PYG{p}{;}
+
+\PYG{+w}{        }\PYG{n}{estado}\PYG{p}{.}\PYG{n}{media\PYGZus{}movel}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{calcular\PYGZus{}media}\PYG{p}{();}
+\PYG{+w}{        }\PYG{c+c1}{// converte o valor bruto do ADC (0\PYGZhy{}4095) para um percentual (0\PYGZhy{}100)}
+\PYG{+w}{        }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{luminosidade\PYGZus{}pct}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{estado}\PYG{p}{.}\PYG{n}{media\PYGZus{}movel}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{l+m+mf}{4095.0f}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{l+m+mf}{100.0f}\PYG{p}{;}
+
+\PYG{+w}{        }\PYG{c+c1}{// guarda o estado anterior do alerta para detectar a TRANSICAO}
+\PYG{+w}{        }\PYG{c+c1}{// de \PYGZdq{}sem alerta\PYGZdq{} para \PYGZdq{}em alerta\PYGZdq{} logo abaixo}
+\PYG{+w}{        }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{estava\PYGZus{}em\PYGZus{}alerta}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{estado}\PYG{p}{.}\PYG{n}{alerta\PYGZus{}ativo}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{estado}\PYG{p}{.}\PYG{n}{alerta\PYGZus{}ativo}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{luminosidade\PYGZus{}pct}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{LIMIAR\PYGZus{}ESCURO}\PYG{p}{);}
+
+\PYG{+w}{        }\PYG{n}{digitalWrite}\PYG{p}{(}\PYG{n}{PINO\PYGZus{}LED}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{estado}\PYG{p}{.}\PYG{n}{alerta\PYGZus{}ativo}\PYG{p}{);}\PYG{+w}{   }\PYG{c+c1}{// acende/apaga o LED}
+
+\PYG{+w}{        }\PYG{c+c1}{// no modo verboso, registra toda leitura; no modo normal, so}
+\PYG{+w}{        }\PYG{c+c1}{// os alertas sao registrados (ver bloco de alerta logo abaixo)}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{estado}\PYG{p}{.}\PYG{n}{modo}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{n}{MODO\PYGZus{}VERBOSO}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}[LEITURA] bruta=\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{            }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{n}{estado}\PYG{p}{.}\PYG{n}{ultima\PYGZus{}leitura}\PYG{p}{);}
+\PYG{+w}{            }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{l+s}{\PYGZdq{} media=\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{            }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{n}{estado}\PYG{p}{.}\PYG{n}{media\PYGZus{}movel}\PYG{p}{);}
+\PYG{+w}{            }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{l+s}{\PYGZdq{} luminosidade=\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{            }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{n}{luminosidade\PYGZus{}pct}\PYG{p}{);}
+\PYG{+w}{            }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{        }\PYG{c+c1}{// envia o alerta apenas no instante em que ele comeca (nao a cada}
+\PYG{+w}{        }\PYG{c+c1}{// leitura) \PYGZhy{}\PYGZhy{} e por isso que \PYGZsq{}estava\PYGZus{}em\PYGZus{}alerta\PYGZsq{} foi guardado acima}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{estado}\PYG{p}{.}\PYG{n}{alerta\PYGZus{}ativo}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{o}{!}\PYG{n}{estava\PYGZus{}em\PYGZus{}alerta}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}[ALERTA] Ambiente escuro detectado!\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{            }\PYG{n}{enviar\PYGZus{}alerta}\PYG{p}{(}\PYG{n}{luminosidade\PYGZus{}pct}\PYG{p}{);}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{n}{esp\PYGZus{}task\PYGZus{}wdt\PYGZus{}reset}\PYG{p}{();}\PYG{+w}{   }\PYG{c+c1}{// \PYGZdq{}alimenta\PYGZdq{} o watchdog a cada volta saudavel do laco}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

@@ -1,0 +1,30 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{}define PINO\PYGZus{}SENSOR       34}
+\PYG{c+c1}{\PYGZsh{}define TEMPO\PYGZus{}DE\PYGZus{}SONO\PYGZus{}S   60   // segundos entre leituras}
+
+\PYG{n+na}{RTC\PYGZus{}DATA\PYGZus{}ATTR int contador\PYGZus{}de\PYGZus{}bootes}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{0}\PYG{c+c1}{;}
+
+\PYG{n+na}{void setup() \PYGZob{}}
+\PYG{+w}{    }\PYG{n+na}{Serial.begin(115200);}
+\PYG{+w}{    }\PYG{n+na}{contador\PYGZus{}de\PYGZus{}bootes++;}
+
+\PYG{+w}{    }\PYG{n+na}{int leitura}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{analogRead(PINO\PYGZus{}SENSOR)}\PYG{c+c1}{;}
+\PYG{+w}{    }\PYG{n+na}{Serial.print(\PYGZdq{}Boot numero \PYGZdq{});}
+\PYG{+w}{    }\PYG{n+na}{Serial.print(contador\PYGZus{}de\PYGZus{}bootes);}
+\PYG{+w}{    }\PYG{n+na}{Serial.print(\PYGZdq{} | Leitura do sensor}\PYG{o}{:}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{})}\PYG{c+c1}{;}
+\PYG{+w}{    }\PYG{n+na}{Serial.println(leitura);}
+
+\PYG{+w}{    }\PYG{n+na}{// configura o timer como fonte de despertar (em microssegundos)}
+\PYG{+w}{    }\PYG{n+na}{esp\PYGZus{}sleep\PYGZus{}enable\PYGZus{}timer\PYGZus{}wakeup(TEMPO\PYGZus{}DE\PYGZus{}SONO\PYGZus{}S * 1000000ULL);}
+
+\PYG{+w}{    }\PYG{n+na}{Serial.println(\PYGZdq{}Entrando em deep sleep...\PYGZdq{});}
+\PYG{+w}{    }\PYG{n+na}{Serial.flush();   // garante que a mensagem saia pela serial antes de dormir}
+
+\PYG{+w}{    }\PYG{n+na}{esp\PYGZus{}deep\PYGZus{}sleep\PYGZus{}start();}
+\PYG{n+na}{\PYGZcb{}}
+
+\PYG{n+na}{void loop() \PYGZob{}}
+\PYG{+w}{    }\PYG{n+na}{// nunca executado}\PYG{o}{:}\PYG{+w}{ }\PYG{l+s}{apos acordar do deep sleep, o ESP32 reinicia}
+\PYG{+w}{    }\PYG{n+na}{// e a execucao volta para o comeco de setup(), nao para ca.}
+\PYG{n+na}{\PYGZcb{}}
+\end{Verbatim}

@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{}include \PYGZdq{}sensor.h\PYGZdq{}}
+
+\PYG{n+na}{float converter\PYGZus{}para\PYGZus{}celsius(int leitura\PYGZus{}bruta) \PYGZob{}}
+\PYG{+w}{    }\PYG{n+na}{return (leitura\PYGZus{}bruta / 4095.0f) * 3.3f * 100.0f;}
+\PYG{n+na}{\PYGZcb{}}
+\end{Verbatim}

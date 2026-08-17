@@ -13,7 +13,7 @@ O \ESP{} oferece diferentes \textbf{modos de operação}, cada um trocando capac
 
 \begin{table}[h]
 \centering
-\begin{tabular}{@{}lll@{}}
+\begin{tabularx}{\textwidth}{@{}lXX@{}}
 \toprule
 \textbf{Modo} & \textbf{O que permanece ativo} & \textbf{Consumo típico*} \\
 \midrule
@@ -22,7 +22,7 @@ Ativo (com Wi-Fi)  & processador, memória, rádio  & dezenas a centenas de mA \
 \emph{Light sleep}  & memória RAM, periféricos configurados & frações de mA \\
 \emph{Deep sleep}   & apenas o núcleo RTC e a memória RTC & microamperes \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \caption{Modos de operação do ESP32, do maior para o menor consumo. *Valores de ordem de grandeza — o consumo real depende da placa, dos periféricos externos e da atividade do rádio.}
 \end{table}
 
@@ -141,7 +141,7 @@ Repare como esse padrão contrasta com a arquitetura de laço único apresentada
 
 \begin{table}[h]
 \centering
-\begin{tabular}{@{}lll@{}}
+\begin{tabularx}{\textwidth}{@{}lXX@{}}
 \toprule
 & \textbf{Light sleep} & \textbf{Deep sleep} \\
 \midrule
@@ -150,7 +150,7 @@ Retomada            & continua após \code{esp\_light\_sleep\_start()} & recome�
 Fontes de despertar & timer, \emph{qualquer} GPIO, UART, \ldots & timer, pinos RTC específicos \\
 Economia de energia & moderada & máxima \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \caption{Light sleep vs. deep sleep — trade-off entre continuidade de execução e economia de energia.}
 \end{table}
 

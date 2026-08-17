@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{}include \PYGZlt{}stdio.h\PYGZgt{}}
+\PYG{c+c1}{\PYGZsh{}include \PYGZlt{}stdlib.h\PYGZgt{}}
+\PYG{c+c1}{\PYGZsh{}include \PYGZlt{}time.h\PYGZgt{}}
+
+\PYG{n+na}{int main(void) \PYGZob{}}
+
+\PYG{+w}{    }\PYG{n+na}{srand(time(NULL));          // inicializa a semente com o tempo atual}
+\PYG{+w}{    }\PYG{n+na}{int dado}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{(rand() \PYGZpc{} 6) + 1}\PYG{c+c1}{; // numero pseudoaleatorio entre 1 e 6}
+
+\PYG{+w}{    }\PYG{n+na}{printf(\PYGZdq{}Voce tirou}\PYG{o}{:}\PYG{+w}{ }\PYG{l+s}{\PYGZpc{}d\PYGZbs{}n\PYGZdq{}, dado)}\PYG{c+c1}{;}
+\PYG{+w}{    }\PYG{n+na}{return 0;}
+\PYG{n+na}{\PYGZcb{}}
+\end{Verbatim}

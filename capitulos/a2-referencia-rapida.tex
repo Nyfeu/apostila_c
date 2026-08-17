@@ -84,7 +84,8 @@ Na dúvida sobre a ordem de avaliação de uma expressão complexa, use parênte
 
 \begin{table}[h]
 \centering
-\begin{tabular}{@{}ll@{}}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{5.1cm}X@{}}
 \toprule
 \textbf{Função / macro} & \textbf{Finalidade} \\
 \midrule
@@ -102,7 +103,7 @@ Na dúvida sobre a ordem de avaliação de uma expressão complexa, use parênte
 \code{IRAM\_ATTR}               & garante que uma ISR fique carregada na RAM interna \\
 \code{log\_i} / \code{log\_w} / \code{log\_e} & mensagens de log por nível de severidade \\
 \code{randomSeed} / \code{random} & inicializa a semente e gera números pseudoaleatórios \\
-\code{esp\_task\_wdt\_init/add/reset} & configura, registra e alimenta o Watchdog Timer \\
+\code{esp\_task\_wdt\_init} / \code{add} / \code{reset} & configura, registra e alimenta o Watchdog Timer \\
 \code{esp\_sleep\_enable\_timer\_wakeup} & configura um temporizador como fonte de despertar \\
 \code{esp\_light\_sleep\_start()}      & entra em \emph{light sleep} (RAM preservada, execução retomada) \\
 \code{esp\_sleep\_enable\_gpio\_wakeup()} / \code{gpio\_wakeup\_enable} & configura um pino como fonte de despertar do \emph{light sleep} \\
@@ -110,9 +111,9 @@ Na dúvida sobre a ordem de avaliação de uma expressão complexa, use parênte
 \code{RTC\_DATA\_ATTR}                 & preserva uma variável entre ciclos de \emph{deep sleep} \\
 \code{WiFi.begin(ssid, senha)}         & inicia a conexão a uma rede Wi-Fi \\
 \code{WiFi.status()} / \code{WiFi.localIP()} & consulta o estado da conexão / o IP obtido \\
-\code{HTTPClient} (\code{begin}/\code{POST}/\code{end}) & realiza requisições HTTP \\
+\code{HTTPClient} (\code{begin} / \code{POST} / \code{end}) & realiza requisições HTTP \\
 \code{ArduinoOTA.begin()} / \code{.handle()} & habilita e processa atualizações de firmware pela rede \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \caption{Funções do framework Arduino apresentadas na Parte II desta apostila.}
 \end{table}

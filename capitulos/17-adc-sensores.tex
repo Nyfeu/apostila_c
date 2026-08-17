@@ -5,7 +5,14 @@ Muitos sensores — potenciômetros, sensores de luminosidade (LDR), sensores de
 
 \section{Como um ADC funciona}
 
-Um ADC amostra uma tensão analógica de entrada e a converte em um número inteiro, dentro de uma faixa determinada pela sua \textbf{resolução}, medida em bits. O \ESP{} possui ADCs de \textbf{12 bits}, o que significa que cada leitura retorna um valor entre 0 e $2^{12}-1 = 4095$ — quanto mais próxima a tensão de entrada estiver da tensão máxima suportada, mais próximo de 4095 será o valor lido.
+Um ADC amostra uma tensão analógica de entrada e a converte em um número inteiro, dentro de uma faixa determinada pela sua \textbf{resolução}, medida em bits. Internamente, essa conversão acontece em duas etapas bem definidas:
+
+\begin{itemize}
+    \item \textbf{Amostragem} (\emph{sample and hold}): em um instante específico, o circuito ``congela'' a tensão de entrada por tempo suficiente para medi-la — sem isso, um sinal que continua variando durante a conversão produziria uma leitura inconsistente;
+    \item \textbf{Quantização}: a tensão amostrada, que em teoria pode assumir infinitos valores contínuos, é arredondada para o nível digital mais próximo dentro de uma faixa finita de códigos possíveis — é aqui que a resolução do conversor entra em jogo.
+\end{itemize}
+
+O \ESP{} possui ADCs de \textbf{12 bits}, o que significa que cada leitura retorna um valor entre 0 e $2^{12}-1 = 4095$ — quanto mais próxima a tensão de entrada estiver da tensão de referência do conversor, mais próximo de 4095 será o valor lido.
 
 \begin{atencao}
 Se você já programou com placas Arduino clássicas (como o Arduino Uno), tenha atenção: lá, \code{analogRead()} retorna valores de \textbf{10 bits} (0 a 1023). No \ESP{}, por padrão, a resolução é de \textbf{12 bits} (0 a 4095) — o dobro de precisão, mas também uma faixa de valores diferente da que você talvez esteja acostumado.
@@ -31,6 +38,70 @@ GPIO39 & ADC1 \\
 \end{tabular}
 \caption{Alguns pinos da ADC1 disponíveis no ESP32.}
 \end{table}
+
+\subsection{Quantização: da tensão contínua ao código digital}
+
+A relação entre a tensão de entrada e o código digital produzido é chamada de \textbf{função de transferência} do ADC. Como o número de códigos de saída é finito ($2^n$, para uma resolução de $n$ bits), essa função tem o formato de uma \emph{escada}: cada degrau corresponde a uma pequena faixa de tensões de entrada — todas mapeadas para o \emph{mesmo} código de saída.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1, font=\small]
+    % --- eixos ---
+    \draw[-{Latex[length=2.5mm]}, thick, cinzaesc] (0,0) -- (8.6,0)
+        node[right, font=\small] {tensão de entrada};
+    \draw[-{Latex[length=2.5mm]}, thick, cinzaesc] (0,0) -- (0,6.4)
+        node[above, font=\small] {código digital};
+
+    % --- relação linear ideal (sem quantização), para referência ---
+    \draw[dashed, acento, thick] (0,0) -- (8,6);
+
+    % --- staircase: função de transferência real (quantizada) ---
+    \foreach \i in {0,...,7} {
+        \draw[secundaria, very thick] (\i,{\i*0.75}) -- ({\i+1},{\i*0.75});
+    }
+    \foreach \i in {0,...,6} {
+        \draw[secundaria, very thick] ({\i+1},{\i*0.75}) -- ({\i+1},{(\i+1)*0.75});
+    }
+
+    % --- exemplo: uma tensao Vin especifica sendo quantizada ---
+    \draw[densely dotted, primaria, thick] (3.4,0) -- (3.4,2.25);
+    \draw[densely dotted, primaria, thick] (3.4,2.25) -- (0,2.25);
+    \filldraw[primaria] (3.4,2.25) circle (1.8pt);
+    \node[below, font=\scriptsize, primaria] at (3.4,-0.05) {$V_{in}$};
+    \node[left, font=\scriptsize, primaria] at (-0.05,2.25) {código 3};
+
+    % --- destaque do degrau de quantizacao ---
+    \draw[<->, thick, cinzaesc] (3,-0.55) -- (4,-0.55)
+        node[midway, below, font=\scriptsize] {$\Delta V$};
+
+    % --- marcacoes dos extremos dos eixos ---
+    \node[below left, font=\scriptsize] at (0,0) {0};
+    \node[below, font=\scriptsize] at (8,0) {$V_{ref}$};
+    \node[left, font=\scriptsize] at (0,6) {$2^n\!-\!1$};
+\end{tikzpicture}
+\caption{Função de transferência de um ADC: a tensão de entrada contínua (linha tracejada, relação ideal sem quantização) é mapeada em degraus de largura $\Delta V$, cada um associado a um único código digital (linha em degraus, a conversão real). Ilustração com resolução reduzida (3 bits, 8 níveis) para fins didáticos — o ADC do \ESP{} usa 12 bits, ou seja, 4096 níveis.}
+\label{fig:adc-staircase}
+\end{figure}
+
+A largura de cada degrau — a menor variação de tensão que o ADC é capaz de distinguir — é chamada de \textbf{tensão de quantização}, dada por:
+\[
+\Delta V = \frac{V_{ref}}{2^n}
+\]
+onde $V_{ref}$ é a tensão de referência do conversor e $n$ é a resolução em bits. Para o \ESP{}, com $V_{ref} \approx 3{,}3$~V e $n = 12$:
+\[
+\Delta V = \frac{3{,}3}{4096} \approx 0{,}8~\text{mV}
+\]
+Ou seja, duas tensões de entrada que diferem por menos de $0{,}8$~mV são indistinguíveis para o ADC — ambas produzem o mesmo código digital. Esse arredondamento inevitável é chamado de \textbf{erro de quantização}, e é uma limitação física de qualquer conversor analógico-digital, não um defeito: quanto maior a resolução (mais bits), menor o degrau $\Delta V$ e mais fiel a leitura digital é à tensão analógica real — ao custo de valores brutos maiores para processar.
+
+\subsection{Atenuação de entrada e faixa de tensão}
+
+A tensão de referência $V_{ref}$ usada na fórmula acima não é fixa: o \ESP{} permite configurar uma \textbf{atenuação} na entrada do ADC, que determina até que tensão máxima uma leitura pode chegar antes de saturar em 4095. Por padrão, o framework Arduino configura a atenuação de \textbf{11~dB}, que permite medir tensões de entrada de aproximadamente 0 a 3,3~V — a faixa usada implicitamente em todos os exemplos deste capítulo.
+
+\begin{atencao}
+O ADC do \ESP{} tem uma não linearidade conhecida nos extremos da faixa de tensão — leituras muito próximas de 0~V ou muito próximas de $V_{ref}$ tendem a ser menos precisas do que leituras na faixa intermediária. Para a maioria dos sensores usados nesta apostila (um LDR, um potenciômetro), esse efeito é pequeno o suficiente para ser ignorado, mas vale ter em mente ao projetar um circuito que dependa de alta precisão perto dos extremos.
+\end{atencao}
+
+Quando um sensor específico produz uma tensão máxima menor que 3,3~V, é possível reduzir a atenuação (com \code{analogSetAttenuation()}, do ESP-IDF) para aproveitar melhor a resolução disponível naquela faixa mais estreita — um refinamento que foge do escopo introdutório deste material, mas que vale conhecer ao trabalhar com sensores de precisão.
 
 \section{Lendo um sensor analógico}
 

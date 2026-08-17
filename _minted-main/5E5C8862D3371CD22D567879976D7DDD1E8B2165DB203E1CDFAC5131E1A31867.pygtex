@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+ArduinoOTA.setHostname\PYG{o}{(}\PYG{l+s+s2}{\PYGZdq{}estacao\PYGZhy{}iot\PYGZdq{}}\PYG{o}{)}\PYG{p}{;}
+ArduinoOTA.setPassword\PYG{o}{(}\PYG{l+s+s2}{\PYGZdq{}uma\PYGZhy{}senha\PYGZhy{}forte\PYGZhy{}aqui\PYGZdq{}}\PYG{o}{)}\PYG{p}{;}
+ArduinoOTA.begin\PYG{o}{()}\PYG{p}{;}
+\end{Verbatim}

@@ -1,14 +1,5 @@
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}stdio.h\PYGZgt{}}
-\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}stdlib.h\PYGZgt{}}
-\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}time.h\PYGZgt{}}
-
 \PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{k+kt}{void}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
-
-\PYG{+w}{    }\PYG{n}{srand}\PYG{p}{(}\PYG{n}{time}\PYG{p}{(}\PYG{n+nb}{NULL}\PYG{p}{));}\PYG{+w}{          }\PYG{c+c1}{// inicializa a semente com o tempo atual}
-\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{dado}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{rand}\PYG{p}{()}\PYG{+w}{ }\PYG{o}{\PYGZpc{}}\PYG{+w}{ }\PYG{l+m+mi}{6}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{+w}{ }\PYG{c+c1}{// numero pseudoaleatorio entre 1 e 6}
-
-\PYG{+w}{    }\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Voce tirou: \PYGZpc{}d}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{dado}\PYG{p}{);}
-\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// ... corpo do programa ...}
 \PYG{p}{\PYGZcb{}}
 \end{Verbatim}

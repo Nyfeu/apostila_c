@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{[}\PYG{n}{env}\PYG{o}{:}\PYG{n}{esp32dev}\PYG{p}{]}
+\PYG{n}{platform}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{espressif32}
+\PYG{n}{board}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{esp32dev}
+\PYG{n}{framework}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{arduino}
+\PYG{n}{monitor\PYGZus{}speed}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{115200}
+\PYG{n}{build\PYGZus{}flags}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{n}{DCORE\PYGZus{}DEBUG\PYGZus{}LEVEL}\PYG{o}{=}\PYG{l+m+mi}{4}\PYG{+w}{   }\PYG{p}{;}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{o}{=}\PYG{n}{Nenhum}\PYG{+w}{ }\PYG{p}{...}\PYG{+w}{ }\PYG{l+m+mi}{5}\PYG{o}{=}\PYG{n}{Verbose}
+\end{Verbatim}

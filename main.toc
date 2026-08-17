@@ -92,62 +92,64 @@
 \contentsline {section}{\numberline {16.3}Controlando vários pinos com um vetor}{75}{section.16.3}%
 \contentsline {chapter}{\numberline {17}Leitura de Sensores Analógicos (ADC)}{77}{chapter.17}%
 \contentsline {section}{\numberline {17.1}Como um ADC funciona}{77}{section.17.1}%
-\contentsline {section}{\numberline {17.2}Lendo um sensor analógico}{78}{section.17.2}%
-\contentsline {section}{\numberline {17.3}De leitura bruta a informação: um sensor de luminosidade}{78}{section.17.3}%
-\contentsline {section}{\numberline {17.4}Suavizando leituras com um vetor: média móvel}{79}{section.17.4}%
-\contentsline {chapter}{\numberline {18}Comunicação Serial e Depuração}{81}{chapter.18}%
-\contentsline {section}{\numberline {18.1}UART e o monitor serial}{81}{section.18.1}%
-\contentsline {subsection}{\numberline {18.1.1}As variantes de \texttt {\color {secundaria}Serial.print}}{82}{subsection.18.1.1}%
-\contentsline {section}{\numberline {18.2}Saída como ferramenta de depuração, agora no firmware}{82}{section.18.2}%
-\contentsline {section}{\numberline {18.3}Log por nível de severidade}{82}{section.18.3}%
-\contentsline {chapter}{\numberline {19}Interrupções e Temporização}{85}{chapter.19}%
-\contentsline {section}{\numberline {19.1}O que é uma interrupção}{85}{section.19.1}%
-\contentsline {section}{\numberline {19.2}Interrupções de GPIO com \texttt {\color {secundaria}attachInterrupt}}{85}{section.19.2}%
-\contentsline {section}{\numberline {19.3}Temporização sem bloquear o laço: a técnica de \texttt {\color {secundaria}millis()}}{86}{section.19.3}%
-\contentsline {section}{\numberline {19.4}Watchdog Timer}{87}{section.19.4}%
-\contentsline {chapter}{\numberline {20}Gerenciamento de Energia}{91}{chapter.20}%
-\contentsline {section}{\numberline {20.1}Por que gerenciar energia}{91}{section.20.1}%
-\contentsline {section}{\numberline {20.2}Modos de baixo consumo do ESP32}{91}{section.20.2}%
-\contentsline {section}{\numberline {20.3}Light sleep: pausas curtas e reversíveis}{92}{section.20.3}%
-\contentsline {section}{\numberline {20.4}Memória RTC: sobrevivendo ao \emph {deep sleep}}{93}{section.20.4}%
-\contentsline {section}{\numberline {20.5}Exemplo: um nó sensor alimentado por bateria}{94}{section.20.5}%
-\contentsline {section}{\numberline {20.6}Qual modo escolher}{95}{section.20.6}%
-\contentsline {chapter}{\numberline {21}Comunicação de Dados via Wi-Fi}{97}{chapter.21}%
-\contentsline {section}{\numberline {21.1}Conectando-se a uma rede}{97}{section.21.1}%
-\contentsline {section}{\numberline {21.2}Enviando dados: requisições HTTP}{98}{section.21.2}%
-\contentsline {section}{\numberline {21.3}Lidando com quedas de conexão}{99}{section.21.3}%
-\contentsline {section}{\numberline {21.4}Além do HTTP: uma palavra sobre MQTT}{99}{section.21.4}%
-\contentsline {chapter}{\numberline {22}Atualizações OTA (\emph {Over-the-Air})}{101}{chapter.22}%
-\contentsline {section}{\numberline {22.1}ArduinoOTA: atualizações na rede local}{101}{section.22.1}%
-\contentsline {subsection}{\numberline {22.1.1}Enviando uma atualização pelo PlatformIO}{102}{subsection.22.1.1}%
-\contentsline {section}{\numberline {22.2}Protegendo o processo com senha}{102}{section.22.2}%
-\contentsline {chapter}{\numberline {23}Estação de Monitoramento IoT}{105}{chapter.23}%
-\contentsline {section}{\numberline {23.1}Especificação do projeto}{105}{section.23.1}%
-\contentsline {subsection}{\numberline {23.1.1}Materiais}{105}{subsection.23.1.1}%
-\contentsline {subsection}{\numberline {23.1.2}Ligações sugeridas}{105}{subsection.23.1.2}%
-\contentsline {section}{\numberline {23.2}Projetando a estrutura do estado}{106}{section.23.2}%
-\contentsline {section}{\numberline {23.3}Firmware completo}{106}{section.23.3}%
-\contentsline {section}{\numberline {23.4}Como o projeto se encaixa}{109}{section.23.4}%
-\contentsline {section}{\numberline {23.5}Sobre economizar energia neste projeto}{110}{section.23.5}%
-\contentsline {section}{\numberline {23.6}Para continuar praticando}{111}{section.23.6}%
-\contentsline {chapter}{\numberline {A}Tabela ASCII}{113}{appendix.A}%
-\contentsline {chapter}{\numberline {B}Referência Rápida}{115}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Precedência de operadores}{115}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Especificadores de formato (\texttt {\color {secundaria}printf}/\texttt {\color {secundaria}scanf})}{116}{section.B.2}%
-\contentsline {section}{\numberline {B.3}Tipos de largura fixa (\texttt {\color {secundaria}stdint.h})}{116}{section.B.3}%
-\contentsline {section}{\numberline {B.4}Funções essenciais do framework Arduino usadas nesta apostila}{116}{section.B.4}%
-\contentsline {chapter}{\numberline {C}Controle de Versão com Git e GitHub}{119}{appendix.C}%
-\contentsline {section}{\numberline {C.1}O que é controle de versão}{119}{section.C.1}%
-\contentsline {section}{\numberline {C.2}Instalação e configuração inicial}{119}{section.C.2}%
-\contentsline {section}{\numberline {C.3}Os três estados de um arquivo}{120}{section.C.3}%
-\contentsline {section}{\numberline {C.4}Criando um repositório}{120}{section.C.4}%
-\contentsline {section}{\numberline {C.5}O ciclo básico: status, add e commit}{120}{section.C.5}%
-\contentsline {section}{\numberline {C.6}Consultando o histórico}{121}{section.C.6}%
-\contentsline {section}{\numberline {C.7}Ignorando arquivos: \texttt {\color {secundaria}.gitignore}}{121}{section.C.7}%
-\contentsline {section}{\numberline {C.8}Ramificações (\emph {branches})}{122}{section.C.8}%
-\contentsline {section}{\numberline {C.9}Trabalhando com o GitHub}{123}{section.C.9}%
-\contentsline {subsection}{\numberline {C.9.1}Criando um repositório remoto}{123}{subsection.C.9.1}%
-\contentsline {subsection}{\numberline {C.9.2}Clonando um repositório existente}{123}{subsection.C.9.2}%
-\contentsline {subsection}{\numberline {C.9.3}Enviando e recebendo atualizações}{123}{subsection.C.9.3}%
-\contentsline {section}{\numberline {C.10}Colaborando com Pull Requests}{123}{section.C.10}%
-\contentsline {section}{\numberline {C.11}Referência rápida}{124}{section.C.11}%
+\contentsline {subsection}{\numberline {17.1.1}Quantização: da tensão contínua ao código digital}{78}{subsection.17.1.1}%
+\contentsline {subsection}{\numberline {17.1.2}Atenuação de entrada e faixa de tensão}{79}{subsection.17.1.2}%
+\contentsline {section}{\numberline {17.2}Lendo um sensor analógico}{79}{section.17.2}%
+\contentsline {section}{\numberline {17.3}De leitura bruta a informação: um sensor de luminosidade}{80}{section.17.3}%
+\contentsline {section}{\numberline {17.4}Suavizando leituras com um vetor: média móvel}{81}{section.17.4}%
+\contentsline {chapter}{\numberline {18}Comunicação Serial e Depuração}{83}{chapter.18}%
+\contentsline {section}{\numberline {18.1}UART e o monitor serial}{83}{section.18.1}%
+\contentsline {subsection}{\numberline {18.1.1}As variantes de \texttt {\color {secundaria}Serial.print}}{84}{subsection.18.1.1}%
+\contentsline {section}{\numberline {18.2}Saída como ferramenta de depuração, agora no firmware}{84}{section.18.2}%
+\contentsline {section}{\numberline {18.3}Log por nível de severidade}{84}{section.18.3}%
+\contentsline {chapter}{\numberline {19}Interrupções e Temporização}{87}{chapter.19}%
+\contentsline {section}{\numberline {19.1}O que é uma interrupção}{87}{section.19.1}%
+\contentsline {section}{\numberline {19.2}Interrupções de GPIO com \texttt {\color {secundaria}attachInterrupt}}{87}{section.19.2}%
+\contentsline {section}{\numberline {19.3}Temporização sem bloquear o laço: a técnica de \texttt {\color {secundaria}millis()}}{88}{section.19.3}%
+\contentsline {section}{\numberline {19.4}Watchdog Timer}{89}{section.19.4}%
+\contentsline {chapter}{\numberline {20}Gerenciamento de Energia}{93}{chapter.20}%
+\contentsline {section}{\numberline {20.1}Por que gerenciar energia}{93}{section.20.1}%
+\contentsline {section}{\numberline {20.2}Modos de baixo consumo do ESP32}{93}{section.20.2}%
+\contentsline {section}{\numberline {20.3}Light sleep: pausas curtas e reversíveis}{94}{section.20.3}%
+\contentsline {section}{\numberline {20.4}Memória RTC: sobrevivendo ao \emph {deep sleep}}{95}{section.20.4}%
+\contentsline {section}{\numberline {20.5}Exemplo: um nó sensor alimentado por bateria}{96}{section.20.5}%
+\contentsline {section}{\numberline {20.6}Qual modo escolher}{97}{section.20.6}%
+\contentsline {chapter}{\numberline {21}Comunicação de Dados via Wi-Fi}{99}{chapter.21}%
+\contentsline {section}{\numberline {21.1}Conectando-se a uma rede}{99}{section.21.1}%
+\contentsline {section}{\numberline {21.2}Enviando dados: requisições HTTP}{100}{section.21.2}%
+\contentsline {section}{\numberline {21.3}Lidando com quedas de conexão}{101}{section.21.3}%
+\contentsline {section}{\numberline {21.4}Além do HTTP: uma palavra sobre MQTT}{101}{section.21.4}%
+\contentsline {chapter}{\numberline {22}Atualizações OTA (\emph {Over-the-Air})}{103}{chapter.22}%
+\contentsline {section}{\numberline {22.1}ArduinoOTA: atualizações na rede local}{103}{section.22.1}%
+\contentsline {subsection}{\numberline {22.1.1}Enviando uma atualização pelo PlatformIO}{104}{subsection.22.1.1}%
+\contentsline {section}{\numberline {22.2}Protegendo o processo com senha}{104}{section.22.2}%
+\contentsline {chapter}{\numberline {23}Estação de Monitoramento IoT}{107}{chapter.23}%
+\contentsline {section}{\numberline {23.1}Especificação do projeto}{107}{section.23.1}%
+\contentsline {subsection}{\numberline {23.1.1}Materiais}{107}{subsection.23.1.1}%
+\contentsline {subsection}{\numberline {23.1.2}Ligações sugeridas}{107}{subsection.23.1.2}%
+\contentsline {section}{\numberline {23.2}Projetando a estrutura do estado}{108}{section.23.2}%
+\contentsline {section}{\numberline {23.3}Firmware completo}{108}{section.23.3}%
+\contentsline {section}{\numberline {23.4}Como o projeto se encaixa}{112}{section.23.4}%
+\contentsline {section}{\numberline {23.5}Sobre economizar energia neste projeto}{113}{section.23.5}%
+\contentsline {section}{\numberline {23.6}Para continuar praticando}{114}{section.23.6}%
+\contentsline {chapter}{\numberline {A}Tabela ASCII}{115}{appendix.A}%
+\contentsline {chapter}{\numberline {B}Referência Rápida}{117}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Precedência de operadores}{117}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Especificadores de formato (\texttt {\color {secundaria}printf}/\texttt {\color {secundaria}scanf})}{118}{section.B.2}%
+\contentsline {section}{\numberline {B.3}Tipos de largura fixa (\texttt {\color {secundaria}stdint.h})}{118}{section.B.3}%
+\contentsline {section}{\numberline {B.4}Funções essenciais do framework Arduino usadas nesta apostila}{118}{section.B.4}%
+\contentsline {chapter}{\numberline {C}Controle de Versão com Git e GitHub}{121}{appendix.C}%
+\contentsline {section}{\numberline {C.1}O que é controle de versão}{121}{section.C.1}%
+\contentsline {section}{\numberline {C.2}Instalação e configuração inicial}{121}{section.C.2}%
+\contentsline {section}{\numberline {C.3}Os três estados de um arquivo}{122}{section.C.3}%
+\contentsline {section}{\numberline {C.4}Criando um repositório}{122}{section.C.4}%
+\contentsline {section}{\numberline {C.5}O ciclo básico: status, add e commit}{123}{section.C.5}%
+\contentsline {section}{\numberline {C.6}Consultando o histórico}{123}{section.C.6}%
+\contentsline {section}{\numberline {C.7}Ignorando arquivos: \texttt {\color {secundaria}.gitignore}}{124}{section.C.7}%
+\contentsline {section}{\numberline {C.8}Ramificações (\emph {branches})}{124}{section.C.8}%
+\contentsline {section}{\numberline {C.9}Trabalhando com o GitHub}{125}{section.C.9}%
+\contentsline {subsection}{\numberline {C.9.1}Criando um repositório remoto}{125}{subsection.C.9.1}%
+\contentsline {subsection}{\numberline {C.9.2}Clonando um repositório existente}{125}{subsection.C.9.2}%
+\contentsline {subsection}{\numberline {C.9.3}Enviando e recebendo atualizações}{126}{subsection.C.9.3}%
+\contentsline {section}{\numberline {C.10}Colaborando com Pull Requests}{126}{section.C.10}%
+\contentsline {section}{\numberline {C.11}Referência rápida}{126}{section.C.11}%

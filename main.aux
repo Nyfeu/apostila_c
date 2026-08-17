@@ -237,142 +237,150 @@
 \@writefile{toc}{\contentsline {section}{\numberline {17.1}Como um ADC funciona}{77}{section.17.1}\protected@file@percent }
 \@writefile{lof}{\setforeignlanguage {brazilian}}
 \@writefile{lot}{\setforeignlanguage {brazilian}}
-\@writefile{lot}{\contentsline {table}{\numberline {17.1}{\ignorespaces Alguns pinos da ADC1 disponíveis no ESP32.}}{77}{table.caption.21}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {17.2}Lendo um sensor analógico}{78}{section.17.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {17.3}De leitura bruta a informação: um sensor de luminosidade}{78}{section.17.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {17.4}Suavizando leituras com um vetor: média móvel}{79}{section.17.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {18}Comunicação Serial e Depuração}{81}{chapter.18}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {17.1}{\ignorespaces Alguns pinos da ADC1 disponíveis no ESP32.}}{78}{table.caption.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {17.1.1}Quantização: da tensão contínua ao código digital}{78}{subsection.17.1.1}\protected@file@percent }
+\@writefile{lof}{\setforeignlanguage {brazilian}}
+\@writefile{lot}{\setforeignlanguage {brazilian}}
+\@writefile{lof}{\contentsline {figure}{\numberline {17.1}{\ignorespaces Função de transferência de um ADC: a tensão de entrada contínua (linha tracejada, relação ideal sem quantização) é mapeada em degraus de largura $\Delta V$, cada um associado a um único código digital (linha em degraus, a conversão real). Ilustração com resolução reduzida (3 bits, 8 níveis) para fins didáticos — o ADC do ESP32\xspace  {} usa 12 bits, ou seja, 4096 níveis.}}{78}{figure.caption.22}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:adc-staircase}{{17.1}{78}{Função de transferência de um ADC: a tensão de entrada contínua (linha tracejada, relação ideal sem quantização) é mapeada em degraus de largura $\Delta V$, cada um associado a um único código digital (linha em degraus, a conversão real). Ilustração com resolução reduzida (3 bits, 8 níveis) para fins didáticos — o ADC do \ESP {} usa 12 bits, ou seja, 4096 níveis}{figure.caption.22}{}}
+\newlabel{fig:adc-staircase@cref}{{[figure][1][17]17.1}{[1][78][]78}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {17.1.2}Atenuação de entrada e faixa de tensão}{79}{subsection.17.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {17.2}Lendo um sensor analógico}{79}{section.17.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {17.3}De leitura bruta a informação: um sensor de luminosidade}{80}{section.17.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {17.4}Suavizando leituras com um vetor: média móvel}{81}{section.17.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {18}Comunicação Serial e Depuração}{83}{chapter.18}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{cap:serial}{{18}{81}{Comunicação Serial e Depuração}{chapter.18}{}}
-\newlabel{cap:serial@cref}{{[chapter][18][]18}{[1][81][]81}}
-\@writefile{toc}{\contentsline {section}{\numberline {18.1}UART e o monitor serial}{81}{section.18.1}\protected@file@percent }
+\newlabel{cap:serial}{{18}{83}{Comunicação Serial e Depuração}{chapter.18}{}}
+\newlabel{cap:serial@cref}{{[chapter][18][]18}{[1][83][]83}}
+\@writefile{toc}{\contentsline {section}{\numberline {18.1}UART e o monitor serial}{83}{section.18.1}\protected@file@percent }
 \@writefile{lof}{\setforeignlanguage {brazilian}}
 \@writefile{lot}{\setforeignlanguage {brazilian}}
-\@writefile{lot}{\contentsline {table}{\numberline {18.1}{\ignorespaces Formas de escrever na porta serial no framework Arduino.}}{82}{table.caption.22}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {18.1.1}As variantes de \texttt  {\color  {secundaria}Serial.print}}{82}{subsection.18.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {18.2}Saída como ferramenta de depuração, agora no firmware}{82}{section.18.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {18.3}Log por nível de severidade}{82}{section.18.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {18.1}{\ignorespaces Formas de escrever na porta serial no framework Arduino.}}{84}{table.caption.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {18.1.1}As variantes de \texttt  {\color  {secundaria}Serial.print}}{84}{subsection.18.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {18.2}Saída como ferramenta de depuração, agora no firmware}{84}{section.18.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {18.3}Log por nível de severidade}{84}{section.18.3}\protected@file@percent }
 \@writefile{lof}{\setforeignlanguage {brazilian}}
 \@writefile{lot}{\setforeignlanguage {brazilian}}
-\@writefile{lot}{\contentsline {table}{\numberline {18.2}{\ignorespaces Níveis de log disponíveis no núcleo Arduino do ESP32.}}{83}{table.caption.23}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {19}Interrupções e Temporização}{85}{chapter.19}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {18.2}{\ignorespaces Níveis de log disponíveis no núcleo Arduino do ESP32.}}{85}{table.caption.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {19}Interrupções e Temporização}{87}{chapter.19}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{cap:interrupcoes}{{19}{85}{Interrupções e Temporização}{chapter.19}{}}
-\newlabel{cap:interrupcoes@cref}{{[chapter][19][]19}{[1][85][]85}}
-\@writefile{toc}{\contentsline {section}{\numberline {19.1}O que é uma interrupção}{85}{section.19.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {19.2}Interrupções de GPIO com \texttt  {\color  {secundaria}attachInterrupt}}{85}{section.19.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {19.3}Temporização sem bloquear o laço: a técnica de \texttt  {\color  {secundaria}millis()}}{86}{section.19.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {19.4}Watchdog Timer}{87}{section.19.4}\protected@file@percent }
-\newlabel{sec:watchdog}{{19.4}{87}{Watchdog Timer}{section.19.4}{}}
-\newlabel{sec:watchdog@cref}{{[section][4][19]19.4}{[1][87][]87}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {20}Gerenciamento de Energia}{91}{chapter.20}\protected@file@percent }
+\newlabel{cap:interrupcoes}{{19}{87}{Interrupções e Temporização}{chapter.19}{}}
+\newlabel{cap:interrupcoes@cref}{{[chapter][19][]19}{[1][87][]87}}
+\@writefile{toc}{\contentsline {section}{\numberline {19.1}O que é uma interrupção}{87}{section.19.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {19.2}Interrupções de GPIO com \texttt  {\color  {secundaria}attachInterrupt}}{87}{section.19.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {19.3}Temporização sem bloquear o laço: a técnica de \texttt  {\color  {secundaria}millis()}}{88}{section.19.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {19.4}Watchdog Timer}{89}{section.19.4}\protected@file@percent }
+\newlabel{sec:watchdog}{{19.4}{89}{Watchdog Timer}{section.19.4}{}}
+\newlabel{sec:watchdog@cref}{{[section][4][19]19.4}{[1][89][]89}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {20}Gerenciamento de Energia}{93}{chapter.20}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{cap:energia}{{20}{91}{Gerenciamento de Energia}{chapter.20}{}}
-\newlabel{cap:energia@cref}{{[chapter][20][]20}{[1][91][]91}}
-\@writefile{toc}{\contentsline {section}{\numberline {20.1}Por que gerenciar energia}{91}{section.20.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {20.2}Modos de baixo consumo do ESP32}{91}{section.20.2}\protected@file@percent }
+\newlabel{cap:energia}{{20}{93}{Gerenciamento de Energia}{chapter.20}{}}
+\newlabel{cap:energia@cref}{{[chapter][20][]20}{[1][93][]93}}
+\@writefile{toc}{\contentsline {section}{\numberline {20.1}Por que gerenciar energia}{93}{section.20.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {20.2}Modos de baixo consumo do ESP32}{93}{section.20.2}\protected@file@percent }
 \@writefile{lof}{\setforeignlanguage {brazilian}}
 \@writefile{lot}{\setforeignlanguage {brazilian}}
-\@writefile{lot}{\contentsline {table}{\numberline {20.1}{\ignorespaces Modos de operação do ESP32, do maior para o menor consumo. *Valores de ordem de grandeza — o consumo real depende da placa, dos periféricos externos e da atividade do rádio.}}{91}{table.caption.24}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {20.3}Light sleep: pausas curtas e reversíveis}{92}{section.20.3}\protected@file@percent }
-\newlabel{sec:light-sleep}{{20.3}{92}{Light sleep: pausas curtas e reversíveis}{section.20.3}{}}
-\newlabel{sec:light-sleep@cref}{{[section][3][20]20.3}{[1][92][]92}}
-\@writefile{toc}{\contentsline {section}{\numberline {20.4}Memória RTC: sobrevivendo ao \emph  {deep sleep}}{93}{section.20.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {20.5}Exemplo: um nó sensor alimentado por bateria}{94}{section.20.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {20.6}Qual modo escolher}{95}{section.20.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {20.1}{\ignorespaces Modos de operação do ESP32, do maior para o menor consumo. *Valores de ordem de grandeza — o consumo real depende da placa, dos periféricos externos e da atividade do rádio.}}{93}{table.caption.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {20.3}Light sleep: pausas curtas e reversíveis}{94}{section.20.3}\protected@file@percent }
+\newlabel{sec:light-sleep}{{20.3}{94}{Light sleep: pausas curtas e reversíveis}{section.20.3}{}}
+\newlabel{sec:light-sleep@cref}{{[section][3][20]20.3}{[1][94][]94}}
+\@writefile{toc}{\contentsline {section}{\numberline {20.4}Memória RTC: sobrevivendo ao \emph  {deep sleep}}{95}{section.20.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {20.5}Exemplo: um nó sensor alimentado por bateria}{96}{section.20.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {20.6}Qual modo escolher}{97}{section.20.6}\protected@file@percent }
 \@writefile{lof}{\setforeignlanguage {brazilian}}
 \@writefile{lot}{\setforeignlanguage {brazilian}}
-\@writefile{lot}{\contentsline {table}{\numberline {20.2}{\ignorespaces Light sleep vs. deep sleep — trade-off entre continuidade de execução e economia de energia.}}{95}{table.caption.25}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {21}Comunicação de Dados via Wi-Fi}{97}{chapter.21}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {20.2}{\ignorespaces Light sleep vs. deep sleep — trade-off entre continuidade de execução e economia de energia.}}{97}{table.caption.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {21}Comunicação de Dados via Wi-Fi}{99}{chapter.21}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{cap:wifi}{{21}{97}{Comunicação de Dados via Wi-Fi}{chapter.21}{}}
-\newlabel{cap:wifi@cref}{{[chapter][21][]21}{[1][97][]97}}
-\@writefile{toc}{\contentsline {section}{\numberline {21.1}Conectando-se a uma rede}{97}{section.21.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {21.2}Enviando dados: requisições HTTP}{98}{section.21.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {21.3}Lidando com quedas de conexão}{99}{section.21.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {21.4}Além do HTTP: uma palavra sobre MQTT}{99}{section.21.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {22}Atualizações OTA (\emph  {Over-the-Air})}{101}{chapter.22}\protected@file@percent }
+\newlabel{cap:wifi}{{21}{99}{Comunicação de Dados via Wi-Fi}{chapter.21}{}}
+\newlabel{cap:wifi@cref}{{[chapter][21][]21}{[1][99][]99}}
+\@writefile{toc}{\contentsline {section}{\numberline {21.1}Conectando-se a uma rede}{99}{section.21.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {21.2}Enviando dados: requisições HTTP}{100}{section.21.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {21.3}Lidando com quedas de conexão}{101}{section.21.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {21.4}Além do HTTP: uma palavra sobre MQTT}{101}{section.21.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {22}Atualizações OTA (\emph  {Over-the-Air})}{103}{chapter.22}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{cap:ota}{{22}{101}{Atualizações OTA (\emph {Over-the-Air})}{chapter.22}{}}
-\newlabel{cap:ota@cref}{{[chapter][22][]22}{[1][101][]101}}
-\@writefile{toc}{\contentsline {section}{\numberline {22.1}ArduinoOTA: atualizações na rede local}{101}{section.22.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {22.1.1}Enviando uma atualização pelo PlatformIO}{102}{subsection.22.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {22.2}Protegendo o processo com senha}{102}{section.22.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {23}Estação de Monitoramento IoT}{105}{chapter.23}\protected@file@percent }
+\newlabel{cap:ota}{{22}{103}{Atualizações OTA (\emph {Over-the-Air})}{chapter.22}{}}
+\newlabel{cap:ota@cref}{{[chapter][22][]22}{[1][103][]103}}
+\@writefile{toc}{\contentsline {section}{\numberline {22.1}ArduinoOTA: atualizações na rede local}{103}{section.22.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {22.1.1}Enviando uma atualização pelo PlatformIO}{104}{subsection.22.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {22.2}Protegendo o processo com senha}{104}{section.22.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {23}Estação de Monitoramento IoT}{107}{chapter.23}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{cap:projeto-final}{{23}{105}{Estação de Monitoramento IoT}{chapter.23}{}}
-\newlabel{cap:projeto-final@cref}{{[chapter][23][]23}{[1][105][]105}}
-\@writefile{toc}{\contentsline {section}{\numberline {23.1}Especificação do projeto}{105}{section.23.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {23.1.1}Materiais}{105}{subsection.23.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {23.1.2}Ligações sugeridas}{105}{subsection.23.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {23.2}Projetando a estrutura do estado}{106}{section.23.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {23.3}Firmware completo}{106}{section.23.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {23.4}Como o projeto se encaixa}{109}{section.23.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {23.5}Sobre economizar energia neste projeto}{110}{section.23.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {23.6}Para continuar praticando}{111}{section.23.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {A}Tabela ASCII}{113}{appendix.A}\protected@file@percent }
+\newlabel{cap:projeto-final}{{23}{107}{Estação de Monitoramento IoT}{chapter.23}{}}
+\newlabel{cap:projeto-final@cref}{{[chapter][23][]23}{[1][107][]107}}
+\@writefile{toc}{\contentsline {section}{\numberline {23.1}Especificação do projeto}{107}{section.23.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {23.1.1}Materiais}{107}{subsection.23.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {23.1.2}Ligações sugeridas}{107}{subsection.23.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {23.2}Projetando a estrutura do estado}{108}{section.23.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {23.3}Firmware completo}{108}{section.23.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {23.4}Como o projeto se encaixa}{112}{section.23.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {23.5}Sobre economizar energia neste projeto}{113}{section.23.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {23.6}Para continuar praticando}{114}{section.23.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Tabela ASCII}{115}{appendix.A}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{ap:ascii}{{A}{113}{Tabela ASCII}{appendix.A}{}}
-\newlabel{ap:ascii@cref}{{[appendix][1][2147483647]A}{[1][113][]113}}
+\newlabel{ap:ascii}{{A}{115}{Tabela ASCII}{appendix.A}{}}
+\newlabel{ap:ascii@cref}{{[appendix][1][2147483647]A}{[1][115][]115}}
 \@writefile{lof}{\setforeignlanguage {brazilian}}
 \@writefile{lot}{\setforeignlanguage {brazilian}}
-\@writefile{lot}{\contentsline {table}{\numberline {A.1}{\ignorespaces Tabela ASCII imprimível (valores decimais 32 a 126).}}{113}{table.caption.26}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {A.1}{\ignorespaces Tabela ASCII imprimível (valores decimais 32 a 126).}}{115}{table.caption.27}\protected@file@percent }
 \@writefile{lof}{\setforeignlanguage {brazilian}}
 \@writefile{lot}{\setforeignlanguage {brazilian}}
-\@writefile{lot}{\contentsline {table}{\numberline {A.2}{\ignorespaces Caracteres de controle mais relevantes para programação em C.}}{114}{table.caption.27}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {B}Referência Rápida}{115}{appendix.B}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {A.2}{\ignorespaces Caracteres de controle mais relevantes para programação em C.}}{116}{table.caption.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {B}Referência Rápida}{117}{appendix.B}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{ap:referencia}{{B}{115}{Referência Rápida}{appendix.B}{}}
-\newlabel{ap:referencia@cref}{{[appendix][2][2147483647]B}{[1][115][]115}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.1}Precedência de operadores}{115}{section.B.1}\protected@file@percent }
+\newlabel{ap:referencia}{{B}{117}{Referência Rápida}{appendix.B}{}}
+\newlabel{ap:referencia@cref}{{[appendix][2][2147483647]B}{[1][117][]117}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.1}Precedência de operadores}{117}{section.B.1}\protected@file@percent }
 \@writefile{lof}{\setforeignlanguage {brazilian}}
 \@writefile{lot}{\setforeignlanguage {brazilian}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.1}{\ignorespaces Precedência de operadores em C, do maior para o menor.}}{115}{table.caption.28}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.2}Especificadores de formato (\texttt  {\color  {secundaria}printf}/\texttt  {\color  {secundaria}scanf})}{116}{section.B.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {B.1}{\ignorespaces Precedência de operadores em C, do maior para o menor.}}{117}{table.caption.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.2}Especificadores de formato (\texttt  {\color  {secundaria}printf}/\texttt  {\color  {secundaria}scanf})}{118}{section.B.2}\protected@file@percent }
 \@writefile{lof}{\setforeignlanguage {brazilian}}
 \@writefile{lot}{\setforeignlanguage {brazilian}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.2}{\ignorespaces Especificadores de formato mais usados.}}{116}{table.caption.29}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.3}Tipos de largura fixa (\texttt  {\color  {secundaria}stdint.h})}{116}{section.B.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {B.2}{\ignorespaces Especificadores de formato mais usados.}}{118}{table.caption.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.3}Tipos de largura fixa (\texttt  {\color  {secundaria}stdint.h})}{118}{section.B.3}\protected@file@percent }
 \@writefile{lof}{\setforeignlanguage {brazilian}}
 \@writefile{lot}{\setforeignlanguage {brazilian}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.3}{\ignorespaces Tipos inteiros de largura fixa.}}{116}{table.caption.30}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.4}Funções essenciais do framework Arduino usadas nesta apostila}{116}{section.B.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {B.3}{\ignorespaces Tipos inteiros de largura fixa.}}{118}{table.caption.31}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.4}Funções essenciais do framework Arduino usadas nesta apostila}{118}{section.B.4}\protected@file@percent }
 \@writefile{lof}{\setforeignlanguage {brazilian}}
 \@writefile{lot}{\setforeignlanguage {brazilian}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.4}{\ignorespaces Funções do framework Arduino apresentadas na Parte II desta apostila.}}{117}{table.caption.31}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {C}Controle de Versão com Git e GitHub}{119}{appendix.C}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {B.4}{\ignorespaces Funções do framework Arduino apresentadas na Parte II desta apostila.}}{119}{table.caption.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {C}Controle de Versão com Git e GitHub}{121}{appendix.C}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{ap:git}{{C}{119}{Controle de Versão com Git e GitHub}{appendix.C}{}}
-\newlabel{ap:git@cref}{{[appendix][3][2147483647]C}{[1][119][]119}}
-\@writefile{toc}{\contentsline {section}{\numberline {C.1}O que é controle de versão}{119}{section.C.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {C.2}Instalação e configuração inicial}{119}{section.C.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {C.3}Os três estados de um arquivo}{120}{section.C.3}\protected@file@percent }
+\newlabel{ap:git}{{C}{121}{Controle de Versão com Git e GitHub}{appendix.C}{}}
+\newlabel{ap:git@cref}{{[appendix][3][2147483647]C}{[1][121][]121}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.1}O que é controle de versão}{121}{section.C.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C.2}Instalação e configuração inicial}{121}{section.C.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C.3}Os três estados de um arquivo}{122}{section.C.3}\protected@file@percent }
 \@writefile{lof}{\setforeignlanguage {brazilian}}
 \@writefile{lot}{\setforeignlanguage {brazilian}}
-\@writefile{lof}{\contentsline {figure}{\numberline {C.1}{\ignorespaces O fluxo básico do Git: do diretório de trabalho ao repositório remoto, e de volta.}}{120}{figure.caption.32}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {C.4}Criando um repositório}{120}{section.C.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {C.5}O ciclo básico: status, add e commit}{120}{section.C.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {C.6}Consultando o histórico}{121}{section.C.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {C.7}Ignorando arquivos: \texttt  {\color  {secundaria}.gitignore}}{121}{section.C.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {C.8}Ramificações (\emph  {branches})}{122}{section.C.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {C.9}Trabalhando com o GitHub}{123}{section.C.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {C.9.1}Criando um repositório remoto}{123}{subsection.C.9.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {C.9.2}Clonando um repositório existente}{123}{subsection.C.9.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {C.9.3}Enviando e recebendo atualizações}{123}{subsection.C.9.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {C.10}Colaborando com Pull Requests}{123}{section.C.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {C.11}Referência rápida}{124}{section.C.11}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {C.1}{\ignorespaces O fluxo básico do Git: do diretório de trabalho ao repositório remoto, e de volta.}}{122}{figure.caption.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C.4}Criando um repositório}{122}{section.C.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C.5}O ciclo básico: status, add e commit}{123}{section.C.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C.6}Consultando o histórico}{123}{section.C.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C.7}Ignorando arquivos: \texttt  {\color  {secundaria}.gitignore}}{124}{section.C.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C.8}Ramificações (\emph  {branches})}{124}{section.C.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C.9}Trabalhando com o GitHub}{125}{section.C.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {C.9.1}Criando um repositório remoto}{125}{subsection.C.9.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {C.9.2}Clonando um repositório existente}{125}{subsection.C.9.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {C.9.3}Enviando e recebendo atualizações}{126}{subsection.C.9.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C.10}Colaborando com Pull Requests}{126}{section.C.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C.11}Referência rápida}{126}{section.C.11}\protected@file@percent }
 \@writefile{lof}{\setforeignlanguage {brazilian}}
 \@writefile{lot}{\setforeignlanguage {brazilian}}
-\@writefile{lot}{\contentsline {table}{\numberline {C.1}{\ignorespaces Comandos Git essenciais para o dia a dia de um projeto PlatformIO.}}{124}{table.caption.33}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {C.1}{\ignorespaces Comandos Git essenciais para o dia a dia de um projeto PlatformIO.}}{127}{table.caption.34}\protected@file@percent }
 \gdef\minted@oldcachelist{,
   one-dark.pygstyle,
   84027A8B149B86175D8315A4E11E7D7ABEBDD1D0F4AA7085BEAD66C8F6783572.pygtex,
@@ -451,7 +459,7 @@
   7D5E85E8F260C36BE6181AF7E96A1A15D8E0493FE5C606A86E94D8F5A4ADE7E0.pygtex,
   5E5C8862D3371CD22D567879976D7DDDBEBDD1D0F4AA7085BEAD66C8F6783572.pygtex,
   DD9894B51F7E90C8466978B3DAECF129BEBDD1D0F4AA7085BEAD66C8F6783572.pygtex,
-  815ED30F33AA6B5F8E8FB7FB0FB251A5BEBDD1D0F4AA7085BEAD66C8F6783572.pygtex,
+  6FE542A39FDC2E1F22982BE64CE4D84BBEBDD1D0F4AA7085BEAD66C8F6783572.pygtex,
   82F8FCCC278E86F1A03453CFE9445A3E1E8B2165DB203E1CDFAC5131E1A31867.pygtex,
   48416387C4B29BFA5C1E3F9DADB827A81E8B2165DB203E1CDFAC5131E1A31867.pygtex,
   486DF4EFD15A0A8E44C8195E10B829331E8B2165DB203E1CDFAC5131E1A31867.pygtex,
@@ -464,4 +472,4 @@
   FC1F572E7791D33F4BE68CA72FB09B9B1E8B2165DB203E1CDFAC5131E1A31867.pygtex,
   A2A07601FC739A34107001AEE6DBADEE1E8B2165DB203E1CDFAC5131E1A31867.pygtex,
   F43DFE5D86FA2F4A09A2D18FB64B35081E8B2165DB203E1CDFAC5131E1A31867.pygtex}
-\gdef \@abspage@last{134}
+\gdef \@abspage@last{138}

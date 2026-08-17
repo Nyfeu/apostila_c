@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{.}\PYG{n}{pio}\PYG{o}{/}\PYG{+w}{               }\PYG{p}{;}\PYG{+w}{ }\PYG{n}{pasta}\PYG{+w}{ }\PYG{n}{de}\PYG{+w}{ }\PYG{n}{compilacao}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{recriada}\PYG{+w}{ }\PYG{n}{a}\PYG{+w}{ }\PYG{n}{cada}\PYG{+w}{ }\PYG{n}{build}
+\PYG{p}{.}\PYG{n}{vscode}\PYG{o}{/}\PYG{+w}{            }\PYG{p}{;}\PYG{+w}{ }\PYG{n}{configuracoes}\PYG{+w}{ }\PYG{n}{locais}\PYG{+w}{ }\PYG{k}{do}\PYG{+w}{ }\PYG{n}{editor}
+\PYG{o}{*}\PYG{p}{.}\PYG{n}{o}\PYG{+w}{                 }\PYG{p}{;}\PYG{+w}{ }\PYG{n}{arquivos}\PYG{+w}{ }\PYG{n}{objeto}\PYG{+w}{ }\PYG{n}{intermediarios}
+\PYG{n}{compile\PYGZus{}commands}\PYG{p}{.}\PYG{n}{json}
+\end{Verbatim}

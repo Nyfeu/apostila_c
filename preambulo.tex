@@ -25,6 +25,12 @@
 \usepackage{setspace}
 \onehalfspacing
 
+% ---- Ajuste fino de quebra de linha ---------------------------
+% Reduz "overfull hbox" causados por trechos com \code{} e \cref{}
+% que não podem ser hifenizados, sem alterar o conteúdo do texto.
+\usepackage{microtype}
+\emergencystretch=2.5em
+
 % ---- Cores ------------------------------------------------
 \usepackage{xcolor}
 \definecolor{primaria}{HTML}{0B3D5C}      % azul petróleo escuro (título)

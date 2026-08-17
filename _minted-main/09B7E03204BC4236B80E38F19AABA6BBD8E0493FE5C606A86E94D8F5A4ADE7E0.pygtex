@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{}include \PYGZlt{}stdio.h\PYGZgt{}}
+
+\PYG{n+na}{typedef enum \PYGZob{}}
+\PYG{+w}{    }\PYG{n+na}{ESTADO\PYGZus{}AGUARDANDO,   // vale 0}
+\PYG{+w}{    }\PYG{n+na}{ESTADO\PYGZus{}CONECTANDO,   // vale 1}
+\PYG{+w}{    }\PYG{n+na}{ESTADO\PYGZus{}ATIVO,        // vale 2}
+\PYG{+w}{    }\PYG{n+na}{ESTADO\PYGZus{}ERRO          // vale 3}
+\PYG{n+na}{\PYGZcb{} EstadoSistema;}
+
+\PYG{n+na}{int main(void) \PYGZob{}}
+\PYG{+w}{    }\PYG{n+na}{EstadoSistema estado}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{ESTADO\PYGZus{}CONECTANDO}\PYG{c+c1}{;}
+
+\PYG{+w}{    }\PYG{n+na}{if (estado}\PYG{+w}{ }\PYG{o}{=}\PYG{l+s}{= ESTADO\PYGZus{}CONECTANDO) \PYGZob{}}
+\PYG{+w}{        }\PYG{n+na}{printf(\PYGZdq{}Conectando...\PYGZbs{}n\PYGZdq{});}
+\PYG{+w}{    }\PYG{n+na}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{n+na}{return 0;}
+\PYG{n+na}{\PYGZcb{}}
+\end{Verbatim}
