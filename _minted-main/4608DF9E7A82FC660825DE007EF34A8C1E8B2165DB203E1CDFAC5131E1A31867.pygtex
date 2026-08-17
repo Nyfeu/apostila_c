@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }commit\PYG{+w}{ }\PYGZhy{}m\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}Adiciona leitura do sensor de luminosidade via ADC\PYGZdq{}}
+\PYG{o}{[}main\PYG{+w}{ }a1b2c3d\PYG{o}{]}\PYG{+w}{ }Adiciona\PYG{+w}{ }leitura\PYG{+w}{ }\PYG{k}{do}\PYG{+w}{ }sensor\PYG{+w}{ }de\PYG{+w}{ }luminosidade\PYG{+w}{ }via\PYG{+w}{ }ADC
+\PYG{+w}{ }\PYG{l+m}{2}\PYG{+w}{ }files\PYG{+w}{ }changed,\PYG{+w}{ }\PYG{l+m}{34}\PYG{+w}{ }insertions\PYG{o}{(}+\PYG{o}{)},\PYG{+w}{ }\PYG{l+m}{2}\PYG{+w}{ }deletions\PYG{o}{(}\PYGZhy{}\PYG{o}{)}
+\end{Verbatim}

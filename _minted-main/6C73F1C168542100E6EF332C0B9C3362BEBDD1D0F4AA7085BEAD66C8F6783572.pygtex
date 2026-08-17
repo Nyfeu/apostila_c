@@ -1,0 +1,25 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}WiFi.h\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}HTTPClient.h\PYGZgt{}}
+
+\PYG{c+cp}{\PYGZsh{}define URL\PYGZus{}SERVIDOR \PYGZdq{}http:}\PYG{c+c1}{//exemplo.com/api/leituras\PYGZdq{}}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{enviar\PYGZus{}leitura}\PYG{p}{(}\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{temperatura}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{WiFi}\PYG{p}{.}\PYG{n}{status}\PYG{p}{()}\PYG{+w}{ }\PYG{o}{!=}\PYG{+w}{ }\PYG{n}{WL\PYGZus{}CONNECTED}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{return}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// sem rede, nao ha o que enviar}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{n}{HTTPClient}\PYG{+w}{ }\PYG{n}{http}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{http}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(}\PYG{n}{URL\PYGZus{}SERVIDOR}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{http}\PYG{p}{.}\PYG{n}{addHeader}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Content\PYGZhy{}Type\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}application/json\PYGZdq{}}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{k+kt}{char}\PYG{+w}{ }\PYG{n}{corpo}\PYG{p}{[}\PYG{l+m+mi}{64}\PYG{p}{];}
+\PYG{+w}{    }\PYG{n}{snprintf}\PYG{p}{(}\PYG{n}{corpo}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{corpo}\PYG{p}{),}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}\PYGZob{}}\PYG{l+s+se}{\PYGZbs{}\PYGZdq{}}\PYG{l+s}{temperatura}\PYG{l+s+se}{\PYGZbs{}\PYGZdq{}}\PYG{l+s}{: \PYGZpc{}.1f\PYGZcb{}\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{temperatura}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{codigo\PYGZus{}resposta}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{http}\PYG{p}{.}\PYG{n}{POST}\PYG{p}{(}\PYG{n}{corpo}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}[HTTP] Resposta do servidor: \PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{n}{codigo\PYGZus{}resposta}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{n}{http}\PYG{p}{.}\PYG{n}{end}\PYG{p}{();}\PYG{+w}{   }\PYG{c+c1}{// libera os recursos da requisicao}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

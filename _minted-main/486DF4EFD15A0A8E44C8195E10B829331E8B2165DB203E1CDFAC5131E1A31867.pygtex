@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }status
+On\PYG{+w}{ }branch\PYG{+w}{ }main
+Changes\PYG{+w}{ }not\PYG{+w}{ }staged\PYG{+w}{ }\PYG{k}{for}\PYG{+w}{ }commit:
+\PYG{+w}{  }\PYG{o}{(}use\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}git add \PYGZlt{}file\PYGZgt{}...\PYGZdq{}}\PYG{+w}{ }to\PYG{+w}{ }update\PYG{+w}{ }what\PYG{+w}{ }will\PYG{+w}{ }be\PYG{+w}{ }committed\PYG{o}{)}
+\PYG{+w}{        }modified:\PYG{+w}{   }src/main.cpp
+
+Untracked\PYG{+w}{ }files:
+\PYG{+w}{  }\PYG{o}{(}use\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}git add \PYGZlt{}file\PYGZgt{}...\PYGZdq{}}\PYG{+w}{ }to\PYG{+w}{ }include\PYG{+w}{ }\PYG{k}{in}\PYG{+w}{ }what\PYG{+w}{ }will\PYG{+w}{ }be\PYG{+w}{ }committed\PYG{o}{)}
+\PYG{+w}{        }include/sensor.h
+\end{Verbatim}

@@ -1,0 +1,29 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZdq{}driver/gpio.h\PYGZdq{}}
+
+\PYG{c+cp}{\PYGZsh{}define PINO\PYGZus{}BOTAO 15}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{setup}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(}\PYG{l+m+mi}{115200}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{pinMode}\PYG{p}{(}\PYG{n}{PINO\PYGZus{}BOTAO}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{INPUT\PYGZus{}PULLUP}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{c+c1}{// fonte de despertar 1: um timer, a cada 5 segundos}
+\PYG{+w}{    }\PYG{n}{esp\PYGZus{}sleep\PYGZus{}enable\PYGZus{}timer\PYGZus{}wakeup}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{l+m+mi}{1000000ULL}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{c+c1}{// fonte de despertar 2: o botao, quando seu nivel estiver baixo}
+\PYG{+w}{    }\PYG{n}{gpio\PYGZus{}wakeup\PYGZus{}enable}\PYG{p}{((}\PYG{n}{gpio\PYGZus{}num\PYGZus{}t}\PYG{p}{)}\PYG{+w}{ }\PYG{n}{PINO\PYGZus{}BOTAO}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{GPIO\PYGZus{}INTR\PYGZus{}LOW\PYGZus{}LEVEL}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{esp\PYGZus{}sleep\PYGZus{}enable\PYGZus{}gpio\PYGZus{}wakeup}\PYG{p}{();}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{loop}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Trabalhando...\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{delay}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{);}\PYG{+w}{   }\PYG{c+c1}{// aqui entraria o trabalho real: ler um sensor, etc.}
+
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Entrando em light sleep...\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{flush}\PYG{p}{();}
+
+\PYG{+w}{    }\PYG{n}{esp\PYGZus{}light\PYGZus{}sleep\PYGZus{}start}\PYG{p}{();}\PYG{+w}{   }\PYG{c+c1}{// a execucao PAUSA nesta linha}
+
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Acordei! Retomando exatamente daqui, com todas as variaveis intactas.\PYGZdq{}}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

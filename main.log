@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023/Debian) (preloaded format=xelatex 2026.4.7)  15 AUG 2026 02:45
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023/Debian) (preloaded format=xelatex 2026.4.7)  16 AUG 2026 19:22
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1680,10 +1680,10 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 76.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 77.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 78.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 77.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 78.
 
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 79.
@@ -1710,7 +1710,10 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 82.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 83.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 82.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 82.
 
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 83.
@@ -1719,19 +1722,16 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 83.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 83.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 85.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 84.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 85.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 84.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 85.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 86.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 86.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 85.
 
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 86.
@@ -1752,10 +1752,10 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 88.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 89.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 90.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 89.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 90.
 
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 91.
@@ -1770,10 +1770,10 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 92.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 93.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 94.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 93.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 94.
 
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 95.
@@ -1794,10 +1794,13 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 97.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 98.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 99.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 98.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 99.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 100.
 
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 100.
@@ -1806,10 +1809,7 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 100.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 101.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 101.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 100.
 
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 101.
@@ -1824,10 +1824,13 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 102.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 103.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 104.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 103.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 104.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 105.
 
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 105.
@@ -1855,9 +1858,6 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 107.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 107.
-
-
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 109.
 
 
@@ -1868,12 +1868,6 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 110.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 110.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 111.
 
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 111.
@@ -1900,10 +1894,16 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 114.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 115.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 116.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 115.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 116.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 117.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 117.
 
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 118.
@@ -1918,25 +1918,212 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 119.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 119.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 119.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 120.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 120.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 120.
-
-
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 121.
 
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 121.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 122.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 122.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 122.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 123.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 123.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 125.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 125.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 126.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 126.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 126.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 127.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 127.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 127.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 128.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 128.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 129.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 129.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 130.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 130.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 131.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 131.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 132.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 132.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 135.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 135.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 136.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 136.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 136.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 136.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 137.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 137.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 137.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 138.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 138.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 140.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 140.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 141.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 141.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 142.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 142.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 143.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 143.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 144.
+
+[6]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 144.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 144.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 145.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 145.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 146.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 146.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 146.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 147.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 147.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 148.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 148.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 149.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 149.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 149.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 150.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 150.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 150.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 151.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 151.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 151.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 152.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 152.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 153.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 153.
 
 )
 \tf@toc=\write7
@@ -1946,7 +2133,13 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 17.
 
-[6]
+[7]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 17.
+
+[8
+
+]
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 19.
 
@@ -1954,7 +2147,6 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 19.
 
 [1
-
 
 ]
 
@@ -4665,19 +4857,9 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 64.
 
+) (./capitulos/14-platformio.tex
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 66.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 69.
-
-
-Overfull \hbox (5.6688pt too wide) in paragraph at lines 69--70
-\TU/FiraSans(0)/m/n/10.95 Mesmo em um firmware bem projetado, coisas dão errado: um sensor pode parar de responder
- []
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 70.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -4687,51 +4869,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.05003pt}.
 
 [63]
-Overfull \hbox (2.94403pt too wide) in paragraph at lines 77--78
-[]\TU/FiraSans(0)/m/n/10.95 Dentro do laço principal, \TU/FiraSans(0)/b/n/10.95 alimentar \TU/FiraSans(0)/m/n/10.95 (“dar comida a”) o watchdog periodicamente, sempre
- []
-
-\openout8 = `main.listing'.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 103.
-
-(./_minted-main/6C17896C33F246A75D3F3E4E860C3B9ABEBDD1D0F4AA7085BEAD66C8F6783572.pygtex
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
 
-)
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 106.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 106.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 106.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 106.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 106.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 107.
-
-[64]
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 110.
-
-) (./capitulos/14-platformio.tex
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
-
-[65]
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
-
-[66
+[64
 
 ]
 Capítulo 14.
@@ -4758,7 +4899,7 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 22.
 
-[67]
+[65]
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 22.
 
@@ -4804,7 +4945,7 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 67.
 
-[68]
+[66]
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 70.
 
@@ -4913,7 +5054,7 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 120.
 
-[69]
+[67]
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 126.
 
@@ -4924,7 +5065,7 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
 
-[70]
+[68]
 Capítulo 15.
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
@@ -5029,7 +5170,7 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 45.
 
-[71
+[69
 
 ]
 
@@ -5086,7 +5227,7 @@ Underfull \hbox (badness 2205) in paragraph at lines 68--69
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 69.
 
-[72]
+[70]
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 71.
 
@@ -5112,11 +5253,11 @@ Overfull \hbox (15.64243pt too wide) in paragraph at lines 75--1
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
 
-[73]
+[71]
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
 
-[74
+[72
 
 ]
 Capítulo 16.
@@ -5166,7 +5307,7 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 35.
 
-[75]
+[73]
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 35.
 
@@ -5213,7 +5354,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-0.05003pt}.
 
-[76]
+[74]
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 72.
 
@@ -5237,11 +5378,11 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
 
-[77]
+[75]
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
 
-[78
+[76
 
 ]
 Capítulo 17.
@@ -5278,7 +5419,7 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 35.
 
-[79]
+[77]
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 35.
 
@@ -5326,7 +5467,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-0.05003pt}.
 
-[80]
+[78]
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 93.
 
@@ -5343,7 +5484,7 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 126.
 
-[81]
+[79]
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 128.
 
@@ -5368,7 +5509,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-0.05003pt}.
 
-[82]
+[80]
 Capítulo 18.
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
@@ -5486,7 +5627,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 46.
 
-[83
+[81
 
 ]
 
@@ -5527,7 +5668,7 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 84.
 
-[84]
+[82]
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 86.
 
@@ -5579,11 +5720,11 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 119.
 
-[85]) (./capitulos/19-interrupcoes-temporizacao.tex
+[83]) (./capitulos/19-interrupcoes-temporizacao.tex
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
 
-[86]
+[84]
 Capítulo 19.
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
@@ -5633,7 +5774,7 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 41.
 
-[87
+[85
 
 ]
 
@@ -5729,7 +5870,7 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 81.
 
-[88]
+[86]
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 83.
 
@@ -5744,9 +5885,73 @@ Overfull \hbox (3.29726pt too wide) in paragraph at lines 83--84
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 86.
 
-) (./capitulos/20-projeto-final.tex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 89.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 92.
+
+
+Overfull \hbox (5.6688pt too wide) in paragraph at lines 92--93
+\TU/FiraSans(0)/m/n/10.95 Mesmo em um firmware bem projetado, coisas dão errado: um sensor pode parar de responder
+ []
+
+
+Overfull \hbox (16.36026pt too wide) in paragraph at lines 92--93
+\TU/FiraSans(0)/m/n/10.95 qual ela nunca retorna. Na arquitetura de laço único do ESP32 (Seção [][]13.3[][]), isso é particularmente
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 95.
+
+[87]
+Overfull \hbox (2.94403pt too wide) in paragraph at lines 100--101
+[]\TU/FiraSans(0)/m/n/10.95 Dentro do laço principal, \TU/FiraSans(0)/b/n/10.95 alimentar \TU/FiraSans(0)/m/n/10.95 (“dar comida a”) o watchdog periodicamente, sempre
+ []
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 126.
+
+(./_minted-main/6C17896C33F246A75D3F3E4E860C3B9ABEBDD1D0F4AA7085BEAD66C8F6783572.pygtex
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 129.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 129.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 129.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 129.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 129.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 133.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 134.
+
+[88]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 136.
+
+) (./capitulos/20-gerenciamento-energia.tex
+Overfull \hbox (11.78214pt too wide) in paragraph at lines 136--1
+\TU/FiraSans(0)/m/n/10.95 frentes complementares. O próximo capítulo aborda uma preocupação central em praticamente
+ []
 
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
@@ -5763,17 +5968,6 @@ Capítulo 20.
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 4.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 4.
-
-
-Overfull \hbox (2.29948pt too wide) in paragraph at lines 4--5
-\TU/FiraSans(0)/m/n/10.95 além de GPIO, ADC, comunicação serial e interrupções. O objetivo é consolidar esses conceitos
- []
-
-
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 6.
 
 
@@ -5783,157 +5977,168 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 10.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 13.
-
-
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 14.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 15.
+Overfull \hbox (44.57712pt too wide) in paragraph at lines 16--26
+ [][][][] 
+ []
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 16.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 26.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 17.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 30.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 20.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 30.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 23.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 31.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 24.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 31.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 25.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 28.
-
-\openout8 = `main.listing'.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 44.
-
-(./_minted-main/DD9894B51F7E90C8466978B3DAECF129BEBDD1D0F4AA7085BEAD66C8F6783572.pygtex
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
-
-)
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 44.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 32.
 
 [91]
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 46.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 48.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 36.
 
 \openout8 = `main.listing'.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 145.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 69.
 
-(./_minted-main/B022B83D306404F6362F8C3FB05297C1BEBDD1D0F4AA7085BEAD66C8F6783572.pygtex
+(./_minted-main/352182254AD71DE83EE5EFFEF5B98BA8BEBDD1D0F4AA7085BEAD66C8F6783572.pygtex
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
 
 )
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 145.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 72.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 72.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 72.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 72.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 72.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 72.
+
+
+Underfull \hbox (badness 3590) in paragraph at lines 72--73
+[]\TU/FiraSans(0)/m/n/10.95 Ao contrário de []\TU/FiraMono(0)/m/n/10.95 attachInterrupt()[]\TU/FiraSans(0)/m/n/10.95 , que aceita bordas de subida ou descida
+ []
+
+
+Underfull \vbox (badness 5133) has occurred while \output is active []
+
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 73.
 
 [92]
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 145.
-
-[93]
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 147.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 75.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 150.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 75.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 150.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 78.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 150.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 78.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 151.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 81.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 151.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 83.
+
+\openout8 = `main.listing'.
 
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 152.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 95.
 
+(./_minted-main/D1A1AF2BEC54866872C3C01AE488D163BEBDD1D0F4AA7085BEAD66C8F6783572.pygtex
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 153.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 153.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 154.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 154.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 154.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 155.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 158.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 163.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 163.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 164.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 164.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 164.
-
-
-Overfull \hbox (1.9987pt too wide) in paragraph at lines 164--165
-\TU/FiraSans(0)/m/n/10.95 para ESP32), para que a estação lembre a última configuração mesmo após ser desligada; 
- []
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 165.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 166.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 166.
-
-
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 166.
-
-
-Overfull \hbox (19.12086pt too wide) in paragraph at lines 166--167
-\TU/FiraSans(0)/m/n/10.95 exemplo, separando a lógica do sensor, do histórico e do botão em módulos independentes. 
- []
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
 
 )
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 42.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 97.
 
-[94] (./capitulos/a1-tabela-ascii.tex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 100.
+
+[93]
+\openout8 = `main.listing'.
+
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 130.
+
+(./_minted-main/43B450820F4871B11E2995EF292EC4EDBEBDD1D0F4AA7085BEAD66C8F6783572.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 133.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 137.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 137.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 137.
+
+
+Underfull \vbox (badness 2318) has occurred while \output is active []
+
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 138.
+
+[94]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 140.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 142.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 148.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 149.
+
+
+Overfull \hbox (15.98735pt too wide) in paragraph at lines 144--154
+ [][][][] 
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 154.
+
+
+Overfull \hbox (31.56017pt too wide) in paragraph at lines 157--158
+[]\TU/FiraSans(0)/m/n/10.95 Como regra prática: prefira \TU/FiraSans(0)/b/it/10.95 light sleep \TU/FiraSans(0)/m/n/10.95 sempre que o dispositivo precisar continuar minimamente
+ []
+
+) (./capitulos/21-comunicacao-wifi.tex
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
 
@@ -5942,6 +6147,539 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
 
 [96
+
+]
+Capítulo 21.
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 4.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 6.
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 33.
+
+(./_minted-main/5944CF17172B7A8F0B57AF769EFB93B7BEBDD1D0F4AA7085BEAD66C8F6783572.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 35.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 35.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 35.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 35.
+
+
+Overfull \hbox (8.20311pt too wide) in paragraph at lines 35--36
+\TU/FiraSans(0)/m/n/10.95 consultar seu andamento a qualquer momento, retornando []\TU/FiraMono(0)/m/n/10.95 WL_CONNECTED[] \TU/FiraSans(0)/m/n/10.95 assim que a conexão
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 38.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 38.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 38.
+
+
+Underfull \vbox (badness 1552) has occurred while \output is active []
+
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 39.
+
+[97]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 41.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 43.
+
+
+Overfull \hbox (9.4119pt too wide) in paragraph at lines 43--44
+\TU/FiraSans(0)/m/n/10.95 Com a rede conectada, a forma mais simples de enviar dados para um servidor é uma requisição
+ []
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 69.
+
+(./_minted-main/6C73F1C168542100E6EF332C0B9C3362BEBDD1D0F4AA7085BEAD66C8F6783572.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 72.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 72.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 72.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 72.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 72.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 75.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 75.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 75.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 75.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 76.
+
+[98]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 77.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 79.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 79.
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 97.
+
+(./_minted-main/189FAC6F0F20BA4C0EB6F93AA7710962BEBDD1D0F4AA7085BEAD66C8F6783572.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 99.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 99.
+
+
+Overfull \hbox (15.01723pt too wide) in paragraph at lines 99--100
+[]\TU/FiraSans(0)/m/n/10.95 Chamar []\TU/FiraMono(0)/m/n/10.95 verificar_wifi()[] \TU/FiraSans(0)/m/n/10.95 a cada volta de []\TU/FiraMono(0)/m/n/10.95 loop()[] \TU/FiraSans(0)/m/n/10.95 garante que o firmware tente se reconectar
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 101.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 103.
+
+
+Underfull \hbox (badness 1043) in paragraph at lines 106--107
+\TU/FiraSans(0)/m/n/10.95 reportar dados pela rede normalmente segue o padrão: acordar do \TU/FiraSans(0)/m/it/10.95 deep sleep\TU/FiraSans(0)/m/n/10.95 ,
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 107.
+
+[99]) (./capitulos/22-atualizacoes-ota.tex
+Overfull \hbox (26.93385pt too wide) in paragraph at lines 109--1
+[]\TU/FiraSans(0)/m/n/10.95 Com o ESP32 conectado à rede, o próximo capítulo mostra como usar essa mesma conectividade
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+[100]
+Capítulo 22.
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 6.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 8.
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 37.
+
+(./_minted-main/57ED1D7B2026AB8B15959B148DC012D7BEBDD1D0F4AA7085BEAD66C8F6783572.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 39.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 39.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 39.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 39.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 39.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 40.
+
+[101
+
+]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 41.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 43.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 43.
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 54.
+
+(./_minted-main/7D5E85E8F260C36BE6181AF7E96A1A15D8E0493FE5C606A86E94D8F5A4ADE7E0.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 58.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 60.
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 66.
+
+(./_minted-main/5E5C8862D3371CD22D567879976D7DDDBEBDD1D0F4AA7085BEAD66C8F6783572.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 69.
+
+) (./capitulos/23-projeto-final.tex
+Overfull \hbox (6.93909pt too wide) in paragraph at lines 72--1
+[]\TU/FiraSans(0)/m/n/10.95 Com GPIO, ADC, comunicação serial, interrupções, gerenciamento de energia, conectividade
+ []
+
+
+Overfull \hbox (18.91911pt too wide) in paragraph at lines 72--1
+\TU/FiraSans(0)/m/n/10.95 Wi-Fi e atualizações OTA todos apresentados, o último capítulo desta apostila reúne praticamente
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 12.05003pt, for example:
+(fancyhdr)                \setlength{\headheight}{12.05003pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-0.05003pt}.
+
+[102]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+[103]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+[104
+
+]
+Capítulo 23.
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 4.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 4.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 6.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 8.
+
+
+Overfull \hbox (6.3203pt too wide) in paragraph at lines 8--9
+\TU/FiraSans(0)/m/n/10.95 estação se conecta ao Wi-Fi para reportar alertas a um servidor, aceita atualizações de firmware
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 14.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 17.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 18.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 19.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 20.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 21.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 24.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 27.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 28.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 29.
+
+[105]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 29.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 32.
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 48.
+
+(./_minted-main/DD9894B51F7E90C8466978B3DAECF129BEBDD1D0F4AA7085BEAD66C8F6783572.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 50.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 52.
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 207.
+
+(./_minted-main/815ED30F33AA6B5F8E8FB7FB0FB251A5BEBDD1D0F4AA7085BEAD66C8F6783572.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 207.
+
+[106]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 207.
+
+[107]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 207.
+
+[108]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 209.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 212.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 212.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 212.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 213.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 213.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 214.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 215.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 215.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 216.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 216.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 216.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 217.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 217.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 217.
+
+
+Overfull \hbox (39.59608pt too wide) in paragraph at lines 217--218
+[]\TU/FiraSans(0)/m/n/10.95 Um \TU/FiraSans(0)/b/n/10.95 Watchdog Timer \TU/FiraSans(0)/m/n/10.95 (Seção [][]19.4[][]) protege o laço principal como um todo: []\TU/FiraMono(0)/m/n/10.95 esp_task_wdt_reset()[]
+ []
+
+
+Overfull \hbox (44.79877pt too wide) in paragraph at lines 217--218
+\TU/FiraSans(0)/m/n/10.95 é chamado ao final de cada volta saudável de []\TU/FiraMono(0)/m/n/10.95 loop()[]\TU/FiraSans(0)/m/n/10.95 , e reiniciaria o dispositivo automaticamente
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 218.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 218.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 218.
+
+
+Overfull \hbox (18.72327pt too wide) in paragraph at lines 218--219
+\TU/FiraSans(0)/m/n/10.95 servidor por \TU/FiraSans(0)/b/n/10.95 HTTP\TU/FiraSans(0)/m/n/10.95 , usando []\TU/FiraMono(0)/m/n/10.95 snprintf[] \TU/FiraSans(0)/m/n/10.95 para montar o corpo da requisição sem a fragmentação
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 219.
+
+[109]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 219.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 219.
+
+
+Overfull \hbox (20.4955pt too wide) in paragraph at lines 219--220
+[]\TU/FiraSans(0)/m/n/10.95 O firmware aceita \TU/FiraSans(0)/b/n/10.95 atualizações OTA \TU/FiraSans(0)/m/n/10.95 (Capítulo [][]22[][]) através de []\TU/FiraMono(0)/m/n/10.95 ArduinoOTA.handle()[]\TU/FiraSans(0)/m/n/10.95 , chamado
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 220.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 223.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 227.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 227.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 227.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 229.
+
+
+Overfull \hbox (27.03403pt too wide) in paragraph at lines 229--230
+\TU/FiraSans(0)/m/n/10.95 passo natural para tornar esta estação mais eficiente em energia sem sacrificar sua responsividade. 
+ []
+
+
+Overfull \hbox (21.13763pt too wide) in paragraph at lines 231--232
+[]\TU/FiraSans(0)/m/n/10.95 Se, por outro lado, o objetivo fosse um sensor remoto alimentado por bateria \TU/FiraSans(0)/m/it/10.95 sem \TU/FiraSans(0)/m/n/10.95 necessidade
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 233.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 238.
+
+[110]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 238.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 238.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 239.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 239.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 239.
+
+
+Overfull \hbox (1.9987pt too wide) in paragraph at lines 239--240
+\TU/FiraSans(0)/m/n/10.95 para ESP32), para que a estação lembre a última configuração mesmo após ser desligada; 
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 240.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 241.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 242.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 243.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 243.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 243.
+
+) (./capitulos/a1-tabela-ascii.tex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+[111]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+[112
 
 ]
 Apêndice A.
@@ -6019,11 +6757,11 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 61.
 
-[97]) (./capitulos/a2-referencia-rapida.tex
+[113]) (./capitulos/a2-referencia-rapida.tex
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
 
-[98]
+[114]
 Apêndice B.
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
@@ -6243,7 +6981,7 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 62.
 
-[99
+[115
 
 ]
 
@@ -6368,31 +7106,516 @@ Package polyglossia Warning: Asking to add empty feature to latin font (Language
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 104.
 
 
-Overfull \hbox (92.12416pt too wide) in paragraph at lines 87--107
- [][][][] 
- []
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 105.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 106.
 
 
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 107.
 
 
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 108.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 108.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 109.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 110.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 111.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 112.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 112.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 113.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 113.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 113.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 113.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 114.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 114.
+
+
+Overfull \hbox (196.12772pt too wide) in paragraph at lines 87--117
+ [][][][] 
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 117.
+
+
 LaTeX Warning: `h' float specifier changed to `ht'.
+
+) (./capitulos/a3-git-github.tex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+[116]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+[117]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+[118
+
+]
+Apêndice C.
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 6.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 11.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 12.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 13.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 14.
+
+
+Overfull \hbox (4.7216pt too wide) in paragraph at lines 14--15
+[]\TU/FiraSans(0)/m/n/10.95 Colaborar com outras pessoas no mesmo código, combinando mudanças de várias fontes
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 21.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 23.
+
+
+Overfull \hbox (20.68pt too wide) in paragraph at lines 23--24
+\TU/FiraSans(0)/m/n/10.95 ou disponível pelo gerenciador de pacotes da distribuição ([]\TU/FiraMono(0)/m/n/10.95 sudo apt install git[]\TU/FiraSans(0)/m/n/10.95 , por exemplo).
+ []
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 28.
+
+(./_minted-main/82F8FCCC278E86F1A03453CFE9445A3E1E8B2165DB203E1CDFAC5131E1A31867.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
 
 )
 
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 28.
+
+[119]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 30.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 34.
+
+LaTeX Font Info:    Font shape `TU/FiraMono(0)/m/n' will be
+(Font)              scaled to size 7.04004pt on input line 47.
+
 Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 47.
 
-[100]
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 47.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 49.
 
-[101]
 
-Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 47.
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 51.
 
-[102
 
-] (./main.aux)
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 55.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 57.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 61.
+
+
+Overfull \hbox (1.5899pt too wide) in paragraph at lines 61--62
+[]\TU/FiraSans(0)/b/n/10.95 Diretório de trabalho \TU/FiraSans(0)/m/n/10.95 — os arquivos como estão no seu disco agora, editáveis livremente; 
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 62.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 63.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 66.
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 72.
+
+(./_minted-main/48416387C4B29BFA5C1E3F9DADB827A81E8B2165DB203E1CDFAC5131E1A31867.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 74.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 74.
+
+
+Overfull \hbox (10.95088pt too wide) in paragraph at lines 74--75
+[][]\TU/FiraMono(0)/m/n/10.95 git init[] \TU/FiraSans(0)/m/n/10.95 cria uma subpasta oculta []\TU/FiraMono(0)/m/n/10.95 .git/[]\TU/FiraSans(0)/m/n/10.95 , onde todo o histórico do projeto será armazenado
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 76.
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 88.
+
+(./_minted-main/486DF4EFD15A0A8E44C8195E10B829331E8B2165DB203E1CDFAC5131E1A31867.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 88.
+
+[120]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 90.
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 96.
+
+(./_minted-main/E65752BA4D7A5DE70FE83A6BD48F0D871E8B2165DB203E1CDFAC5131E1A31867.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+\openout8 = `main.listing'.
+
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 102.
+
+(./_minted-main/4608DF9E7A82FC660825DE007EF34A8C1E8B2165DB203E1CDFAC5131E1A31867.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 105.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 105.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 108.
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 115.
+
+(./_minted-main/CE255E77C8C3C575197FC28D5FAD2B3A1E8B2165DB203E1CDFAC5131E1A31867.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+\openout8 = `main.listing'.
+
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 120.
+
+(./_minted-main/E91978DE3DD6D35D5E97840CCDEACFBF1E8B2165DB203E1CDFAC5131E1A31867.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 122.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 122.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\@ifnextchar' on input line 122.
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 131.
+
+(./_minted-main/2CBC8222035429610E350A76BEAB869ED8E0493FE5C606A86E94D8F5A4ADE7E0.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 131.
+
+[121]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 134.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 134.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 134.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 134.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 134.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 138.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 138.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 138.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 138.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 138.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 138--139
+[]\TU/FiraSans(0)/m/n/10.95 Além de artefatos de compilação, \TU/FiraSans(0)/b/n/10.95 nunca \TU/FiraSans(0)/m/n/10.95 commite credenciais — como as
+ []
+
+
+Underfull \hbox (badness 2096) in paragraph at lines 138--139
+\TU/FiraSans(0)/m/n/10.95 constantes []\TU/FiraMono(0)/m/n/10.95 WIFI_SSID[] \TU/FiraSans(0)/m/n/10.95 e []\TU/FiraMono(0)/m/n/10.95 WIFI_PASSWORD[] \TU/FiraSans(0)/m/n/10.95 usadas no Capítulo [][]21[][] e no projeto do
+ []
+
+
+Underfull \hbox (badness 1824) in paragraph at lines 138--139
+\TU/FiraSans(0)/m/n/10.95 Capítulo [][]23[][]. A prática recomendada é isolá-las em um arquivo separado (por
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 141.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 143.
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 152.
+
+(./_minted-main/436FF49893D8DE94E4D05E3C7D7BCD3A1E8B2165DB203E1CDFAC5131E1A31867.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 155.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 155.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 155.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 155.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 155.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 158.
+
+
+Overfull \hbox (14.28244pt too wide) in paragraph at lines 158--159
+\TU/FiraSans(0)/b/n/10.95 merge\TU/FiraSans(0)/m/n/10.95 . O Git marca o trecho conflitante diretamente no arquivo, e cabe à pessoa desenvolvedora
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 159.
+
+[122]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 160.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 162.
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 170.
+
+(./_minted-main/FC1F572E7791D33F4BE68CA72FB09B9B1E8B2165DB203E1CDFAC5131E1A31867.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 172.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 172.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 172.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 172.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 172.
+
+
+Overfull \hbox (7.73863pt too wide) in paragraph at lines 172--173
+[][]\TU/FiraMono(0)/m/n/10.95 origin[] \TU/FiraSans(0)/m/n/10.95 é apenas um apelido (o mais comum, por convenção) para o endereço do repositório
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 174.
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 181.
+
+(./_minted-main/A2A07601FC739A34107001AEE6DBADEE1E8B2165DB203E1CDFAC5131E1A31867.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 183.
+
+\openout8 = `main.listing'.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 188.
+
+(./_minted-main/F43DFE5D86FA2F4A09A2D18FB64B35081E8B2165DB203E1CDFAC5131E1A31867.pygtex
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 1.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 190.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 195.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 196.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 197.
+
+[123]
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 197.
+
+
+Overfull \hbox (1.84541pt too wide) in paragraph at lines 199--200
+[]\TU/FiraSans(0)/m/n/10.95 Uma vez aprovado, o Pull Request é \TU/FiraSans(0)/b/n/10.95 mesclado \TU/FiraSans(0)/m/n/10.95 (\TU/FiraSans(0)/m/it/10.95 merged\TU/FiraSans(0)/m/n/10.95 ) à branch principal, incorporando
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 203.
+
+
+Underfull \hbox (badness 1205) in paragraph at lines 203--204
+[]\TU/FiraSans(0)/m/n/10.95 Esse fluxo — branch dedicada, revisão antes de mesclar — vale a pena mesmo
+ []
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 206.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 208.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 214.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 215.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 216.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 217.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 218.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 219.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 220.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 221.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 222.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 223.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 224.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 225.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 226.
+
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 229.
+
+)
+
+Package polyglossia Warning: Asking to add empty feature to latin font (Language="Brazilian" to langtag "") on input line 51.
+
+[124] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -6402,17 +7625,17 @@ L3 programming layer <2024-01-22>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: AD41704EB1345740361293153EF9B70A;27140.
+(rerunfilecheck)             Checksum: FD7ABF5BE666407C9AECE64D31F46D76;35150.
 runsystem(rm main.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 40747 strings out of 474878
- 910317 string characters out of 5762517
- 1945627 words of memory out of 5000000
- 61823 multiletter control sequences out of 15000+600000
- 568346 words of font info for 135 fonts, out of 8000000 for 9000
+ 41038 strings out of 474878
+ 925838 string characters out of 5762517
+ 1954627 words of memory out of 5000000
+ 62037 multiletter control sequences out of 15000+600000
+ 568362 words of font info for 137 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  89i,13n,120p,1258b,1348s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.xdv (110 pages, 2344408 bytes).
+Output written on main.xdv (134 pages, 2988300 bytes).

@@ -85,3 +85,52 @@ Essa comparação — ``já se passou tempo suficiente desde a última vez?'' �
 \begin{esp32box}
 Combinar \textbf{interrupções} (para eventos externos imprevisíveis, como um botão) com \textbf{temporização por \code{millis()}} (para tarefas periódicas e previsíveis, como ler um sensor a cada segundo) é o padrão de projeto mais comum em firmware Arduino para o \ESP{}.
 \end{esp32box}
+
+\section{Watchdog Timer}
+\label{sec:watchdog}
+
+Mesmo em um firmware bem projetado, coisas dão errado: um sensor pode parar de responder e travar uma leitura que deveria ser rápida, um laço de espera pode nunca satisfazer sua condição de saída, ou um bug qualquer pode prender a execução em um ponto do código do qual ela nunca retorna. Na arquitetura de laço único do \ESP{} (\cref{sec:super-loop}), isso é particularmente grave: se \code{loop()} trava, \textbf{o sistema inteiro trava} — sem um sistema operacional completo para intervir, nada tira o processador desse estado sozinho.
+
+A solução para esse problema é um pequeno circuito de hardware chamado \textbf{Watchdog Timer} (WDT, ou ``temporizador de vigilância''): um contador regressivo independente que, se não for \textbf{reiniciado periodicamente pelo próprio firmware}, entende que o sistema travou e força um \textbf{reset} completo do microcontrolador — trazendo-o de volta a um estado conhecido e funcional, em vez de deixá-lo preso indefinidamente.
+
+O uso típico segue um padrão de três passos:
+
+\begin{enumerate}
+    \item \textbf{Configurar} o watchdog com um tempo limite (\emph{timeout}) — por exemplo, 5 segundos;
+    \item Dentro do laço principal, \textbf{alimentar} (``dar comida a'') o watchdog periodicamente, sempre que o firmware sabe que está funcionando normalmente — isso reinicia a contagem regressiva;
+    \item Se, por qualquer motivo, o firmware travar e parar de alimentar o watchdog, o tempo limite se esgota e o \textbf{chip reinicia sozinho}.
+\end{enumerate}
+
+\begin{codigoc}{src/main.cpp — protegendo o laço principal com o watchdog}
+#include <esp_task_wdt.h>
+
+#define WDT_TIMEOUT 5   // segundos ate o reset, caso nao seja alimentado
+
+void setup() {
+    Serial.begin(115200);
+
+    esp_task_wdt_init(WDT_TIMEOUT, true);   // true: reinicia o chip ao vencer
+    esp_task_wdt_add(NULL);                 // registra a tarefa de loop() no watchdog
+
+    Serial.println("Watchdog configurado. Sistema iniciado.");
+}
+
+void loop() {
+    // ... leitura de sensores, logica do programa, etc ...
+
+    Serial.println("Laco em execucao normal.");
+    esp_task_wdt_reset();   // "alimenta" o watchdog: avisa que o laco esta vivo
+
+    delay(1000);
+}
+\end{codigoc}
+
+\begin{dica}
+Para ver o watchdog em ação, tente comentar a linha \code{esp\_task\_wdt\_reset();} e substituir o \code{delay(1000)} por um laço vazio bem mais longo que o \code{WDT\_TIMEOUT} configurado (por exemplo, \code{while (true) \{\}}). Poucos segundos depois, o watchdog vai perceber que o laço parou de ser alimentado e reiniciar o \ESP{} sozinho — o monitor serial mostrará a mensagem \code{"Sistema iniciado."} aparecendo repetidamente, uma prova visível de que o mecanismo de proteção está funcionando.
+\end{dica}
+
+\begin{atencao}
+Chamar \code{esp\_task\_wdt\_reset()} em um ponto do código onde, na verdade, algo já está errado — por exemplo, dentro de um laço de espera que deveria ter um limite de tentativas — \textbf{mascara o problema} em vez de resolvê-lo: o watchdog nunca vai disparar, mesmo que o sistema esteja preso ali, inútil, indefinidamente. O watchdog deve alimentar-se a partir de um ponto do código que só é alcançado quando o laço principal de fato completou uma volta inteira e saudável — nunca de dentro de uma espera que já é, ela própria, suspeita.
+\end{atencao}
+
+Com botões tratados por interrupção, tarefas periódicas tratadas por \code{millis()}, e agora um watchdog vigiando o laço principal como um todo, o firmware está protegido em três frentes complementares. O próximo capítulo aborda uma preocupação central em praticamente todo projeto de IoT: como gerenciar o consumo de energia do \ESP{}, especialmente relevante quando o dispositivo é alimentado por bateria.

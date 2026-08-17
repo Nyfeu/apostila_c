@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{RTC\PYGZus{}DATA\PYGZus{}ATTR}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{contador\PYGZus{}de\PYGZus{}bootes}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{setup}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(}\PYG{l+m+mi}{115200}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{contador\PYGZus{}de\PYGZus{}bootes}\PYG{o}{++}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// preserva o valor entre ciclos de sono}
+
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Numero de vezes que acordei: \PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{n}{contador\PYGZus{}de\PYGZus{}bootes}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

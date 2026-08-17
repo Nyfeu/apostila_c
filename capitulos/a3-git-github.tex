@@ -1,0 +1,230 @@
+\chapter{Controle de Versão com Git e GitHub}
+\label{ap:git}
+
+Todo projeto de software — e firmware não é exceção — muda ao longo do tempo: funções são adicionadas, bugs são corrigidos, ideias são tentadas e, às vezes, abandonadas. Sem uma ferramenta para gerenciar esse histórico, é fácil perder uma versão que funcionava, sobrescrever o trabalho de outra pessoa, ou simplesmente esquecer \emph{por que} uma mudança foi feita. Este apêndice apresenta o \textbf{Git}, a ferramenta de controle de versão mais usada do mundo, e o \textbf{GitHub}, o serviço mais popular para hospedar repositórios Git na nuvem — ambos tão fundamentais para desenvolvimento de software moderno (incluindo projetos em PlatformIO) quanto o próprio compilador.
+
+\section{O que é controle de versão}
+
+Um \textbf{sistema de controle de versão} registra o histórico de alterações de um conjunto de arquivos ao longo do tempo, permitindo:
+
+\begin{itemize}
+    \item Voltar a qualquer versão anterior do projeto, a qualquer momento;
+    \item Entender \emph{quem} mudou \emph{o quê}, \emph{quando} e \emph{por quê} (através de mensagens de commit);
+    \item Trabalhar em uma funcionalidade nova sem arriscar quebrar a versão que já funciona (usando \textbf{ramificações}, ou \emph{branches});
+    \item Colaborar com outras pessoas no mesmo código, combinando mudanças de várias fontes de forma organizada.
+\end{itemize}
+
+\begin{nota}
+\textbf{Git} é a ferramenta que roda no seu computador e gerencia esse histórico localmente — nada obriga o uso de nenhum serviço externo. \textbf{GitHub} é, separadamente, um serviço \emph{online} que hospeda repositórios Git na nuvem, adicionando funcionalidades de colaboração (revisão de código, rastreamento de problemas, integração contínua). Existem alternativas ao GitHub — GitLab, Bitbucket —, mas todas são construídas sobre o mesmo Git.
+\end{nota}
+
+\section{Instalação e configuração inicial}
+
+O Git está disponível para Windows, macOS e Linux — no Linux, geralmente já vem instalado ou disponível pelo gerenciador de pacotes da distribuição (\code{sudo apt install git}, por exemplo). Após instalar, identifique-se para que seus commits sejam atribuídos corretamente:
+
+\begin{codigobash}{Configuração inicial (executada uma única vez por computador)}
+$ git config --global user.name "Seu Nome"
+$ git config --global user.email "seu.email@exemplo.com"
+\end{codigobash}
+
+\section{Os três estados de um arquivo}
+
+Entender o Git fica muito mais simples ao visualizar as três áreas por onde um arquivo passa:
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    box/.style={draw=secundaria, very thick, rounded corners=2mm, fill=fundoclaro,
+                minimum height=1.5cm, minimum width=2.6cm, align=center, font=\small},
+    node distance=1.6cm and 1.6cm
+]
+\node[box] (wd) {Diretório de\\Trabalho};
+\node[box, right=of wd] (stage) {Área de\\\emph{Staging}};
+\node[box, right=of stage] (local) {Repositório\\Local};
+\node[box, right=of local] (remote) {Repositório\\Remoto\\(GitHub)};
+
+\draw[-{Latex[length=2.5mm]}, thick, primaria] (wd) -- (stage)
+    node[midway, above, yshift=1mm, font=\scriptsize\ttfamily] {git add};
+\draw[-{Latex[length=2.5mm]}, thick, primaria] (stage) -- (local)
+    node[midway, above, yshift=1mm, font=\scriptsize\ttfamily] {git commit};
+\draw[-{Latex[length=2.5mm]}, thick, primaria] (local) -- (remote)
+    node[midway, above, yshift=1mm, font=\scriptsize\ttfamily] {git push};
+
+\draw[-{Latex[length=2.5mm]}, thick, acento]
+    (remote.south) to[out=250, in=290]
+    node[midway, below, yshift=-1mm, font=\scriptsize\ttfamily] {git pull / clone} (local.south);
+\end{tikzpicture}
+\caption{O fluxo básico do Git: do diretório de trabalho ao repositório remoto, e de volta.}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Diretório de trabalho} — os arquivos como estão no seu disco agora, editáveis livremente;
+    \item \textbf{Área de \emph{staging}} (ou \emph{índice}) — uma zona intermediária onde você escolhe \emph{exatamente} quais mudanças farão parte do próximo commit, mesmo que outros arquivos também tenham sido alterados;
+    \item \textbf{Repositório} — o histórico permanente de \emph{commits}, cada um uma ``fotografia'' completa do projeto em um instante específico.
+\end{itemize}
+
+\section{Criando um repositório}
+
+\begin{codigobash}{Iniciando um repositório Git em um projeto existente}
+$ cd meu-projeto-platformio
+$ git init
+Initialized empty Git repository in .../meu-projeto-platformio/.git/
+\end{codigobash}
+
+\code{git init} cria uma subpasta oculta \code{.git/}, onde todo o histórico do projeto será armazenado — apagar essa pasta apaga o histórico inteiro (o restante dos arquivos do projeto não é afetado).
+
+\section{O ciclo básico: status, add e commit}
+
+\begin{codigobash}{Verificando o estado do repositório}
+$ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+        modified:   src/main.cpp
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        include/sensor.h
+\end{codigobash}
+
+\code{git status} é, disparadamente, o comando mais usado no dia a dia — ele mostra quais arquivos foram modificados, quais são novos (\emph{untracked}) e quais já estão prontos para o próximo commit.
+
+\begin{codigobash}{Adicionando mudanças à área de staging}
+$ git add src/main.cpp          # adiciona um arquivo especifico
+$ git add include/sensor.h
+$ git add .                     # adiciona TODAS as mudancas do diretorio atual
+\end{codigobash}
+
+\begin{codigobash}{Registrando um commit}
+$ git commit -m "Adiciona leitura do sensor de luminosidade via ADC"
+[main a1b2c3d] Adiciona leitura do sensor de luminosidade via ADC
+ 2 files changed, 34 insertions(+), 2 deletions(-)
+\end{codigobash}
+
+\begin{dica}
+Uma boa mensagem de commit descreve \emph{o que} mudou e, quando não for óbvio, \emph{por que} — no modo imperativo (``Adiciona'', ``Corrige'', ``Remove''), como se estivesse dando uma instrução ao repositório. \code{"fix"} ou \code{"mudancas"} são mensagens que, seis meses depois, não ajudam ninguém (nem você mesmo) a entender o histórico do projeto.
+\end{dica}
+
+\section{Consultando o histórico}
+
+\begin{codigobash}{Visualizando o histórico de commits}
+$ git log --oneline
+a1b2c3d Adiciona leitura do sensor de luminosidade via ADC
+7e8f9a0 Configura watchdog timer no loop principal
+3c4d5e6 Estrutura inicial do projeto PlatformIO
+\end{codigobash}
+
+\begin{codigobash}{Vendo exatamente o que mudou}
+$ git diff                # mudancas ainda nao adicionadas ao staging
+$ git diff --staged       # mudancas ja adicionadas, prontas para commit
+\end{codigobash}
+
+\section{Ignorando arquivos: \code{.gitignore}}
+
+Nem todo arquivo gerado durante o desenvolvimento deveria entrar no histórico do Git — artefatos de compilação, por exemplo, podem sempre ser recriados a partir do código-fonte, e apenas poluiriam o repositório. Um projeto PlatformIO tipicamente ignora:
+
+\begin{codigoini}{.gitignore de um projeto PlatformIO}
+.pio/               ; pasta de compilacao, recriada a cada build
+.vscode/            ; configuracoes locais do editor
+*.o                 ; arquivos objeto intermediarios
+compile_commands.json
+\end{codigoini}
+
+\begin{atencao}
+Arquivos listados no \code{.gitignore} \textbf{deixam de ser sugeridos} pelo \code{git status} e pelo \code{git add .} — mas um arquivo que \emph{já} foi adicionado ao repositório antes de entrar no \code{.gitignore} continua sendo rastreado normalmente. Configure o \code{.gitignore} desde o início do projeto, antes do primeiro commit, para evitar esse tipo de surpresa.
+\end{atencao}
+
+\begin{esp32box}
+Além de artefatos de compilação, \textbf{nunca} commite credenciais — como as constantes \code{WIFI\_SSID} e \code{WIFI\_PASSWORD} usadas no \cref{cap:wifi} e no projeto do \cref{cap:projeto-final}. A prática recomendada é isolá-las em um arquivo separado (por exemplo, \code{include/credenciais.h}), incluído no \code{.gitignore}, e versionar apenas um \code{credenciais.h.exemplo} com valores fictícios — assim, qualquer pessoa que clone o projeto sabe exatamente quais variáveis precisa preencher, sem que a senha real jamais chegue a ser registrada no histórico do Git (e, pior, publicada caso o repositório vá para o GitHub).
+\end{esp32box}
+
+\section{Ramificações (\emph{branches})}
+
+Uma \textbf{branch} é uma linha independente de desenvolvimento — por padrão, todo repositório começa com uma branch principal (tradicionalmente chamada \code{main}). Criar uma nova branch permite experimentar ou desenvolver uma funcionalidade sem afetar o código já estável:
+
+\begin{codigobash}{Criando e alternando entre branches}
+$ git branch                       # lista as branches existentes
+$ git checkout -b feature/wifi     # cria e ja muda para a nova branch
+$ # ... faca commits normalmente nesta branch ...
+
+$ git checkout main                # volta para a branch principal
+$ git merge feature/wifi           # traz as mudancas de volta para main
+\end{codigobash}
+
+\begin{nota}
+Versões mais recentes do Git introduziram \code{git switch} e \code{git restore} como alternativas mais específicas a \code{git checkout} (que, historicamente, acumulou funções demais). \code{git switch -c feature/wifi} é equivalente ao \code{git checkout -b feature/wifi} do exemplo acima.
+\end{nota}
+
+Quando duas branches modificam as mesmas linhas de um mesmo arquivo de formas diferentes, o \code{git merge} não consegue decidir sozinho qual versão manter — um \textbf{conflito de merge}. O Git marca o trecho conflitante diretamente no arquivo, e cabe à pessoa desenvolvedora escolher (ou combinar) manualmente qual versão faz sentido, antes de finalizar o merge com um novo commit.
+
+\section{Trabalhando com o GitHub}
+
+\subsection{Criando um repositório remoto}
+
+Depois de criar um repositório vazio pelo site do GitHub, conecte-o ao repositório local e envie o histórico existente:
+
+\begin{codigobash}{Conectando um repositório local ao GitHub}
+$ git remote add origin https://github.com/seu-usuario/meu-projeto.git
+$ git branch -M main
+$ git push -u origin main
+\end{codigobash}
+
+\code{origin} é apenas um apelido (o mais comum, por convenção) para o endereço do repositório remoto; \code{-u} associa a branch local \code{main} à branch remota correspondente, para que futuros \code{git push}/\code{git pull} sem argumentos já saibam para onde ir.
+
+\subsection{Clonando um repositório existente}
+
+Para obter uma cópia completa de um projeto já hospedado no GitHub — o próprio código desta apostila, por exemplo —, junto com todo o seu histórico:
+
+\begin{codigobash}{Clonando um repositório}
+$ git clone https://github.com/algum-usuario/algum-projeto.git
+$ cd algum-projeto
+\end{codigobash}
+
+\subsection{Enviando e recebendo atualizações}
+
+\begin{codigobash}{Sincronizando com o repositório remoto}
+$ git push          # envia seus commits locais para o GitHub
+$ git pull          # traz e integra commits novos do GitHub
+\end{codigobash}
+
+\section{Colaborando com Pull Requests}
+
+Em projetos com mais de uma pessoa, a forma padrão de propor uma mudança no GitHub é o \textbf{Pull Request} (PR): em vez de enviar commits diretamente para a branch principal, o fluxo típico é:
+
+\begin{enumerate}
+    \item Criar uma branch nova para a mudança (\code{git checkout -b feature/nome-da-mudanca});
+    \item Fazer commits normalmente nessa branch, e enviá-la ao GitHub (\code{git push -u origin feature/nome-da-mudanca});
+    \item Abrir um \textbf{Pull Request} pelo site do GitHub, comparando a nova branch com \code{main} — descrevendo o que mudou e por quê;
+    \item Outras pessoas do projeto revisam o código, deixam comentários, e solicitam ajustes se necessário;
+    \item Uma vez aprovado, o Pull Request é \textbf{mesclado} (\emph{merged}) à branch principal, incorporando a mudança de forma definitiva e registrada.
+\end{enumerate}
+
+\begin{dica}
+Esse fluxo — branch dedicada, revisão antes de mesclar — vale a pena mesmo trabalhando sozinho em um projeto: ele força uma pausa para revisar as próprias mudanças antes de torná-las permanentes, e mantém a branch \code{main} sempre em um estado que compila e funciona.
+\end{dica}
+
+\section{Referência rápida}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Comando} & \textbf{Finalidade} \\
+\midrule
+\code{git init}                  & inicia um repositório Git na pasta atual \\
+\code{git clone <url>}           & copia um repositório remoto para o computador local \\
+\code{git status}                & mostra o estado atual dos arquivos \\
+\code{git add <arquivo>}         & move mudanças para a área de \emph{staging} \\
+\code{git commit -m "..."}       & registra as mudanças em \emph{staging} como um novo commit \\
+\code{git log --oneline}         & lista o histórico de commits, de forma resumida \\
+\code{git diff}                  & mostra as mudanças ainda não adicionadas ao \emph{staging} \\
+\code{git branch}                & lista, cria ou remove branches \\
+\code{git checkout -b <nome>}    & cria e alterna para uma nova branch \\
+\code{git merge <branch>}        & incorpora as mudanças de outra branch na atual \\
+\code{git remote add origin <url>} & associa um repositório remoto ao projeto local \\
+\code{git push}                  & envia commits locais para o repositório remoto \\
+\code{git pull}                  & traz e integra commits do repositório remoto \\
+\bottomrule
+\end{tabular}
+\caption{Comandos Git essenciais para o dia a dia de um projeto PlatformIO.}
+\end{table}

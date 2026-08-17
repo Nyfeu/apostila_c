@@ -1,0 +1,109 @@
+\chapter{Comunicação de Dados via Wi-Fi}
+\label{cap:wifi}
+
+Um sensor que apenas acende um LED ou imprime valores no monitor serial, como nos capítulos anteriores, já é útil para aprender — mas o que realmente distingue um projeto de \textbf{IoT} (\emph{Internet of Things}) é conectar esses dados ao resto do mundo: um painel de controle, um banco de dados, um aplicativo de celular. O \ESP{} tem um rádio Wi-Fi embutido exatamente para isso, e o framework Arduino expõe seu uso através da biblioteca \code{WiFi.h}.
+
+\section{Conectando-se a uma rede}
+
+\begin{codigoc}{src/main.cpp — conectando ao Wi-Fi}
+#include <WiFi.h>
+
+#define WIFI_SSID     "MinhaRede"
+#define WIFI_PASSWORD "minha_senha"
+
+void setup() {
+    Serial.begin(115200);
+
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    Serial.print("Conectando ao Wi-Fi");
+
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
+
+    Serial.println();
+    Serial.print("Conectado! Endereco IP: ");
+    Serial.println(WiFi.localIP());
+}
+
+void loop() {
+    // ...
+}
+\end{codigoc}
+
+\code{WiFi.begin(ssid, senha)} inicia a conexão de forma assíncrona; \code{WiFi.status()} permite consultar seu andamento a qualquer momento, retornando \code{WL\_CONNECTED} assim que a conexão é estabelecida. \code{WiFi.localIP()} retorna o endereço IP obtido na rede local — útil para depuração e, como veremos no \cref{cap:ota}, para atualizações remotas.
+
+\begin{nota}
+O laço de espera com \code{delay(500)} dentro de \code{setup()} é uma das poucas exceções aceitáveis à regra de ``nunca bloquear'' apresentada no \cref{cap:interrupcoes}: como acontece uma única vez, durante a inicialização, antes de \code{loop()} sequer começar a rodar, bloquear a execução aqui não compromete a responsividade do sistema em operação normal.
+\end{nota}
+
+\section{Enviando dados: requisições HTTP}
+
+Com a rede conectada, a forma mais simples de enviar dados para um servidor é uma requisição \textbf{HTTP}, usando a biblioteca \code{HTTPClient.h}:
+
+\begin{codigoc}{Enviando uma leitura de sensor via HTTP POST}
+#include <WiFi.h>
+#include <HTTPClient.h>
+
+#define URL_SERVIDOR "http://exemplo.com/api/leituras"
+
+void enviar_leitura(float temperatura) {
+    if (WiFi.status() != WL_CONNECTED) {
+        return;   // sem rede, nao ha o que enviar
+    }
+
+    HTTPClient http;
+    http.begin(URL_SERVIDOR);
+    http.addHeader("Content-Type", "application/json");
+
+    char corpo[64];
+    snprintf(corpo, sizeof(corpo), "{\"temperatura\": %.1f}", temperatura);
+
+    int codigo_resposta = http.POST(corpo);
+    Serial.print("[HTTP] Resposta do servidor: ");
+    Serial.println(codigo_resposta);
+
+    http.end();   // libera os recursos da requisicao
+}
+\end{codigoc}
+
+\begin{dica}
+Repare no uso de \code{snprintf} para montar o corpo da requisição em um \code{char} de tamanho fixo, em vez de concatenar strings dinamicamente com o tipo \code{String} do Arduino. Concatenação repetida de \code{String} realoca memória no heap a cada operação — inofensivo em um exemplo isolado, mas uma fonte conhecida de \textbf{fragmentação de memória} em firmwares que rodam por dias ou semanas sem reiniciar. \code{snprintf} — a mesma função de formatação apresentada no \cref{cap:entrada-saida}, aqui aplicada a um buffer em vez da tela — evita esse problema por completo.
+\end{dica}
+
+O valor retornado por \code{http.POST(...)} é o código de status HTTP da resposta (\code{200} para sucesso, \code{404} se o endereço não existe, \code{500} para erro no servidor, e assim por diante) — ou um valor negativo se a própria requisição falhou (por exemplo, servidor inacessível).
+
+\section{Lidando com quedas de conexão}
+
+Redes Wi-Fi não são perfeitamente confiáveis: a conexão pode cair a qualquer momento. Verificar \code{WiFi.status() != WL\_CONNECTED} antes de cada envio, como no exemplo acima, evita que o firmware trave tentando enviar dados por uma rede indisponível. Para tentar reconectar automaticamente, sem bloquear o restante do laço principal, a mesma técnica de temporização por \code{millis()} do \cref{cap:interrupcoes} se aplica:
+
+\begin{codigoc}{Reconexão não bloqueante}
+unsigned long ultima_tentativa = 0;
+const unsigned long INTERVALO_RECONEXAO = 10000;   // 10 segundos
+
+void verificar_wifi() {
+    if (WiFi.status() == WL_CONNECTED) {
+        return;
+    }
+
+    unsigned long agora = millis();
+    if (agora - ultima_tentativa >= INTERVALO_RECONEXAO) {
+        ultima_tentativa = agora;
+        Serial.println("Wi-Fi desconectado. Tentando reconectar...");
+        WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    }
+}
+\end{codigoc}
+
+Chamar \code{verificar\_wifi()} a cada volta de \code{loop()} garante que o firmware tente se reconectar periodicamente, sem nunca travar o restante do programa esperando por uma rede que pode não voltar tão cedo.
+
+\section{Além do HTTP: uma palavra sobre MQTT}
+
+Requisições HTTP funcionam bem para envios pontuais e periódicos, como no exemplo desta seção. Para projetos de IoT com muitos dispositivos trocando mensagens constantemente — sensores publicando leituras, atuadores recebendo comandos, tudo em tempo quase real — o protocolo mais usado da indústria é o \textbf{MQTT}: um protocolo de mensagens leve, baseado em um modelo de publicação/assinatura (\emph{publish/subscribe}) através de um servidor central chamado \emph{broker}. Ele não faz parte desta apostila introdutória, mas é o passo natural seguinte para quem for construir um projeto de IoT com múltiplos dispositivos — bibliotecas como a \code{PubSubClient}, compatíveis com o framework Arduino, tornam sua adoção direta.
+
+\begin{esp32box}
+O rádio Wi-Fi é, disparadamente, o componente que mais consome energia no \ESP{} — voltando ao \cref{cap:energia}, um dispositivo que precisa economizar bateria e também reportar dados pela rede normalmente segue o padrão: acordar do \emph{deep sleep}, conectar-se ao Wi-Fi, enviar os dados pendentes, desconectar, e voltar a dormir — minimizando o tempo em que o rádio permanece ativo, em vez de mantê-lo conectado continuamente.
+\end{esp32box}
+
+Com o \ESP{} conectado à rede, o próximo capítulo mostra como usar essa mesma conectividade para atualizar o firmware remotamente — sem precisar de um cabo USB.

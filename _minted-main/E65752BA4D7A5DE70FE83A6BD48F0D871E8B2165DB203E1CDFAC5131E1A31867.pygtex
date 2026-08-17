@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }add\PYG{+w}{ }src/main.cpp\PYG{+w}{          }\PYG{c+c1}{\PYGZsh{} adiciona um arquivo especifico}
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }add\PYG{+w}{ }include/sensor.h
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }add\PYG{+w}{ }.\PYG{+w}{                     }\PYG{c+c1}{\PYGZsh{} adiciona TODAS as mudancas do diretorio atual}
+\end{Verbatim}

@@ -1,0 +1,159 @@
+\chapter{Gerenciamento de Energia}
+\label{cap:energia}
+
+Todos os exemplos desta apostila, até aqui, assumiram implicitamente que o \ESP{} está conectado a uma fonte de energia praticamente ilimitada — o cabo USB do computador. Muitos projetos de IoT, porém, precisam operar de forma autônoma, alimentados por bateria, em locais onde recarregar ou trocar a bateria com frequência é impraticável: um sensor de umidade de solo no meio de uma plantação, um medidor de nível de água em um reservatório remoto. Nesses cenários, \textbf{gerenciar energia} deixa de ser um detalhe de otimização e passa a determinar se o produto é viável ou não.
+
+\section{Por que gerenciar energia}
+
+Um firmware escrito com a arquitetura de laço único (\cref{sec:super-loop}) — como todos os desta apostila — mantém o processador \textbf{sempre ativo}, rodando o laço \code{loop()} continuamente, mesmo quando não há absolutamente nada novo para fazer entre uma leitura de sensor e a próxima. Para um dispositivo alimentado por USB, isso não importa. Para um dispositivo alimentado por uma pilha ou bateria, esse tempo ocioso — que, em muitos projetos de monitoramento, é a maior parte do tempo de vida do dispositivo — representa uma energia desperdiçada que poderia estender a autonomia de dias para meses.
+
+\section{Modos de baixo consumo do ESP32}
+
+O \ESP{} oferece diferentes \textbf{modos de operação}, cada um trocando capacidade de resposta por economia de energia:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Modo} & \textbf{O que permanece ativo} & \textbf{Consumo típico*} \\
+\midrule
+Ativo (com Wi-Fi)  & processador, memória, rádio  & dezenas a centenas de mA \\
+\emph{Modem-sleep}  & processador, memória (rádio dorme entre pacotes) & poucos mA a dezenas de mA \\
+\emph{Light sleep}  & memória RAM, periféricos configurados & frações de mA \\
+\emph{Deep sleep}   & apenas o núcleo RTC e a memória RTC & microamperes \\
+\bottomrule
+\end{tabular}
+\caption{Modos de operação do ESP32, do maior para o menor consumo. *Valores de ordem de grandeza — o consumo real depende da placa, dos periféricos externos e da atividade do rádio.}
+\end{table}
+
+\begin{itemize}
+    \item No \textbf{\emph{light sleep}}, o processador pausa a execução, mas toda a memória RAM permanece intacta — ao acordar, o firmware retoma exatamente de onde parou, como se \code{loop()} tivesse simplesmente pausado por um instante;
+    \item No \textbf{\emph{deep sleep}}, praticamente tudo é desligado — inclusive a memória RAM principal, que é apagada. Ao acordar, o \ESP{} não ``retoma'' a execução: ele reinicia completamente, executando \code{setup()} novamente do zero, como se tivesse acabado de ser ligado.
+\end{itemize}
+
+Dos dois, o \textbf{\emph{light sleep}} é o que mais interessa para a maioria dos projetos desta apostila — inclusive o projeto integrador do \cref{cap:projeto-final} —, exatamente por preservar o estado do programa e continuar reagindo a eventos. É nele que este capítulo foca primeiro.
+
+\section{Light sleep: pausas curtas e reversíveis}
+\label{sec:light-sleep}
+
+Diferente do \emph{deep sleep}, o \emph{light sleep} \textbf{não} exige abrir mão da estrutura de programa já usada em toda a apostila, porque a RAM inteira permanece ligada durante o sono. E, crucialmente, um pino GPIO qualquer — não apenas os pinos RTC especiais exigidos pelo \emph{deep sleep} — pode ser configurado como fonte de despertar, o que o torna compatível com o mesmo botão de interrupção usado no \cref{cap:interrupcoes}.
+
+\begin{codigoc}{src/main.cpp — light sleep com despertar por timer ou botão}
+#include "driver/gpio.h"
+
+#define PINO_BOTAO 15
+
+void setup() {
+    Serial.begin(115200);
+    pinMode(PINO_BOTAO, INPUT_PULLUP);
+
+    // fonte de despertar 1: um timer, a cada 5 segundos
+    esp_sleep_enable_timer_wakeup(5 * 1000000ULL);
+
+    // fonte de despertar 2: o botao, quando seu nivel estiver baixo
+    gpio_wakeup_enable((gpio_num_t) PINO_BOTAO, GPIO_INTR_LOW_LEVEL);
+    esp_sleep_enable_gpio_wakeup();
+}
+
+void loop() {
+    Serial.println("Trabalhando...");
+    delay(100);   // aqui entraria o trabalho real: ler um sensor, etc.
+
+    Serial.println("Entrando em light sleep...");
+    Serial.flush();
+
+    esp_light_sleep_start();   // a execucao PAUSA nesta linha
+
+    Serial.println("Acordei! Retomando exatamente daqui, com todas as variaveis intactas.");
+}
+\end{codigoc}
+
+\begin{nota}
+Ao contrário de \code{attachInterrupt()}, que aceita bordas de subida ou descida (\code{RISING}/\code{FALLING}, \cref{cap:interrupcoes}), o despertar por GPIO durante o sono só reconhece \textbf{nível} — \code{GPIO\_INTR\_LOW\_LEVEL} ou \code{GPIO\_INTR\_HIGH\_LEVEL}. Com um botão em \emph{pull-up} (nível baixo quando pressionado, como configurado ao longo desta apostila), \code{GPIO\_INTR\_LOW\_LEVEL} é a escolha correspondente.
+\end{nota}
+
+A grande diferença prática em relação a um \code{delay()} comum é que, durante o \emph{light sleep}, o processador de fato reduz seu consumo — \code{delay()} apenas ocupa a CPU em espera de baixo nível, sem desligar nada.
+
+\begin{atencao}
+\emph{Light sleep} economiza muito menos energia que \emph{deep sleep} (frações de mA contra microamperes), e coordená-lo com uma conexão \textbf{Wi-Fi} ativa exige cuidado extra: chamar \code{esp\_light\_sleep\_start()} com o rádio ligado normalmente requer que ele esteja em repouso (\emph{modem-sleep}) no momento do chamado, ou usar a API de gerenciamento automático de energia do ESP-IDF — um refinamento que foge do escopo introdutório desta apostila. Para um firmware que precisa manter Wi-Fi e OTA sempre prontos, como o do \cref{cap:projeto-final}, isso significa que \emph{light sleep} entra como uma otimização cuidadosa dos trechos realmente ociosos do laço, não como uma substituição direta de \code{loop()} inteiro.
+\end{atencao}
+
+\section{Memória RTC: sobrevivendo ao \emph{deep sleep}}
+
+Como o \emph{deep sleep} apaga a RAM principal, qualquer variável global comum perde seu valor a cada ciclo de sono. Para preservar dados entre um \emph{deep sleep} e o próximo, o \ESP{} reserva uma pequena região de memória — a \textbf{memória RTC} — que permanece energizada mesmo nesse estado. Variáveis declaradas com o qualificador \code{RTC\_DATA\_ATTR} são automaticamente armazenadas ali:
+
+\begin{codigoc}{Uma variável que sobrevive ao deep sleep}
+RTC_DATA_ATTR int contador_de_bootes = 0;
+
+void setup() {
+    Serial.begin(115200);
+    contador_de_bootes++;   // preserva o valor entre ciclos de sono
+
+    Serial.print("Numero de vezes que acordei: ");
+    Serial.println(contador_de_bootes);
+}
+\end{codigoc}
+
+\section{Exemplo: um nó sensor alimentado por bateria}
+
+O padrão mais comum de economia de energia em IoT é: acordar, medir, transmitir (ou registrar), e voltar a dormir — repetindo esse ciclo indefinidamente, em intervalos de minutos ou horas, em vez de rodar continuamente.
+
+\begin{codigoc}{src/main.cpp — leitura periódica com deep sleep}
+#define PINO_SENSOR       34
+#define TEMPO_DE_SONO_S   60   // segundos entre leituras
+
+RTC_DATA_ATTR int contador_de_bootes = 0;
+
+void setup() {
+    Serial.begin(115200);
+    contador_de_bootes++;
+
+    int leitura = analogRead(PINO_SENSOR);
+    Serial.print("Boot numero ");
+    Serial.print(contador_de_bootes);
+    Serial.print(" | Leitura do sensor: ");
+    Serial.println(leitura);
+
+    // configura o timer como fonte de despertar (em microssegundos)
+    esp_sleep_enable_timer_wakeup(TEMPO_DE_SONO_S * 1000000ULL);
+
+    Serial.println("Entrando em deep sleep...");
+    Serial.flush();   // garante que a mensagem saia pela serial antes de dormir
+
+    esp_deep_sleep_start();
+}
+
+void loop() {
+    // nunca executado: apos acordar do deep sleep, o ESP32 reinicia
+    // e a execucao volta para o comeco de setup(), nao para ca.
+}
+\end{codigoc}
+
+\begin{nota}
+\code{Serial.flush()} espera que todos os bytes ainda no buffer de saída sejam efetivamente transmitidos pela UART antes de continuar — sem essa chamada, é possível que o \ESP{} entre em \emph{deep sleep} tão rapidamente que a última mensagem sequer chegue a ser enviada.
+\end{nota}
+
+\begin{esp32box}
+Repare como esse padrão contrasta com a arquitetura de laço único apresentada no \cref{sec:super-loop}: em vez de um \code{loop()} que roda para sempre reagindo a eventos, todo o trabalho acontece dentro de \code{setup()}, que termina explicitamente colocando o chip para dormir — \code{loop()} praticamente deixa de existir na prática. É uma segunda arquitetura de firmware, tão válida quanto a primeira, escolhida quando o padrão de uso do dispositivo é ``acordar, agir, dormir'' em vez de ``ficar sempre alerta''.
+\end{esp32box}
+
+\section{Qual modo escolher}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+& \textbf{Light sleep} & \textbf{Deep sleep} \\
+\midrule
+Estado do programa & preservado (RAM intacta) & perdido (reinicia \code{setup()}) \\
+Retomada            & continua após \code{esp\_light\_sleep\_start()} & recomeça do zero \\
+Fontes de despertar & timer, \emph{qualquer} GPIO, UART, \ldots & timer, pinos RTC específicos \\
+Economia de energia & moderada & máxima \\
+\bottomrule
+\end{tabular}
+\caption{Light sleep vs. deep sleep — trade-off entre continuidade de execução e economia de energia.}
+\end{table}
+
+Como regra prática: prefira \textbf{\emph{light sleep}} sempre que o dispositivo precisar continuar minimamente responsivo — reagindo a um botão, mantendo uma conexão de rede — e precisar apenas de pausas curtas para economizar energia entre uma tarefa e outra. Reserve o \textbf{\emph{deep sleep}} para dispositivos que passam a maior parte da vida completamente inativos, sem nenhuma necessidade de reagir a nada até o próximo ciclo programado — o padrão ``acordar, medir, dormir'' do exemplo anterior.
+
+O próximo capítulo conecta o \ESP{} à rede: como enviar as leituras coletadas para fora do dispositivo, usando a conectividade Wi-Fi embutida no chip.

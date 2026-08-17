@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+na}{.pio/               ; pasta de compilacao, recriada a cada build}
+\PYG{n+na}{.vscode/            ; configuracoes locais do editor}
+\PYG{n+na}{*.o                 ; arquivos objeto intermediarios}
+\PYG{n+na}{compile\PYGZus{}commands.json}
+\end{Verbatim}

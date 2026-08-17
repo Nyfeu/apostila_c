@@ -1,0 +1,246 @@
+\chapter{Estação de Monitoramento IoT}
+\label{cap:projeto-final}
+
+Este capítulo final reúne, em um único projeto, praticamente tudo o que foi apresentado nesta apostila: tipos de dados, estruturas de controle, funções, vetores, \code{structs} e \code{enums}, além de GPIO, ADC, comunicação serial, interrupções, Watchdog Timer, Wi-Fi e atualizações OTA. O objetivo é consolidar esses conceitos através de um firmware completo e funcional — não apenas um exemplo isolado de cada periférico.
+
+\section{Especificação do projeto}
+
+Uma \textbf{estação de monitoramento} de luminosidade ambiente: o \ESP{} lê continuamente um sensor LDR, mantém uma média móvel das últimas leituras para suavizar ruído, registra o estado do ambiente pela porta serial e acende um LED de alerta sempre que o ambiente estiver escuro. Um botão alterna entre modo \textbf{normal} (só registra alertas) e modo \textbf{verboso} (registra cada leitura) — sem nunca bloquear o laço principal com \code{delay}. Além disso, a estação se conecta ao Wi-Fi para reportar alertas a um servidor, aceita atualizações de firmware pela rede (OTA), e é protegida por um Watchdog Timer contra travamentos.
+
+\begin{nota}
+O \emph{deep sleep} do \cref{cap:energia} não entra no firmware a seguir: ele é incompatível com o botão de interrupção e com a resposta imediata que este projeto busca (durante o \emph{deep sleep}, o processador está desligado e não pode reagir a nada além das fontes de despertar configuradas, nem manter a conexão Wi-Fi). Já o \emph{light sleep} — a opção mais viável para um projeto como este, por preservar o estado do programa e continuar acordando pelo próprio botão — é discutido na seção final deste capítulo.
+\end{nota}
+
+\subsection{Materiais}
+
+\begin{itemize}
+    \item 1 placa de desenvolvimento \ESP{};
+    \item 1 LED (com resistor limitador em série, \textasciitilde220~$\Omega$), como indicador de alerta;
+    \item 1 sensor LDR, em um divisor de tensão com um resistor fixo (\textasciitilde10~k$\Omega$);
+    \item 1 botão \emph{push-button};
+    \item Protoboard e jumpers.
+\end{itemize}
+
+\subsection{Ligações sugeridas}
+
+\begin{itemize}
+    \item LED de alerta $\rightarrow$ GPIO2 (através do resistor limitador, ao GND);
+    \item Ponto médio do divisor de tensão do LDR $\rightarrow$ GPIO34 (ADC1);
+    \item Botão $\rightarrow$ GPIO15 e GND (usando o \emph{pull-up} interno, como no \cref{cap:gpio}).
+\end{itemize}
+
+\section{Projetando a estrutura do estado}
+
+Antes de escrever o laço principal, vale modelar o \textbf{estado} do sistema com os tipos vistos no \cref{cap:structs} — uma prática de organização que se torna cada vez mais valiosa à medida que um firmware cresce:
+
+\begin{codigoc}{Modelando o estado do sistema}
+enum ModoOperacao {
+    MODO_NORMAL,
+    MODO_VERBOSO,
+};
+
+struct EstadoEstacao {
+    ModoOperacao modo;
+    int ultima_leitura;
+    float media_movel;
+    bool alerta_ativo;
+};
+\end{codigoc}
+
+Agrupar essas variáveis em uma única \code{struct}, em vez de espalhá-las como variáveis globais soltas, deixa explícito o que compõe ``o estado do sistema'' — e facilita, por exemplo, passar esse estado inteiro para uma função de log, caso o projeto cresça no futuro.
+
+\section{Firmware completo}
+
+\begin{codigoc}{src/main.cpp — estação de monitoramento IoT}
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <ArduinoOTA.h>
+#include <esp_task_wdt.h>
+
+#define PINO_LED    2
+#define PINO_LDR    34
+#define PINO_BOTAO  15
+
+#define TAMANHO_HISTORICO   10
+#define LIMIAR_ESCURO       25.0f   // abaixo disso, ambiente "escuro" (%)
+#define INTERVALO_LEITURA   500UL   // ms entre leituras do sensor
+#define WDT_TIMEOUT         5       // segundos ate o reset do watchdog
+
+#define WIFI_SSID     "MinhaRede"
+#define WIFI_PASSWORD "minha_senha"
+#define URL_SERVIDOR  "http://exemplo.com/api/alertas"
+
+enum ModoOperacao {
+    MODO_NORMAL,
+    MODO_VERBOSO,
+};
+
+struct EstadoEstacao {
+    ModoOperacao modo;
+    int ultima_leitura;
+    float media_movel;
+    bool alerta_ativo;
+};
+
+EstadoEstacao estado = {MODO_NORMAL, 0, 0.0f, false};
+
+int historico[TAMANHO_HISTORICO];
+int indice_historico = 0;
+
+volatile bool evento_botao = false;
+unsigned long ultima_leitura_ms = 0;
+
+void IRAM_ATTR botao_isr() {
+    evento_botao = true;
+}
+
+float calcular_media(void) {
+    long soma = 0;
+    for (int i = 0; i < TAMANHO_HISTORICO; i++) {
+        soma += historico[i];
+    }
+    return (float) soma / TAMANHO_HISTORICO;
+}
+
+void conectar_wifi(void) {
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    Serial.print("Conectando ao Wi-Fi");
+
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
+
+    Serial.println();
+    Serial.print("Conectado! IP: ");
+    Serial.println(WiFi.localIP());
+}
+
+void enviar_alerta(float luminosidade_pct) {
+    if (WiFi.status() != WL_CONNECTED) {
+        return;
+    }
+
+    HTTPClient http;
+    http.begin(URL_SERVIDOR);
+    http.addHeader("Content-Type", "application/json");
+
+    char corpo[64];
+    snprintf(corpo, sizeof(corpo), "{\"luminosidade\": %.1f}", luminosidade_pct);
+
+    int codigo = http.POST(corpo);
+    Serial.print("[HTTP] Alerta enviado, resposta: ");
+    Serial.println(codigo);
+
+    http.end();
+}
+
+void setup() {
+    Serial.begin(115200);
+
+    pinMode(PINO_LED, OUTPUT);
+    pinMode(PINO_BOTAO, INPUT_PULLUP);
+    attachInterrupt(digitalPinToInterrupt(PINO_BOTAO), botao_isr, FALLING);
+
+    for (int i = 0; i < TAMANHO_HISTORICO; i++) {
+        historico[i] = 0;
+    }
+
+    conectar_wifi();
+
+    ArduinoOTA.setHostname("estacao-iot");
+    ArduinoOTA.begin();
+
+    esp_task_wdt_init(WDT_TIMEOUT, true);
+    esp_task_wdt_add(NULL);
+
+    Serial.println("Estacao de monitoramento iniciada em modo NORMAL.");
+}
+
+void loop() {
+    ArduinoOTA.handle();   // fica pronta para uma atualizacao a qualquer momento
+
+    // 1) verifica se o botao foi pressionado (sem bloquear o laco)
+    if (evento_botao) {
+        evento_botao = false;
+        estado.modo = (estado.modo == MODO_NORMAL) ? MODO_VERBOSO : MODO_NORMAL;
+
+        Serial.print("Modo alterado para: ");
+        Serial.println(estado.modo == MODO_NORMAL ? "NORMAL" : "VERBOSO");
+    }
+
+    // 2) le o sensor periodicamente, sem usar delay()
+    unsigned long agora = millis();
+    if (agora - ultima_leitura_ms >= INTERVALO_LEITURA) {
+        ultima_leitura_ms = agora;
+
+        estado.ultima_leitura = analogRead(PINO_LDR);
+        historico[indice_historico] = estado.ultima_leitura;
+        indice_historico = (indice_historico + 1) % TAMANHO_HISTORICO;
+
+        estado.media_movel = calcular_media();
+        float luminosidade_pct = (estado.media_movel / 4095.0f) * 100.0f;
+        bool estava_em_alerta = estado.alerta_ativo;
+        estado.alerta_ativo = (luminosidade_pct < LIMIAR_ESCURO);
+
+        digitalWrite(PINO_LED, estado.alerta_ativo);
+
+        if (estado.modo == MODO_VERBOSO) {
+            Serial.print("[LEITURA] bruta=");
+            Serial.print(estado.ultima_leitura);
+            Serial.print(" media=");
+            Serial.print(estado.media_movel);
+            Serial.print(" luminosidade=");
+            Serial.print(luminosidade_pct);
+            Serial.println("%");
+        }
+
+        // envia o alerta apenas no instante em que ele comeca (nao a cada leitura)
+        if (estado.alerta_ativo && !estava_em_alerta) {
+            Serial.println("[ALERTA] Ambiente escuro detectado!");
+            enviar_alerta(luminosidade_pct);
+        }
+    }
+
+    esp_task_wdt_reset();   // "alimenta" o watchdog a cada volta saudavel do laco
+}
+\end{codigoc}
+
+\section{Como o projeto se encaixa}
+
+\begin{itemize}
+    \item A \code{struct EstadoEstacao} e a \code{enum ModoOperacao} (\cref{cap:structs}) organizam o estado do sistema de forma clara, em vez de espalhá-lo em variáveis globais soltas;
+    \item O vetor \code{historico} (\cref{cap:arranjos}) implementa um \textbf{buffer circular} para a média móvel, suavizando o ruído natural do sensor, exatamente como praticado no \cref{cap:adc};
+    \item A leitura do LDR usa a \textbf{ADC} (\cref{cap:adc}) para medir luminosidade de forma contínua, convertida de valor bruto para porcentagem com um \emph{cast} (\cref{cap:tipos});
+    \item O botão é lido por \textbf{interrupção} (\cref{cap:interrupcoes}), sinalizando o laço principal por meio de uma variável \code{volatile}, sem nunca bloquear a leitura contínua do sensor;
+    \item A leitura periódica do sensor usa a técnica de \textbf{temporização por \code{millis()}} (\cref{cap:interrupcoes}), mantendo \code{loop()} sempre livre para reagir ao botão e às atualizações OTA a qualquer momento;
+    \item Um \textbf{Watchdog Timer} (\cref{sec:watchdog}) protege o laço principal como um todo: \code{esp\_task\_wdt\_reset()} é chamado ao final de cada volta saudável de \code{loop()}, e reiniciaria o dispositivo automaticamente caso algo travasse a execução;
+    \item A estação se conecta à rede via \textbf{Wi-Fi} (\cref{cap:wifi}) e reporta cada novo alerta a um servidor por \textbf{HTTP}, usando \code{snprintf} para montar o corpo da requisição sem a fragmentação de memória associada a concatenar \code{String};
+    \item O firmware aceita \textbf{atualizações OTA} (\cref{cap:ota}) através de \code{ArduinoOTA.handle()}, chamado a cada volta do laço — a estação pode receber correções e melhorias sem nunca precisar ser desconectada e levada até um computador;
+    \item Todo o comportamento é registrado pela \textbf{porta serial} (\cref{cap:serial}) — mensagens de leitura apenas em modo verboso, e alertas sempre, independentemente do modo.
+\end{itemize}
+
+\section{Sobre economizar energia neste projeto}
+
+Vale retomar a ressalva feita no início do capítulo: o \emph{deep sleep} do \cref{cap:energia} \textbf{não} foi incorporado a este firmware, e essa foi uma decisão deliberada, não um esquecimento. Este projeto foi especificado para ficar \emph{sempre alerta} — reagir ao botão instantaneamente, aceitar uma atualização OTA a qualquer momento, manter a conexão Wi-Fi ativa — e o \emph{deep sleep} desliga exatamente os componentes (processador, rádio) que tornam isso possível, reiniciando o firmware do zero a cada ciclo.
+
+O \textbf{\emph{light sleep}} (\cref{sec:light-sleep}) é uma história diferente, e de fato a opção mais viável se este projeto precisasse rodar por mais tempo em uma bateria: como preserva toda a RAM e pode acordar por qualquer pino GPIO — incluindo o próprio \code{PINO\_BOTAO} já usado aqui —, ele não exige abandonar nem a estrutura do estado (\code{struct EstadoEstacao}), nem a responsividade ao botão. A forma mais direta de incorporá-lo seria substituir o \code{delay(100)} tipicamente usado em trabalhos curtos e síncronos por uma pausa de \emph{light sleep} equivalente, ou intercalar breves períodos de sono entre uma leitura do sensor e a seguinte, quando não há nenhum evento pendente para tratar.
+
+A complicação — e o motivo de o exemplo completo desta apostila não incluir isso — é que \code{esp\_light\_sleep\_start()} interage com a conexão \textbf{Wi-Fi} e a disponibilidade do \textbf{OTA} de um jeito que exige coordenação cuidadosa com o rádio (\cref{sec:light-sleep}), algo que foge do escopo introdutório deste material. Ainda assim, entre as duas opções de baixo consumo apresentadas no \cref{cap:energia}, é o \emph{light sleep} — não o \emph{deep sleep} — que representa o próximo passo natural para tornar esta estação mais eficiente em energia sem sacrificar sua responsividade.
+
+Se, por outro lado, o objetivo fosse um sensor remoto alimentado por bateria \emph{sem} necessidade de resposta imediata a um botão físico nem de manter o Wi-Fi permanentemente ativo, o projeto certo seria mais radical: acordar a cada poucos minutos, ler o sensor, conectar ao Wi-Fi \emph{apenas} para enviar o alerta (se houver um), e voltar ao \emph{deep sleep} — o padrão ``acordar, medir, dormir'' do \cref{cap:energia}, em vez da arquitetura de laço único sempre ativo usada aqui. Essa tensão entre \textbf{responsividade} e \textbf{autonomia de energia} é uma decisão de projeto real, que todo engenheiro de sistemas embarcados precisa fazer conscientemente — não existe uma resposta certa universal, apenas a mais adequada a cada aplicação.
+
+\section{Para continuar praticando}
+
+Esta apostila termina aqui, mas o aprendizado de sistemas embarcados é, acima de tudo, prático. Como próximos passos a partir deste projeto, considere:
+
+\begin{itemize}
+    \item Adicionar um segundo sensor (por exemplo, um sensor de temperatura) e expandir a \code{struct EstadoEstacao} para incluí-lo;
+    \item Salvar o \code{modo} escolhido na memória flash (usando a biblioteca \code{Preferences} do Arduino para ESP32), para que a estação lembre a última configuração mesmo após ser desligada;
+    \item Introduzir pausas de \emph{light sleep} (\cref{sec:light-sleep}) nos trechos realmente ociosos do laço, para reduzir o consumo sem abrir mão da resposta ao botão — o passo intermediário mais realista para esta estação;
+    \item Ir além, adaptando o projeto para o padrão ``acorda, mede, dorme'' com \emph{deep sleep} do \cref{cap:energia}, caso a resposta imediata ao botão físico deixe de ser um requisito;
+    \item Trocar as requisições HTTP avulsas por uma conexão MQTT persistente (\cref{cap:wifi}), caso o projeto cresça para múltiplos dispositivos reportando dados continuamente;
+    \item Reescrever o projeto dividindo-o em múltiplos arquivos \code{.h}/\code{.cpp} (\cref{cap:modularizacao}) — por exemplo, separando a lógica do sensor, da rede e do botão em módulos independentes.
+\end{itemize}
+
+Cada um desses passos reutiliza e aprofunda os mesmos fundamentos de C apresentados nesta apostila — a linguagem muda pouco; o que cresce é a sua familiaridade com o hardware e o ecossistema ao redor dela.

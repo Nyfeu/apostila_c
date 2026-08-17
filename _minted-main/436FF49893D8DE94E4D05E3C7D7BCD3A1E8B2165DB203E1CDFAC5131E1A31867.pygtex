@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }branch\PYG{+w}{                       }\PYG{c+c1}{\PYGZsh{} lista as branches existentes}
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }checkout\PYG{+w}{ }\PYGZhy{}b\PYG{+w}{ }feature/wifi\PYG{+w}{     }\PYG{c+c1}{\PYGZsh{} cria e ja muda para a nova branch}
+\PYGZdl{}\PYG{+w}{ }\PYG{c+c1}{\PYGZsh{} ... faca commits normalmente nesta branch ...}
+
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }checkout\PYG{+w}{ }main\PYG{+w}{                }\PYG{c+c1}{\PYGZsh{} volta para a branch principal}
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }merge\PYG{+w}{ }feature/wifi\PYG{+w}{           }\PYG{c+c1}{\PYGZsh{} traz as mudancas de volta para main}
+\end{Verbatim}

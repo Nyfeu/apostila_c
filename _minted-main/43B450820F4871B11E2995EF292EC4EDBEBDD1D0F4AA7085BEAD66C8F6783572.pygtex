@@ -1,0 +1,30 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}define PINO\PYGZus{}SENSOR       34}
+\PYG{c+cp}{\PYGZsh{}define TEMPO\PYGZus{}DE\PYGZus{}SONO\PYGZus{}S   60   }\PYG{c+c1}{// segundos entre leituras}
+
+\PYG{n}{RTC\PYGZus{}DATA\PYGZus{}ATTR}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{contador\PYGZus{}de\PYGZus{}bootes}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{setup}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(}\PYG{l+m+mi}{115200}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{contador\PYGZus{}de\PYGZus{}bootes}\PYG{o}{++}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{leitura}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{analogRead}\PYG{p}{(}\PYG{n}{PINO\PYGZus{}SENSOR}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Boot numero \PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{n}{contador\PYGZus{}de\PYGZus{}bootes}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{print}\PYG{p}{(}\PYG{l+s}{\PYGZdq{} | Leitura do sensor: \PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{n}{leitura}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{c+c1}{// configura o timer como fonte de despertar (em microssegundos)}
+\PYG{+w}{    }\PYG{n}{esp\PYGZus{}sleep\PYGZus{}enable\PYGZus{}timer\PYGZus{}wakeup}\PYG{p}{(}\PYG{n}{TEMPO\PYGZus{}DE\PYGZus{}SONO\PYGZus{}S}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{l+m+mi}{1000000ULL}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Entrando em deep sleep...\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{flush}\PYG{p}{();}\PYG{+w}{   }\PYG{c+c1}{// garante que a mensagem saia pela serial antes de dormir}
+
+\PYG{+w}{    }\PYG{n}{esp\PYGZus{}deep\PYGZus{}sleep\PYGZus{}start}\PYG{p}{();}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{loop}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{c+c1}{// nunca executado: apos acordar do deep sleep, o ESP32 reinicia}
+\PYG{+w}{    }\PYG{c+c1}{// e a execucao volta para o comeco de setup(), nao para ca.}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

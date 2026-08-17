@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }remote\PYG{+w}{ }add\PYG{+w}{ }origin\PYG{+w}{ }https://github.com/seu\PYGZhy{}usuario/meu\PYGZhy{}projeto.git
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }branch\PYG{+w}{ }\PYGZhy{}M\PYG{+w}{ }main
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }push\PYG{+w}{ }\PYGZhy{}u\PYG{+w}{ }origin\PYG{+w}{ }main
+\end{Verbatim}

@@ -1,7 +1,7 @@
 \chapter{Microcontroladores: História e Arquitetura}
 \label{cap:arquitetura-mcu}
 
-Antes de configurar o ambiente de desenvolvimento e escrever firmware de verdade, vale entender de onde vêm os microcontroladores e como sua unidade de processamento funciona por dentro. Esse pano de fundo explica \emph{por que} o firmware que escreveremos ao longo desta apostila é estruturado do jeito que é — e, em particular, por que o \ESP{} precisa ser protegido por um mecanismo chamado \textbf{Watchdog Timer}, apresentado ao final deste capítulo.
+Antes de configurar o ambiente de desenvolvimento e escrever firmware de verdade, vale entender de onde vêm os microcontroladores e como sua unidade de processamento funciona por dentro. Esse pano de fundo explica \emph{por que} o firmware que escreveremos ao longo desta apostila é estruturado do jeito que é — em particular, por que ele gira em torno de um laço único, apresentado a seguir.
 
 \section{Um breve histórico}
 
@@ -61,53 +61,6 @@ Você já reconhece essa estrutura: é exatamente o par \code{setup()} / \code{l
 
 A grande vantagem da arquitetura de laço único é a \textbf{simplicidade}: não há troca de contexto entre tarefas, não há concorrência para gerenciar, e o comportamento do sistema é fácil de prever e depurar — a cada volta do laço, o código roda sempre na mesma ordem. É também extremamente econômica em termos de memória, o que a torna ideal para microcontroladores simples.
 
-O preço dessa simplicidade é que \textbf{nenhuma tarefa pode bloquear o laço por muito tempo}. Se uma única iteração de \code{loop()} demorar demais — por exemplo, presa em um \code{delay()} longo ou esperando um sensor lento —, \emph{todo} o resto do sistema fica paralisado durante esse tempo: nenhum outro sensor é lido, nenhum outro botão é verificado. É exatamente por isso que o \cref{cap:interrupcoes} apresenta a técnica de temporização por \code{millis()} como alternativa ao \code{delay()} dentro de um laço com múltiplas responsabilidades — e é para proteger o sistema quando, apesar de tudo, alguma tarefa trava por completo, que existe o mecanismo apresentado a seguir.
-
-\section{Watchdog Timer}
-\label{sec:watchdog}
-
-Mesmo em um firmware bem projetado, coisas dão errado: um sensor pode parar de responder e travar uma leitura que deveria ser rápida, um laço de espera pode nunca satisfazer sua condição de saída, ou um bug qualquer pode prender a execução em um ponto do código do qual ela nunca retorna. Em uma arquitetura de laço único (\cref{sec:super-loop}), isso é particularmente grave: se \code{loop()} trava, \textbf{o sistema inteiro trava} — sem um sistema operacional completo para intervir, nada tira o processador desse estado sozinho.
-
-A solução para esse problema é um pequeno circuito de hardware chamado \textbf{Watchdog Timer} (WDT, ou ``temporizador de vigilância''): um contador regressivo independente que, se não for \textbf{reiniciado periodicamente pelo próprio firmware}, entende que o sistema travou e força um \textbf{reset} completo do microcontrolador — trazendo-o de volta a um estado conhecido e funcional, em vez de deixá-lo preso indefinidamente.
-
-O uso típico segue um padrão de três passos:
-
-\begin{enumerate}
-    \item \textbf{Configurar} o watchdog com um tempo limite (\emph{timeout}) — por exemplo, 5 segundos;
-    \item Dentro do laço principal, \textbf{alimentar} (``dar comida a'') o watchdog periodicamente, sempre que o firmware sabe que está funcionando normalmente — isso reinicia a contagem regressiva;
-    \item Se, por qualquer motivo, o firmware travar e parar de alimentar o watchdog, o tempo limite se esgota e o \textbf{chip reinicia sozinho}.
-\end{enumerate}
-
-\begin{codigoc}{src/main.cpp — protegendo o laço principal com o watchdog}
-#include <esp_task_wdt.h>
-
-#define WDT_TIMEOUT 5   // segundos ate o reset, caso nao seja alimentado
-
-void setup() {
-    Serial.begin(115200);
-
-    esp_task_wdt_init(WDT_TIMEOUT, true);   // true: reinicia o chip ao vencer
-    esp_task_wdt_add(NULL);                 // registra a tarefa de loop() no watchdog
-
-    Serial.println("Watchdog configurado. Sistema iniciado.");
-}
-
-void loop() {
-    // ... leitura de sensores, logica do programa, etc ...
-
-    Serial.println("Laco em execucao normal.");
-    esp_task_wdt_reset();   // "alimenta" o watchdog: avisa que o laco esta vivo
-
-    delay(1000);
-}
-\end{codigoc}
-
-\begin{dica}
-Para ver o watchdog em ação, tente comentar a linha \code{esp\_task\_wdt\_reset();} e substituir o \code{delay(1000)} por um laço vazio bem mais longo que o \code{WDT\_TIMEOUT} configurado (por exemplo, \code{while (true) \{\}}). Poucos segundos depois, o watchdog vai perceber que o laço parou de ser alimentado e reiniciar o \ESP{} sozinho — o monitor serial mostrará a mensagem \code{"Sistema iniciado."} aparecendo repetidamente, uma prova visível de que o mecanismo de proteção está funcionando.
-\end{dica}
-
-\begin{atencao}
-Chamar \code{esp\_task\_wdt\_reset()} em um ponto do código onde, na verdade, algo já está errado — por exemplo, dentro de um laço de espera que deveria ter um limite de tentativas — \textbf{mascara o problema} em vez de resolvê-lo: o watchdog nunca vai disparar, mesmo que o sistema esteja preso ali, inútil, indefinidamente. O watchdog deve alimentar-se a partir de um ponto do código que só é alcançado quando o laço principal de fato completou uma volta inteira e saudável — nunca de dentro de uma espera que já é, ela própria, suspeita.
-\end{atencao}
+O preço dessa simplicidade é que \textbf{nenhuma tarefa pode bloquear o laço por muito tempo}. Se uma única iteração de \code{loop()} demorar demais — por exemplo, presa em um \code{delay()} longo ou esperando um sensor lento —, \emph{todo} o resto do sistema fica paralisado durante esse tempo: nenhum outro sensor é lido, nenhum outro botão é verificado. É exatamente por isso que o \cref{cap:interrupcoes} apresenta a técnica de temporização por \code{millis()} como alternativa ao \code{delay()} dentro de um laço com múltiplas responsabilidades — e é também nesse capítulo, mais adiante, que veremos como proteger o sistema para quando, apesar de tudo, alguma tarefa trava por completo.
 
 Com o histórico e a arquitetura de um microcontrolador em mente, o próximo capítulo coloca a mão na massa: a instalação e configuração do \textbf{PlatformIO}, o ambiente que usaremos para escrever, compilar e carregar firmware no \ESP{}.

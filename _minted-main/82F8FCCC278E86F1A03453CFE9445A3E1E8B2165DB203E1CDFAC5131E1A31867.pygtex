@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }config\PYG{+w}{ }\PYGZhy{}\PYGZhy{}global\PYG{+w}{ }user.name\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}Seu Nome\PYGZdq{}}
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }config\PYG{+w}{ }\PYGZhy{}\PYGZhy{}global\PYG{+w}{ }user.email\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}seu.email@exemplo.com\PYGZdq{}}
+\end{Verbatim}

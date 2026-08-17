@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }push\PYG{+w}{          }\PYG{c+c1}{\PYGZsh{} envia seus commits locais para o GitHub}
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }pull\PYG{+w}{          }\PYG{c+c1}{\PYGZsh{} traz e integra commits novos do GitHub}
+\end{Verbatim}

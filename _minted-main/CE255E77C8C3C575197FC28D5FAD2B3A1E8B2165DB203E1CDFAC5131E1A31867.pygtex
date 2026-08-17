@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }log\PYG{+w}{ }\PYGZhy{}\PYGZhy{}oneline
+a1b2c3d\PYG{+w}{ }Adiciona\PYG{+w}{ }leitura\PYG{+w}{ }\PYG{k}{do}\PYG{+w}{ }sensor\PYG{+w}{ }de\PYG{+w}{ }luminosidade\PYG{+w}{ }via\PYG{+w}{ }ADC
+7e8f9a0\PYG{+w}{ }Configura\PYG{+w}{ }watchdog\PYG{+w}{ }timer\PYG{+w}{ }no\PYG{+w}{ }loop\PYG{+w}{ }principal
+3c4d5e6\PYG{+w}{ }Estrutura\PYG{+w}{ }inicial\PYG{+w}{ }\PYG{k}{do}\PYG{+w}{ }projeto\PYG{+w}{ }PlatformIO
+\end{Verbatim}

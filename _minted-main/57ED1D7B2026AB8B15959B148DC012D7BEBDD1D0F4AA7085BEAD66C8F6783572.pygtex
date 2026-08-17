@@ -1,0 +1,28 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}WiFi.h\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}ArduinoOTA.h\PYGZgt{}}
+
+\PYG{c+cp}{\PYGZsh{}define WIFI\PYGZus{}SSID     \PYGZdq{}MinhaRede\PYGZdq{}}
+\PYG{c+cp}{\PYGZsh{}define WIFI\PYGZus{}PASSWORD \PYGZdq{}minha\PYGZus{}senha\PYGZdq{}}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{setup}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(}\PYG{l+m+mi}{115200}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{n}{WiFi}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(}\PYG{n}{WIFI\PYGZus{}SSID}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{WIFI\PYGZus{}PASSWORD}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k}{while}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{WiFi}\PYG{p}{.}\PYG{n}{status}\PYG{p}{()}\PYG{+w}{ }\PYG{o}{!=}\PYG{+w}{ }\PYG{n}{WL\PYGZus{}CONNECTED}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{delay}\PYG{p}{(}\PYG{l+m+mi}{500}\PYG{p}{);}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Wi\PYGZhy{}Fi conectado.\PYGZdq{}}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{n}{ArduinoOTA}\PYG{p}{.}\PYG{n}{setHostname}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}estacao\PYGZhy{}iot\PYGZdq{}}\PYG{p}{);}\PYG{+w}{   }\PYG{c+c1}{// nome do dispositivo na rede}
+\PYG{+w}{    }\PYG{n}{ArduinoOTA}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{();}
+
+\PYG{+w}{    }\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Pronto para receber atualizacoes OTA.\PYGZdq{}}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{loop}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{ArduinoOTA}\PYG{p}{.}\PYG{n}{handle}\PYG{p}{();}\PYG{+w}{   }\PYG{c+c1}{// verifica se uma atualizacao esta chegando}
+
+\PYG{+w}{    }\PYG{c+c1}{// ... resto da logica do programa ...}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

@@ -1,0 +1,72 @@
+\chapter{Atualizações OTA (\emph{Over-the-Air})}
+\label{cap:ota}
+
+Depois que um dispositivo IoT está instalado em campo — dentro de uma parede, no topo de um poste, dentro de um equipamento fechado —, conectar um cabo USB para corrigir um bug ou adicionar uma funcionalidade nova pode ser impraticável ou até impossível. A solução é a atualização \textbf{OTA} (\emph{Over-the-Air}): carregar um novo firmware no \ESP{} através da própria rede Wi-Fi já configurada no \cref{cap:wifi}, sem nenhum contato físico com o dispositivo.
+
+\section{ArduinoOTA: atualizações na rede local}
+
+Para desenvolvimento e para dispositivos na mesma rede local, o framework Arduino oferece a biblioteca \code{ArduinoOTA}, que expõe o \ESP{} como um alvo de upload diretamente para o PlatformIO — como se fosse uma porta USB virtual, só que pela rede.
+
+\begin{codigoc}{src/main.cpp — habilitando atualizações OTA}
+#include <WiFi.h>
+#include <ArduinoOTA.h>
+
+#define WIFI_SSID     "MinhaRede"
+#define WIFI_PASSWORD "minha_senha"
+
+void setup() {
+    Serial.begin(115200);
+
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+    }
+    Serial.println("Wi-Fi conectado.");
+
+    ArduinoOTA.setHostname("estacao-iot");   // nome do dispositivo na rede
+    ArduinoOTA.begin();
+
+    Serial.println("Pronto para receber atualizacoes OTA.");
+}
+
+void loop() {
+    ArduinoOTA.handle();   // verifica se uma atualizacao esta chegando
+
+    // ... resto da logica do programa ...
+}
+\end{codigoc}
+
+\code{ArduinoOTA.handle()} precisa ser chamada a cada volta de \code{loop()} — exatamente como \code{ArduinoOTA} espera que o firmware siga a arquitetura de laço único e não-bloqueante já praticada desde o \cref{cap:interrupcoes}: se \code{loop()} ficar preso em um \code{delay()} longo, o dispositivo simplesmente não vai perceber que uma atualização está chegando.
+
+\subsection{Enviando uma atualização pelo PlatformIO}
+
+Depois do primeiro upload via USB (necessário para que o firmware com \code{ArduinoOTA} já esteja rodando no dispositivo), os uploads seguintes podem ser feitos pela rede, ajustando o \code{platformio.ini}:
+
+\begin{codigoini}{platformio.ini com upload por OTA}
+[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = arduino
+monitor_speed = 115200
+
+upload_protocol = espota
+upload_port = 192.168.0.42   ; o IP do ESP32, visto em WiFi.localIP()
+\end{codigoini}
+
+Com essa configuração, o botão de \textbf{Upload} do PlatformIO (\cref{cap:platformio}) passa a enviar o firmware pela rede em vez de pelo cabo USB.
+
+\section{Protegendo o processo com senha}
+
+Por padrão, qualquer dispositivo na mesma rede local pode enviar um novo firmware para um \ESP{} com \code{ArduinoOTA} ativo — um risco de segurança real. Uma senha simples adiciona uma primeira camada de proteção:
+
+\begin{codigoc}{Protegendo o OTA com senha}
+ArduinoOTA.setHostname("estacao-iot");
+ArduinoOTA.setPassword("uma-senha-forte-aqui");
+ArduinoOTA.begin();
+\end{codigoc}
+
+\begin{esp32box}
+Gravar um novo firmware na memória flash leva alguns segundos — durante esse período, o \ESP{} está ocupado escrevendo a nova imagem e reinicia automaticamente assim que a gravação termina com sucesso. É normal, e é o próprio \code{ArduinoOTA} que orquestra esse processo, incluindo notificar erros (por exemplo, se a conexão cair no meio do envio) sem deixar o dispositivo em um estado inconsistente.
+\end{esp32box}
+
+Com GPIO, ADC, comunicação serial, interrupções, gerenciamento de energia, conectividade Wi-Fi e atualizações OTA todos apresentados, o último capítulo desta apostila reúne praticamente todas essas peças em um único projeto integrador.

@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{ArduinoOTA}\PYG{p}{.}\PYG{n}{setHostname}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}estacao\PYGZhy{}iot\PYGZdq{}}\PYG{p}{);}
+\PYG{n}{ArduinoOTA}\PYG{p}{.}\PYG{n}{setPassword}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}uma\PYGZhy{}senha\PYGZhy{}forte\PYGZhy{}aqui\PYGZdq{}}\PYG{p}{);}
+\PYG{n}{ArduinoOTA}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{();}
+\end{Verbatim}

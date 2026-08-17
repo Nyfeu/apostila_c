@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }diff\PYG{+w}{                }\PYG{c+c1}{\PYGZsh{} mudancas ainda nao adicionadas ao staging}
+\PYGZdl{}\PYG{+w}{ }git\PYG{+w}{ }diff\PYG{+w}{ }\PYGZhy{}\PYGZhy{}staged\PYG{+w}{       }\PYG{c+c1}{\PYGZsh{} mudancas ja adicionadas, prontas para commit}
+\end{Verbatim}

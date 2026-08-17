@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{[env:esp32dev]}
+\PYG{n+na}{platform}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{espressif32}
+\PYG{n+na}{board}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{esp32dev}
+\PYG{n+na}{framework}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{arduino}
+\PYG{n+na}{monitor\PYGZus{}speed}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{115200}
+
+\PYG{n+na}{upload\PYGZus{}protocol}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{espota}
+\PYG{n+na}{upload\PYGZus{}port}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s}{192.168.0.42}\PYG{+w}{   }\PYG{c+c1}{; o IP do ESP32, visto em WiFi.localIP()}
+\end{Verbatim}
