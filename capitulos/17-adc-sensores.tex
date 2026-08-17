@@ -196,4 +196,53 @@ void loop() {
 }
 \end{codigoc}
 
-O operador \code{\%} (resto da divisão, \cref{cap:tipos}) faz o índice \code{indice\_atual} voltar a 0 automaticamente ao chegar em \code{TAMANHO\_HISTORICO} — o vetor se comporta como um \textbf{buffer circular}, sempre sobrescrevendo a leitura mais antiga com a mais nova. 
+O operador \code{\%} (resto da divisão, \cref{cap:tipos}) faz o índice \code{indice\_atual} voltar a 0 automaticamente ao chegar em \code{TAMANHO\_HISTORICO} — o vetor se comporta como um \textbf{buffer circular}, sempre sobrescrevendo a leitura mais antiga com a mais nova.
+
+O gráfico a seguir ilustra o efeito dessa técnica: a leitura bruta do sensor (em cinza) oscila a cada amostra por causa do ruído, enquanto a média móvel (em azul) — calculada a cada instante sobre a janela de amostras mais recentes, que desliza junto com o tempo — acompanha a tendência real do sinal de forma muito mais estável.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[x=0.42cm, y=1.7cm, font=\small]
+    % --- janela deslizante em destaque (últimas 5 amostras) ---
+    \fill[secundaria, opacity=0.12] (14.5,1.1) rectangle (19.5,3.95);
+    \draw[secundaria, dashed, opacity=0.6] (14.5,1.1) rectangle (19.5,3.95);
+
+    % --- eixos ---
+    \draw[-{Latex[length=2.5mm]}, thick, cinzaesc] (-0.6,1.1) -- (20.6,1.1)
+        node[right, font=\small] {amostra};
+    \draw[-{Latex[length=2.5mm]}, thick, cinzaesc] (-0.6,1.1) -- (-0.6,4.15)
+        node[above, font=\small] {leitura};
+
+    % --- leitura bruta (ruidosa) ---
+    \draw[cinzaesc, thick, opacity=0.75]
+        (0,2.60) -- (1,1.77) -- (2,2.63) -- (3,1.60) -- (4,2.66) --
+        (5,2.13) -- (6,2.94) -- (7,2.01) -- (8,2.82) -- (9,2.09) --
+        (10,3.10) -- (11,2.37) -- (12,3.28) -- (13,2.25) -- (14,3.26) --
+        (15,2.73) -- (16,3.54) -- (17,2.71) -- (18,3.47) -- (19,2.94);
+    \foreach \x/\y in {0/2.60,1/1.77,2/2.63,3/1.60,4/2.66,5/2.13,6/2.94,
+                        7/2.01,8/2.82,9/2.09,10/3.10,11/2.37,12/3.28,
+                        13/2.25,14/3.26,15/2.73,16/3.54,17/2.71,18/3.47,19/2.94}
+        \fill[cinzaesc, opacity=0.75] (\x,\y) circle (1.3pt);
+
+    % --- media movel (janela de 5 amostras) ---
+    \draw[secundaria, very thick]
+        (4,2.252) -- (5,2.158) -- (6,2.392) -- (7,2.268) -- (8,2.512) --
+        (9,2.398) -- (10,2.592) -- (11,2.478) -- (12,2.732) -- (13,2.618) --
+        (14,2.852) -- (15,2.778) -- (16,3.012) -- (17,2.898) -- (18,3.142) -- (19,3.078);
+    \filldraw[primaria] (19,3.078) circle (2pt);
+
+    % --- indicacao da janela deslizante ---
+    \draw[<->, thick, cinzaesc] (14.5,0.75) -- (19.5,0.75)
+        node[midway, below, font=\scriptsize] {janela deslizante (5 leituras)};
+
+    % --- legenda ---
+    \draw[cinzaesc, thick, opacity=0.75] (21.2,3.55) -- (21.8,3.55);
+    \fill[cinzaesc, opacity=0.75] (21.5,3.55) circle (1.3pt);
+    \node[right, font=\scriptsize, cinzaesc] at (21.9,3.55) {leitura bruta (ruidosa)};
+
+    \draw[secundaria, very thick] (21.2,3.0) -- (21.8,3.0);
+    \node[right, font=\scriptsize, primaria] at (21.9,3.0) {leitura filtrada (média móvel)};
+\end{tikzpicture}
+\caption{Efeito da média móvel sobre uma leitura ruidosa: a cada nova amostra, a janela (destacada em azul-claro, aqui com 5 leituras para maior clareza gráfica) desliza uma posição à frente, e sua média produz uma leitura filtrada muito mais estável do que a leitura bruta isolada. No código do exemplo, a janela usada tem \code{TAMANHO\_HISTORICO} = 10 amostras.}
+\label{fig:media-movel}
+\end{figure}

@@ -3,7 +3,7 @@ INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/xetex/xelatex.fmt
-INPUT /home/nyfeu/Documentos/EFB2006/apostila_c/main.tex
+INPUT main.tex
 OUTPUT main.log
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/book.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/book.cls
@@ -398,6 +398,9 @@ OUTPUT main.out
 INPUT ./capa.tex
 INPUT ./capa.tex
 INPUT capa.tex
+INPUT ./imagens/logo.png
+INPUT ./imagens/logo.png
+INPUT ./imagens/logo.png
 OUTPUT main.xdv
 INPUT ./capitulos/00-prefacio.tex
 INPUT ./capitulos/00-prefacio.tex

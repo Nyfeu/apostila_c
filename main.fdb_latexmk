@@ -1,12 +1,11 @@
 # Fdb version 4
-["xdvipdfmx"] 1786928089.66827 "main.xdv" "main.pdf" "main" 1786928105.07102 0
-  "main.xdv" 1786928089.43341 3078536 5649d4d127667d84e0fd5e4a2c738526 "xelatex"
+["xdvipdfmx"] 1786931461.9543 "main.xdv" "main.pdf" "main" 1786931477.70168 0
+  "main.xdv" 1786931461.5924 3105660 9dc2c7cf7c4dffbb63119cbfb3a68d2f "xelatex"
   (generated)
   "main.pdf"
   (rewritten before read)
-["xelatex"] 1786928083.47459 "/home/nyfeu/Documentos/EFB2006/apostila_c/main.tex" "main.xdv" "main" 1786928105.06886 0
+["xelatex"] 1786931455.53432 "main.tex" "main.xdv" "main" 1786931477.69934 0
   "/etc/texmf/web2c/texmf.cnf" 1775588259.22282 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/nyfeu/Documentos/EFB2006/apostila_c/main.tex" 1786928083.28958 1481 594bb3520070e8334f6160ea47bea9ce ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -330,7 +329,7 @@
   "_minted-main/FDD92878E4EEBF64023DCE159D533D13BEBDD1D0F4AA7085BEAD66C8F6783572.pygtex" 1786908137.48528 278 56096fb818c0031035c63ebe0b28f1b4 ""
   "_minted-main/native.pygstyle" 1786908137.60084 7461 716f4a82f6b27a7f7bfe0a4d356c3844 ""
   "_minted-main/one-dark.pygstyle" 1786908137.38484 6883 cb2d31262874d4935e43e0e6ed849510 ""
-  "capa.tex" 1786750150.40447 3052 77e1e307d881fc9661493a4bba81fd58 ""
+  "capa.tex" 1786931450.46955 3086 7d80ca43418ff6b96a77bdf9fe831a05 ""
   "capitulos/00-prefacio.tex" 1786760504.54525 3370 de2f947ee646d6715219c722edc479fa ""
   "capitulos/01-primeiros-passos.tex" 1786763007.43517 8991 e97d7be002d77af3a3e9507fd539ec53 ""
   "capitulos/02-sistemas-numericos.tex" 1786927395.26472 12419 f25b6a07ee2e3403319d200ff075385a ""
@@ -348,7 +347,7 @@
   "capitulos/14-platformio.tex" 1786927400.13837 8114 a0d8716de545b8f234843c8d45a60564 ""
   "capitulos/15-anatomia-projeto.tex" 1786758222.57005 4987 531cfd0d5906ee866dfbc5888b335f1c ""
   "capitulos/16-gpio.tex" 1786754990.19129 4983 71daaaff145ab9add56e3d2239ebb505 ""
-  "capitulos/17-adc-sensores.tex" 1786927545.7013 11036 291e3f6501d51ba733a833611b81059e ""
+  "capitulos/17-adc-sensores.tex" 1786928965.97736 13965 534ae38d0e61055b095e2305d3d6cb87 ""
   "capitulos/18-serial-debug.tex" 1786755075.79976 5425 a23f3030f63adfc2d80fc3ed6b232163 ""
   "capitulos/19-interrupcoes-temporizacao.tex" 1786773355.85591 9720 a2b1e83327858af7c176d46c5484f1e3 ""
   "capitulos/20-gerenciamento-energia.tex" 1786927224.86975 10123 c303999afae11f2f0e6080ebad9a0d18 ""
@@ -361,13 +360,14 @@
   "imagens/esp32_diagram_upscayl_5x_upscayl-standard-4x.png" 1786768894.2005 10673788 9de0b497241652ce931ce0c24b464cd1 ""
   "imagens/estado_microcontrolador.png" 1786757865.40409 863247 3dc5b36e7ca0b2c2cdbafe73bcc93e21 ""
   "imagens/intel_4004.png" 1786756781.12318 77214 5954a1dca8e8dac8e31c3bbd948659c8 ""
+  "imagens/logo.png" 1786931348.62341 7290 6c1519ee5f090a10a9d38b288ed486fd ""
   "imagens/mark_watney.png" 1786764127.53875 736562 891029cf976a6c13961a491e01911bf6 ""
   "imagens/mars_pathfinder.png" 1786763829.53011 1846201 c234dee5011ba51d574fe5a442b329d5 ""
-  "main.aux" 1786928089.42941 45437 4eaec7334e9f0ef835ded344d2370405 "xelatex"
-  "main.listing" 1786928089.39473 123 f43dfe5d86fa2f4a09a2d18fb64b3508 "xelatex"
-  "main.out" 1786928089.43212 35849 84a3671ba24aebfd730700c359ac90fe "xelatex"
+  "main.aux" 1786931461.5874 46543 2cd719826aa038e72302d3d06a658722 "xelatex"
+  "main.listing" 1786931461.55124 123 f43dfe5d86fa2f4a09a2d18fb64b3508 "xelatex"
+  "main.out" 1786931461.59 35849 84a3671ba24aebfd730700c359ac90fe "xelatex"
   "main.tex" 1786928083.28958 1481 594bb3520070e8334f6160ea47bea9ce ""
-  "main.toc" 1786928089.43341 14683 53739247ef0412ce89164e0f8c581f55 "xelatex"
+  "main.toc" 1786931461.5924 14683 53739247ef0412ce89164e0f8c581f55 "xelatex"
   "preambulo.tex" 1786927179.37521 7839 e3511f0c0282aa43f129d1fbababb102 ""
   (generated)
   "main.aux"
